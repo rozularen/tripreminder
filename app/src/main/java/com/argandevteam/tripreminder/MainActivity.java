@@ -12,7 +12,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         FragmentManager supportFragmentManager = getSupportFragmentManager();
-        supportFragmentManager.beginTransaction().add(R.id.fragment_container, new TripsFragment(), "TripsFragment").commit();
+        supportFragmentManager.beginTransaction().add(R.id.fragment_container, new TripsListFragment(), "TripsListFragment").commit();
     }
 
 
