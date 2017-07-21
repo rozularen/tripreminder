@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Application Color Palette -->
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <!-- Other colors -->
+    <color name="color_white">#fafafa</color>
+    <color name="color_black">#000000</color>
+    <color name="color_material_gray">#757575</color>
 </resources>
