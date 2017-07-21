@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TripsFragment extends Fragment {
+public class TripsListFragment extends Fragment {
 
     @BindView(R.id.trip_recycler_view)
     RecyclerView tripsRecyclerView;
@@ -27,7 +27,7 @@ public class TripsFragment extends Fragment {
     private RecyclerView.LayoutManager tripsLayoutManager;
     private TripsAdapter tripsAdapter;
 
-    public TripsFragment() {
+    public TripsListFragment() {
         // Required empty public constructor
     }
 
