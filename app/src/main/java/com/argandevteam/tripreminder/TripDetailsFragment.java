@@ -30,7 +30,6 @@ public class TripDetailsFragment extends Fragment {
         ButterKnife.bind(this, view);
 
 
-
         return view;
     }
 

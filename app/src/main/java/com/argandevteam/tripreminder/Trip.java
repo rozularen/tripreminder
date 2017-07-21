@@ -9,6 +9,17 @@ import android.os.Parcelable;
 
 class Trip implements Parcelable {
 
+    public static final Creator<Trip> CREATOR = new Creator<Trip>() {
+        @Override
+        public Trip createFromParcel(Parcel in) {
+            return new Trip(in);
+        }
+
+        @Override
+        public Trip[] newArray(int size) {
+            return new Trip[size];
+        }
+    };
     private String name;
 
     public Trip() {
@@ -22,18 +33,6 @@ class Trip implements Parcelable {
     protected Trip(Parcel in) {
         name = in.readString();
     }
-
-    public static final Creator<Trip> CREATOR = new Creator<Trip>() {
-        @Override
-        public Trip createFromParcel(Parcel in) {
-            return new Trip(in);
-        }
-
-        @Override
-        public Trip[] newArray(int size) {
-            return new Trip[size];
-        }
-    };
 
     public String getName() {
         return name;

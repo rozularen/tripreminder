@@ -23,6 +23,36 @@ public class TripsAdapter extends RecyclerView.Adapter {
 
     private List<Trip> tripsList;
 
+    public TripsAdapter(List<Trip> tripsList) {
+        this.tripsList = tripsList;
+    }
+
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+        // create a new view
+        View tripCardView = LayoutInflater.from(parent.getContext()).inflate(R.layout.trip_card, parent, false);
+        // set the view's size, margins, paddings and layout parameters
+
+
+        TripViewHolder vh = new TripViewHolder(tripCardView);
+        return vh;
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        Trip trip = tripsList.get(position);
+
+        TripViewHolder tripViewHolder = (TripViewHolder) holder;
+
+        tripViewHolder.setData(trip);
+    }
+
+    @Override
+    public int getItemCount() {
+        return tripsList.size();
+    }
+
     class TripViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.textView)
@@ -60,35 +90,5 @@ public class TripsAdapter extends RecyclerView.Adapter {
                     .addToBackStack(null)
                     .commit();
         }
-    }
-
-    public TripsAdapter(List<Trip> tripsList) {
-        this.tripsList = tripsList;
-    }
-
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-        // create a new view
-        View tripCardView = LayoutInflater.from(parent.getContext()).inflate(R.layout.trip_card, parent, false);
-        // set the view's size, margins, paddings and layout parameters
-
-
-        TripViewHolder vh = new TripViewHolder(tripCardView);
-        return vh;
-    }
-
-    @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        Trip trip = tripsList.get(position);
-
-        TripViewHolder tripViewHolder = (TripViewHolder) holder;
-
-        tripViewHolder.setData(trip);
-    }
-
-    @Override
-    public int getItemCount() {
-        return tripsList.size();
     }
 }
