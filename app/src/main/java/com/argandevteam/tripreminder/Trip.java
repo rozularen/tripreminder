@@ -7,7 +7,7 @@ import android.os.Parcelable;
  * Created by markc on 21/07/2017.
  */
 
-class Trip implements Parcelable {
+public class Trip implements Parcelable {
 
     public static final Creator<Trip> CREATOR = new Creator<Trip>() {
         @Override
