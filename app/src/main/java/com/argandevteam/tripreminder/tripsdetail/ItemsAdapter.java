@@ -1,9 +1,11 @@
-package com.argandevteam.tripreminder;
+package com.argandevteam.tripreminder.tripsdetail;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.argandevteam.tripreminder.R;
 
 import java.util.List;
 

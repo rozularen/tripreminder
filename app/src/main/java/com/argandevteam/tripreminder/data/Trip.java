@@ -1,4 +1,4 @@
-package com.argandevteam.tripreminder;
+package com.argandevteam.tripreminder.data;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -8,6 +8,50 @@ import android.os.Parcelable;
  */
 
 public class Trip implements Parcelable {
+
+
+
+    private String id;
+
+    private String name;
+
+    public Trip() {
+        //Empty constructor
+    }
+
+    public Trip(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id){
+        this.id = id;
+    }
+
+    protected Trip(Parcel in) {
+        name = in.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+    }
 
     public static final Creator<Trip> CREATOR = new Creator<Trip>() {
         @Override
@@ -20,35 +64,4 @@ public class Trip implements Parcelable {
             return new Trip[size];
         }
     };
-    private String name;
-
-    public Trip() {
-        //Empty constructor
-    }
-
-    public Trip(String name) {
-        this.name = name;
-    }
-
-    protected Trip(Parcel in) {
-        name = in.readString();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(name);
-    }
 }

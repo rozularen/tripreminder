@@ -1,4 +1,4 @@
-package com.argandevteam.tripreminder;
+package com.argandevteam.tripreminder.tripsdetail;
 
 /**
  * Created by markc on 21/07/2017.

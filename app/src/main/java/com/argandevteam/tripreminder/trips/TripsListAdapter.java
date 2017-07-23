@@ -1,4 +1,4 @@
-package com.argandevteam.tripreminder;
+package com.argandevteam.tripreminder.trips;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,6 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.argandevteam.tripreminder.R;
+import com.argandevteam.tripreminder.data.Trip;
+import com.argandevteam.tripreminder.tripsdetail.TripDetailsFragment;
+
 import java.util.List;
 
 import butterknife.BindView;
@@ -19,11 +23,16 @@ import butterknife.ButterKnife;
  * Created by markc on 21/07/2017.
  */
 
-public class TripsAdapter extends RecyclerView.Adapter {
+public class TripsListAdapter extends RecyclerView.Adapter {
 
     private List<Trip> tripsList;
+    private TripItemListener listener;
 
-    public TripsAdapter(List<Trip> tripsList) {
+    interface TripItemListener {
+        void onTripClick(Trip clickedTrip);
+    }
+
+    public TripsListAdapter(List<Trip> tripsList) {
         this.tripsList = tripsList;
     }
 
@@ -34,8 +43,7 @@ public class TripsAdapter extends RecyclerView.Adapter {
         View tripCardView = LayoutInflater.from(parent.getContext()).inflate(R.layout.trip_card, parent, false);
         // set the view's size, margins, paddings and layout parameters
 
-
-        TripViewHolder vh = new TripViewHolder(tripCardView);
+        TripViewHolder vh = new TripViewHolder(tripCardView, listener);
         return vh;
     }
 
@@ -60,11 +68,12 @@ public class TripsAdapter extends RecyclerView.Adapter {
 
         private String name;
         private Trip trip;
+        private TripItemListener listener;
 
-
-        TripViewHolder(View itemView) {
+        TripViewHolder(View itemView, TripItemListener listener) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            this.listener = listener;
             itemView.setOnClickListener(this);
         }
 
@@ -75,6 +84,8 @@ public class TripsAdapter extends RecyclerView.Adapter {
 
         @Override
         public void onClick(View view) {
+            listener.onTripClick(trip);
+
             AppCompatActivity activity = (AppCompatActivity) view.getContext();
             Fragment myFragment = new TripDetailsFragment();
 
@@ -89,6 +100,7 @@ public class TripsAdapter extends RecyclerView.Adapter {
                     .replace(R.id.fragment_container, myFragment)
                     .addToBackStack(null)
                     .commit();
+
         }
     }
 }
