@@ -4,13 +4,17 @@ package com.argandevteam.tripreminder.trips;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.argandevteam.tripreminder.R;
 import com.argandevteam.tripreminder.data.Trip;
@@ -31,11 +35,30 @@ public class TripsListFragment extends Fragment implements TripsListContract.Vie
     @BindView(R.id.trip_recycler_view)
     RecyclerView tripsRecyclerView;
 
+    @BindView(R.id.trips_view)
+    LinearLayout mTripsView;
+
+    @BindView(R.id.no_trips_view)
+    LinearLayout mNoTripsView;
+
+    @BindView(R.id.no_trips_main_text_view)
+    TextView mNoTripsMainTextView;
+
+    @BindView(R.id.no_trips_image_view)
+    ImageView mNoTripsIcon;
+
+    @BindView(R.id.no_trips_create_text_view)
+    TextView mNoTripsCreateView;
+
+    @BindView(R.id.trips_refresh_layout)
+    SwipeRefreshLayout swipeRefreshLayout;
+
+
     private static final String TAG = "TripListFragment";
 
-    private RecyclerView.LayoutManager tripsLayoutManager;
-    private TripsListContract.Presenter presenter;
-    private TripsListAdapter tripsListAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private TripsListContract.Presenter mPresenter;
+    private TripsListAdapter mAdapter;
 
 
     public TripsListFragment() {
@@ -49,12 +72,13 @@ public class TripsListFragment extends Fragment implements TripsListContract.Vie
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        tripsListAdapter = new TripsListAdapter(new ArrayList<Trip>(0));
+        mAdapter = new TripsListAdapter(new ArrayList<Trip>(0));
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        mPresenter.start();
     }
 
     @Override
@@ -65,67 +89,95 @@ public class TripsListFragment extends Fragment implements TripsListContract.Vie
 
         ButterKnife.bind(this, view);
 
+        mPresenter.loadTrips(false);
 
         return view;
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        presenter.result(requestCode, resultCode);
+        mPresenter.result(requestCode, resultCode);
     }
 
     @Override
     public void setPresenter(TripsListContract.Presenter presenter) {
         if (presenter != null) {
-            this.presenter = presenter;
+            this.mPresenter = presenter;
         }
     }
 
     @Override
-    public void setLoadingView(boolean showLoadingView) {
-
+    public void setLoadingView(final boolean showLoadingView) {
+        if (getView() != null) {
+            swipeRefreshLayout.post(new Runnable() {
+                @Override
+                public void run() {
+                    swipeRefreshLayout.setRefreshing(showLoadingView);
+                }
+            });
+        } else {
+            return;
+        }
     }
 
     @Override
     public void showTrips(List<Trip> tripsToShow) {
         tripsRecyclerView.setHasFixedSize(true);
 
-        tripsLayoutManager = new LinearLayoutManager(getActivity());
-        tripsRecyclerView.setLayoutManager(tripsLayoutManager);
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        tripsRecyclerView.setLayoutManager(mLayoutManager);
 
-        tripsListAdapter = new TripsListAdapter(tripsToShow);
-        tripsRecyclerView.setAdapter(tripsListAdapter);
+        mAdapter = new TripsListAdapter(tripsToShow);
+        tripsRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
     public void showTripDetailsView(String tripId) {
-      Intent intent = new Intent(getContext(), TripDetailsActivity.class);
+        Intent intent = new Intent(getContext(), TripDetailsActivity.class);
         intent.putExtra(TripDetailsActivity.EXTRA_TRIP_ID, tripId);
         startActivity(intent);
     }
 
     @Override
     public void showCreateTrip() {
+        // TODO: Create trip
 
+        /*
+        Intent intent = new Intent(getContext(), CreateEditTripActivity.class);
+        startActivityForResult(intent, CreateEditTripActivity.REQUEST_ADD_TRIP);
+        */
     }
 
     @Override
     public void showNoTrips() {
+        showNoTripsView("You don't have any trip yet!", R.drawable.ic_group_black_24dp, false);
+    }
 
+    private void showNoTripsView(String mainText, int iconRes, boolean showCreateView) {
+        mTripsView.setVisibility(View.GONE);
+        mNoTripsView.setVisibility(View.VISIBLE);
+
+        mNoTripsMainTextView.setText(mainText);
+        mNoTripsIcon.setImageDrawable(getResources().getDrawable(iconRes));
+        mNoTripsCreateView.setVisibility(showCreateView ? View.VISIBLE : View.GONE);
     }
 
     @Override
     public void showLoadingTripsError() {
-
+        showMessage("Error cargando tus viajes!");
     }
 
     @Override
     public void showSuccessfullySavedTrip() {
-        Toast.makeText(getContext(), "Trip created successfully!", Toast.LENGTH_SHORT).show();
+        showMessage("Viaje creado con éxito!");
     }
 
     @Override
     public boolean isActive() {
         return isAdded();
+    }
+
+    private void showMessage(String message) {
+        Snackbar.make(getView(), message, Snackbar.LENGTH_LONG).show();
     }
 }

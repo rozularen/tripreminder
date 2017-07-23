@@ -5,4 +5,8 @@ package com.argandevteam.tripreminder.tripsdetail;
  */
 
 public class TripDetailsPresenter implements TripDetailsContract.Presenter{
+    @Override
+    public void start() {
+
+    }
 }

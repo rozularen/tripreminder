@@ -1,13 +1,66 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/trip_recycler_view"
+    <LinearLayout
+        android:id="@+id/trips_view"
         android:layout_width="match_parent"
-        android:background="#f0f0f0"
         android:layout_height="match_parent"
-        tools:context="com.argandevteam.tripreminder.trips.TripsListFragment" />
+        android:gravity="center"
+        tools:visibility="visible">
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/trips_refresh_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v4.widget.ContentLoadingProgressBar
+                android:id="@+id/no_trips_loading_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/trip_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#f0f0f0"
+                tools:context="com.argandevteam.tripreminder.trips.TripsListFragment" />
+        </android.support.v4.widget.SwipeRefreshLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/no_trips_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        tools:visibility="gone">
+
+        <ImageView
+            android:id="@+id/no_trips_image_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            tools:src="@drawable/ic_basket_black_24dp" />
+
+        <TextView
+            android:id="@+id/no_trips_main_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No tienes viajes aún!"
+            android:textColor="@color/color_black"
+            android:textSize="19sp" />
+
+        <TextView
+            android:id="@+id/no_trips_create_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Crea uno nuevo ahora!"
+            android:textSize="14sp" />
+
+    </LinearLayout>
 
 </LinearLayout>
