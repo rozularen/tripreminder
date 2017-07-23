@@ -46,6 +46,11 @@ public class TripsRemoteDataSource implements TripsDataSource {
     }
 
     @Override
+    public void deleteAllTrips() {
+
+    }
+
+    @Override
     public void refreshTrips() {
 
     }

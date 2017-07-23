@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,6 +32,9 @@ import butterknife.ButterKnife;
  * A simple {@link android.support.v4.app.Fragment} subclass.
  */
 public class TripsListFragment extends Fragment implements TripsListContract.View {
+//
+//    @BindView(R.id.no_trips_loading_view)
+//    ContentLoadingProgressBar contentLoadingProgressBar;
 
     @BindView(R.id.trip_recycler_view)
     RecyclerView tripsRecyclerView;
@@ -108,6 +112,7 @@ public class TripsListFragment extends Fragment implements TripsListContract.Vie
 
     @Override
     public void setLoadingView(final boolean showLoadingView) {
+//        contentLoadingProgressBar.setVisibility(showLoadingView ? View.VISIBLE : View.GONE);
         if (getView() != null) {
             swipeRefreshLayout.post(new Runnable() {
                 @Override

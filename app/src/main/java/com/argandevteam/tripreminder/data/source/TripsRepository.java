@@ -1,7 +1,12 @@
 package com.argandevteam.tripreminder.data.source;
 
+import android.util.Log;
+
 import com.argandevteam.tripreminder.data.Trip;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -10,6 +15,8 @@ import java.util.Map;
  */
 
 public class TripsRepository implements TripsDataSource {
+
+    private static final String TAG = "TripsRepository";
 
     private static TripsRepository INSTANCE = null;
 
@@ -20,7 +27,6 @@ public class TripsRepository implements TripsDataSource {
     Map<String, Trip> mCachedTrips;
 
     boolean mCacheIsDirty = false;
-
 
     public TripsRepository(TripsDataSource mTripsLocalDataSource, TripsDataSource mTripsRemoteDataSource) {
         if (mTripsLocalDataSource != null) {
@@ -45,22 +51,83 @@ public class TripsRepository implements TripsDataSource {
 
     @Override
     public void getTrips(LoadTripsCallback callback) {
-
+        if (callback != null) {
+            if (mCachedTrips != null && !mCacheIsDirty) {
+                callback.onTripsLoaded(new ArrayList<Trip>(mCachedTrips.values()));
+                return;
+            }
+            if (mCacheIsDirty) {
+                getTripsFromRemoteDataSource(callback);
+            }
+        } else {
+            Log.e(TAG, "getTrips: Load callback can't be null");
+        }
     }
 
     @Override
-    public void getTrip(String tripId, GetTripCallback callback) {
+    public void getTrip(final String tripId, final GetTripCallback callback) {
+        if (tripId != null) {
+            if (callback != null) {
+                Trip cachedTrip = getTripWithId(tripId);
 
+                if (cachedTrip != null) {
+                    callback.onTripsLoaded(cachedTrip);
+                    return;
+                }
+
+                mTripsLocalDataSource.getTrip(tripId, new GetTripCallback() {
+                    @Override
+                    public void onTripsLoaded(Trip trip) {
+                        if (mCachedTrips == null) {
+                            mCachedTrips = new LinkedHashMap<>();
+                        }
+                        mCachedTrips.put(trip.getId(), trip);
+                        callback.onTripsLoaded(trip);
+                    }
+
+                    @Override
+                    public void onDataNotAvailable() {
+                        mTripsRemoteDataSource.getTrip(tripId, new GetTripCallback() {
+                            @Override
+                            public void onTripsLoaded(Trip trip) {
+                                if (mCachedTrips == null) {
+                                    mCachedTrips = new LinkedHashMap<>();
+                                }
+                                mCachedTrips.put(trip.getId(), trip);
+                                callback.onTripsLoaded(trip);
+                            }
+
+                            @Override
+                            public void onDataNotAvailable() {
+                                callback.onDataNotAvailable();
+                            }
+                        });
+                    }
+                });
+            }
+        }
     }
 
     @Override
     public void saveTrip(Trip trip) {
+        if (trip != null) {
+            mTripsRemoteDataSource.saveTrip(trip);
+            mTripsLocalDataSource.saveTrip(trip);
+            
+            if (mCachedTrips == null) {
+                mCachedTrips = new LinkedHashMap<>();
+            }
 
+            mCachedTrips.put(trip.getId(), trip);
+        }
     }
 
     @Override
     public void deleteTrip(Trip trip) {
+        mTripsRemoteDataSource.deleteTrip(trip.getId());
+        mTripsLocalDataSource.deleteTrip(trip.getId());
 
+        mCachedTrips.remove(trip.getId());
     }
 
     @Override
@@ -68,6 +135,18 @@ public class TripsRepository implements TripsDataSource {
         if (tripId != null) {
             deleteTrip(getTripWithId(tripId));
         }
+    }
+
+    @Override
+    public void deleteAllTrips() {
+        mTripsRemoteDataSource.deleteAllTrips();
+        mTripsLocalDataSource.deleteAllTrips();
+
+        if (mCachedTrips == null) {
+            mCachedTrips = new LinkedHashMap<>();
+        }
+
+        mCachedTrips.clear();
     }
 
     private Trip getTripWithId(String tripId) {
@@ -87,4 +166,36 @@ public class TripsRepository implements TripsDataSource {
     }
 
 
+    public void getTripsFromRemoteDataSource(final LoadTripsCallback callback) {
+        mTripsRemoteDataSource.getTrips(new LoadTripsCallback() {
+            @Override
+            public void onTripsLoaded(List<Trip> trips) {
+                refreshCache(trips);
+                refreshLocalDataSource(trips);
+                callback.onTripsLoaded(new ArrayList<>(mCachedTrips.values()));
+            }
+
+
+            @Override
+            public void onDataNotAvailable() {
+                callback.onDataNotAvailable();
+            }
+        });
+
+    }
+
+    private void refreshLocalDataSource(List<Trip> trips) {
+        mTripsLocalDataSource.deleteAllTrips();
+    }
+
+    private void refreshCache(List<Trip> trips) {
+        if (mCachedTrips == null) {
+            mCachedTrips = new LinkedHashMap<>();
+        }
+        mCachedTrips.clear();
+        for (Trip trip : trips) {
+            mCachedTrips.put(trip.getId(), trip);
+        }
+        mCacheIsDirty = false;
+    }
 }

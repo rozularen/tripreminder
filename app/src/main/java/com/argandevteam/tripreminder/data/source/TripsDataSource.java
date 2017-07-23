@@ -9,6 +9,7 @@ import java.util.List;
  */
 
 public interface TripsDataSource {
+
     interface LoadTripsCallback {
         void onTripsLoaded(List<Trip> trips);
 
@@ -30,6 +31,8 @@ public interface TripsDataSource {
     void deleteTrip(Trip trip);
 
     void deleteTrip(String tripid);
+
+    void deleteAllTrips();
 
     void refreshTrips();
 
