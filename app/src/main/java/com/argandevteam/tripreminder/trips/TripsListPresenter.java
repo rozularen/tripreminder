@@ -61,26 +61,33 @@ public class TripsListPresenter implements TripsListContract.Presenter {
         mTripsRepository.getTrips(new TripsDataSource.LoadTripsCallback() {
             @Override
             public void onTripsLoaded(List<Trip> trips) {
+                Log.d(TAG, "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" );
+
                 List<Trip> tripsToShow = new ArrayList<>();
 
                 for (Trip trip : trips) {
                     tripsToShow.add(trip);
                 }
 
+                if (!mView.isActive()) {
+                    return;
+                }
                 if (showLoadingView) {
                     mView.setLoadingView(false);
                 }
+
+                Log.d(TAG, "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" );
 
                 processTrips(tripsToShow);
             }
 
             @Override
             public void onDataNotAvailable() {
+                Log.d(TAG, "onDataNotAvailable: ERROR LOADING TRIP DATA NOT AVAILABLE" );
                 if (!mView.isActive()) {
                     return;
-                } else {
-                    mView.showLoadingTripsError();
                 }
+                mView.showLoadingTripsError();
             }
         });
     }
@@ -89,6 +96,7 @@ public class TripsListPresenter implements TripsListContract.Presenter {
         if (!tripsToShow.isEmpty()) {
             mView.showTrips(tripsToShow);
         } else {
+            //Show message indicating there are no Trips
             processEmptyTrips();
         }
     }
@@ -113,7 +121,7 @@ public class TripsListPresenter implements TripsListContract.Presenter {
 
     @Override
     public void deleteTrip(Trip deletedTrip) {
-        if(deletedTrip != null){
+        if (deletedTrip != null) {
             mTripsRepository.deleteTrip(deletedTrip);
         }
     }

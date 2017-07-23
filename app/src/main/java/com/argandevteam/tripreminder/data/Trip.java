@@ -15,11 +15,14 @@ public class Trip implements Parcelable {
 
     private String name;
 
+
     public Trip() {
         //Empty constructor
     }
 
-    public Trip(String name) {
+    //TODO: Model correctly Trip Object
+    public Trip(String id, String name) {
+        this.id = id;
         this.name = name;
     }
 

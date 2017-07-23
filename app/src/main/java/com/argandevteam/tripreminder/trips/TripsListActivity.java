@@ -31,6 +31,7 @@ public class TripsListActivity extends AppCompatActivity {
         //Should use DI framework
         TripsLocalDataSource mTripsLocalDataSource = new TripsLocalDataSource(this);
         TripsRemoteDataSource mTripsRemoteDataSource = new TripsRemoteDataSource();
+
         TripsRepository mTripsRepository = new TripsRepository(mTripsLocalDataSource, mTripsRemoteDataSource);
 
         mTripsListPresenter = new TripsListPresenter(mTripsRepository, tripsListTripsListFragment);

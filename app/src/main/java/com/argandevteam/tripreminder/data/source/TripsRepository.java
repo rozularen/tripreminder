@@ -41,7 +41,6 @@ public class TripsRepository implements TripsDataSource {
         if (INSTANCE == null) {
             INSTANCE = new TripsRepository(mTripsLocalDataSource, mTripsRemoteDataSource);
         }
-
         return INSTANCE;
     }
 
@@ -50,14 +49,43 @@ public class TripsRepository implements TripsDataSource {
     }
 
     @Override
-    public void getTrips(LoadTripsCallback callback) {
+    public void getTrips(final LoadTripsCallback callback) {
         if (callback != null) {
+            //Respond inmediatly with cache if available and not dirty
             if (mCachedTrips != null && !mCacheIsDirty) {
                 callback.onTripsLoaded(new ArrayList<Trip>(mCachedTrips.values()));
                 return;
             }
-            if (mCacheIsDirty) {
+            if (mCacheIsDirty && mCachedTrips != null) {
+                //If cache is dirty and we have cache from before
                 getTripsFromRemoteDataSource(callback);
+            } else if (mCacheIsDirty && mCachedTrips == null) {
+                //If we dont have cache and dirty flag is set
+                mTripsLocalDataSource.getTrips(new LoadTripsCallback() {
+                    @Override
+                    public void onTripsLoaded(List<Trip> trips) {
+                        refreshCache(trips);
+                        callback.onTripsLoaded(new ArrayList<Trip>(mCachedTrips.values()));
+                    }
+
+                    @Override
+                    public void onDataNotAvailable() {
+                        getTripsFromRemoteDataSource(callback);
+                    }
+                });
+            } else {
+                mTripsLocalDataSource.getTrips(new LoadTripsCallback() {
+                    @Override
+                    public void onTripsLoaded(List<Trip> trips) {
+                        refreshCache(trips);
+                        callback.onTripsLoaded(new ArrayList<Trip>(mCachedTrips.values()));
+                    }
+
+                    @Override
+                    public void onDataNotAvailable() {
+                        getTripsFromRemoteDataSource(callback);
+                    }
+                });
             }
         } else {
             Log.e(TAG, "getTrips: Load callback can't be null");
@@ -113,7 +141,7 @@ public class TripsRepository implements TripsDataSource {
         if (trip != null) {
             mTripsRemoteDataSource.saveTrip(trip);
             mTripsLocalDataSource.saveTrip(trip);
-            
+
             if (mCachedTrips == null) {
                 mCachedTrips = new LinkedHashMap<>();
             }

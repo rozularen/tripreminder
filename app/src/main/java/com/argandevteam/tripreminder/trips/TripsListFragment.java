@@ -6,10 +6,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.ContentLoadingProgressBar;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,7 +77,9 @@ public class TripsListFragment extends Fragment implements TripsListContract.Vie
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAdapter = new TripsListAdapter(new ArrayList<Trip>(0));
+        ArrayList<Trip> tripsList = new ArrayList<>(0);
+
+        mAdapter = new TripsListAdapter(tripsList, mItemListener);
     }
 
     @Override
@@ -93,7 +96,23 @@ public class TripsListFragment extends Fragment implements TripsListContract.Vie
 
         ButterKnife.bind(this, view);
 
-        mPresenter.loadTrips(false);
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        tripsRecyclerView.setLayoutManager(mLayoutManager);
+        tripsRecyclerView.setHasFixedSize(true);
+        tripsRecyclerView.setAdapter(mAdapter);
+
+        swipeRefreshLayout.setColorSchemeColors(
+                ContextCompat.getColor(getActivity(), R.color.colorPrimary),
+                ContextCompat.getColor(getActivity(), R.color.colorAccent),
+                ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark)
+        );
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPresenter.loadTrips(false);
+            }
+        });
 
         return view;
     }
@@ -113,27 +132,23 @@ public class TripsListFragment extends Fragment implements TripsListContract.Vie
     @Override
     public void setLoadingView(final boolean showLoadingView) {
 //        contentLoadingProgressBar.setVisibility(showLoadingView ? View.VISIBLE : View.GONE);
-        if (getView() != null) {
-            swipeRefreshLayout.post(new Runnable() {
-                @Override
-                public void run() {
-                    swipeRefreshLayout.setRefreshing(showLoadingView);
-                }
-            });
-        } else {
+        if (getView() == null) {
             return;
         }
+        swipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                swipeRefreshLayout.setRefreshing(showLoadingView);
+            }
+        });
     }
 
     @Override
     public void showTrips(List<Trip> tripsToShow) {
-        tripsRecyclerView.setHasFixedSize(true);
+        mAdapter.replaceData(tripsToShow);
 
-        mLayoutManager = new LinearLayoutManager(getActivity());
-        tripsRecyclerView.setLayoutManager(mLayoutManager);
-
-        mAdapter = new TripsListAdapter(tripsToShow);
-        tripsRecyclerView.setAdapter(mAdapter);
+        mTripsView.setVisibility(View.VISIBLE);
+        mNoTripsView.setVisibility(View.GONE);
     }
 
     @Override
@@ -185,4 +200,10 @@ public class TripsListFragment extends Fragment implements TripsListContract.Vie
     private void showMessage(String message) {
         Snackbar.make(getView(), message, Snackbar.LENGTH_LONG).show();
     }
+    TripsListAdapter.TripItemListener mItemListener = new TripsListAdapter.TripItemListener() {
+        @Override
+        public void onTripClick(Trip clickedTrip) {
+            Log.d(TAG, "onTripClick: CLICKED BITCH");
+        }
+    };
 }

@@ -35,6 +35,16 @@ public class TripsListAdapter extends RecyclerView.Adapter {
     public TripsListAdapter(List<Trip> tripsList) {
         this.tripsList = tripsList;
     }
+    public TripsListAdapter(List<Trip> tripsList, TripItemListener listener) {
+        this.tripsList = tripsList;
+        this.listener = listener;
+    }
+
+    public void replaceData(List<Trip> tripsToShow) {
+        tripsList = tripsToShow;
+
+        notifyDataSetChanged();
+    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
