@@ -37,34 +37,30 @@ public class TripsListFragment extends Fragment implements TripsListContract.Vie
 //    @BindView(R.id.no_trips_loading_view)
 //    ContentLoadingProgressBar contentLoadingProgressBar;
 
+    private static final String TAG = "TripListFragment";
     @BindView(R.id.trip_recycler_view)
     RecyclerView tripsRecyclerView;
-
     @BindView(R.id.trips_view)
     LinearLayout mTripsView;
-
     @BindView(R.id.no_trips_view)
     LinearLayout mNoTripsView;
-
     @BindView(R.id.no_trips_main_text_view)
     TextView mNoTripsMainTextView;
-
     @BindView(R.id.no_trips_image_view)
     ImageView mNoTripsIcon;
-
     @BindView(R.id.no_trips_create_text_view)
     TextView mNoTripsCreateView;
-
     @BindView(R.id.trips_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
-
-
-    private static final String TAG = "TripListFragment";
-
+    TripsListAdapter.TripItemListener mItemListener = new TripsListAdapter.TripItemListener() {
+        @Override
+        public void onTripClick(Trip clickedTrip) {
+            Log.d(TAG, "onTripClick: CLICKED BITCH");
+        }
+    };
     private RecyclerView.LayoutManager mLayoutManager;
     private TripsListContract.Presenter mPresenter;
     private TripsListAdapter mAdapter;
-
 
     public TripsListFragment() {
         // Required empty public constructor
@@ -200,10 +196,4 @@ public class TripsListFragment extends Fragment implements TripsListContract.Vie
     private void showMessage(String message) {
         Snackbar.make(getView(), message, Snackbar.LENGTH_LONG).show();
     }
-    TripsListAdapter.TripItemListener mItemListener = new TripsListAdapter.TripItemListener() {
-        @Override
-        public void onTripClick(Trip clickedTrip) {
-            Log.d(TAG, "onTripClick: CLICKED BITCH");
-        }
-    };
 }

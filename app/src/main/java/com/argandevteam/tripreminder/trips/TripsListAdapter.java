@@ -28,13 +28,10 @@ public class TripsListAdapter extends RecyclerView.Adapter {
     private List<Trip> tripsList;
     private TripItemListener listener;
 
-    interface TripItemListener {
-        void onTripClick(Trip clickedTrip);
-    }
-
     public TripsListAdapter(List<Trip> tripsList) {
         this.tripsList = tripsList;
     }
+
     public TripsListAdapter(List<Trip> tripsList, TripItemListener listener) {
         this.tripsList = tripsList;
         this.listener = listener;
@@ -71,6 +68,10 @@ public class TripsListAdapter extends RecyclerView.Adapter {
         return tripsList.size();
     }
 
+    interface TripItemListener {
+        void onTripClick(Trip clickedTrip);
+    }
+
     class TripViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.textView)
@@ -89,7 +90,7 @@ public class TripsListAdapter extends RecyclerView.Adapter {
 
         public void setData(Trip trip) {
             this.trip = trip;
-            textView.setText(trip.getName());
+            textView.setText(trip.getTitle());
         }
 
         @Override

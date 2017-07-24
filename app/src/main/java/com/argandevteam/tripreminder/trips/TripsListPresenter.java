@@ -61,7 +61,7 @@ public class TripsListPresenter implements TripsListContract.Presenter {
         mTripsRepository.getTrips(new TripsDataSource.LoadTripsCallback() {
             @Override
             public void onTripsLoaded(List<Trip> trips) {
-                Log.d(TAG, "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" );
+                Log.d(TAG, "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 
                 List<Trip> tripsToShow = new ArrayList<>();
 
@@ -76,14 +76,14 @@ public class TripsListPresenter implements TripsListContract.Presenter {
                     mView.setLoadingView(false);
                 }
 
-                Log.d(TAG, "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" );
+                Log.d(TAG, "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 
                 processTrips(tripsToShow);
             }
 
             @Override
             public void onDataNotAvailable() {
-                Log.d(TAG, "onDataNotAvailable: ERROR LOADING TRIP DATA NOT AVAILABLE" );
+                Log.d(TAG, "onDataNotAvailable: ERROR LOADING TRIP DATA NOT AVAILABLE");
                 if (!mView.isActive()) {
                     return;
                 }

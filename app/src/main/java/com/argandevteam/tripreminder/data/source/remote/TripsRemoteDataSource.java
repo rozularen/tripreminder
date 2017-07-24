@@ -15,26 +15,24 @@ import java.util.Map;
 
 public class TripsRemoteDataSource implements TripsDataSource {
 
-    private static TripsRemoteDataSource INSTANCE;
-
     private static final int SERVICE_LATENCY_IN_MILIS = 5000;
-
+    private static TripsRemoteDataSource INSTANCE;
     private static Map<String, Trip> TRIP_SERVICE_DATA = null;
 
     static {
         TRIP_SERVICE_DATA = new LinkedHashMap<>(2);
-        addTrip("ALVAA", "asda");
-        addTrip("MALAGA", "DESCRIPCION");
+        addTrip("1", "MALAGA", "1465003330000", "1487491870000", 4, "220");
+        addTrip("2", "CADIZ", "1466043360000", "1467243470000", 3, "158");
 
-    }
-
-    private static void addTrip(String name, String description) {
-        Trip newTrip = new Trip(name, description);
-        TRIP_SERVICE_DATA.put(newTrip.getId(), newTrip);
     }
 
     //SHould prevent direct instantiation
     public TripsRemoteDataSource() {
+    }
+
+    private static void addTrip(String id, String title, String startDate, String endDate, int numPersons, String totalCost) {
+        Trip newTrip = new Trip(id, title, startDate, endDate, numPersons, totalCost);
+        TRIP_SERVICE_DATA.put(newTrip.getId(), newTrip);
     }
 
     @Override
@@ -49,32 +47,42 @@ public class TripsRemoteDataSource implements TripsDataSource {
     }
 
     @Override
-    public void getTrip(String tripId, GetTripCallback callback) {
+    public void getTrip(String tripId, final GetTripCallback callback) {
+        final Trip trip = TRIP_SERVICE_DATA.get(tripId);
 
+        // Simulate network by delaying the execution.
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                callback.onTripsLoaded(trip);
+            }
+        }, SERVICE_LATENCY_IN_MILIS);
     }
 
     @Override
     public void saveTrip(Trip trip) {
-
+        TRIP_SERVICE_DATA.put(trip.getId(), trip);
     }
 
     @Override
     public void deleteTrip(Trip trip) {
-
+        TRIP_SERVICE_DATA.remove(trip.getId());
     }
 
     @Override
-    public void deleteTrip(String tripid) {
-
+    public void deleteTrip(String tripId) {
+        TRIP_SERVICE_DATA.remove(tripId);
     }
 
     @Override
     public void deleteAllTrips() {
-
+        TRIP_SERVICE_DATA.clear();
     }
 
     @Override
     public void refreshTrips() {
-
+        // Not required, {@link TripsRepository} handles the logic
+        // of refreshing the trips from all the available data
     }
 }

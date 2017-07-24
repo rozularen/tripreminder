@@ -19,14 +19,10 @@ public class TripsRepository implements TripsDataSource {
     private static final String TAG = "TripsRepository";
 
     private static TripsRepository INSTANCE = null;
-
-    private TripsDataSource mTripsLocalDataSource = null;
-
-    private TripsDataSource mTripsRemoteDataSource = null;
-
     Map<String, Trip> mCachedTrips;
-
     boolean mCacheIsDirty = false;
+    private TripsDataSource mTripsLocalDataSource = null;
+    private TripsDataSource mTripsRemoteDataSource = null;
 
     public TripsRepository(TripsDataSource mTripsLocalDataSource, TripsDataSource mTripsRemoteDataSource) {
         if (mTripsLocalDataSource != null) {

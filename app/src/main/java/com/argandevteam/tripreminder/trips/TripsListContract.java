@@ -29,9 +29,6 @@ public interface TripsListContract {
         void showSuccessfullySavedTrip();
 
 
-
-
-
         boolean isActive();
     }
 

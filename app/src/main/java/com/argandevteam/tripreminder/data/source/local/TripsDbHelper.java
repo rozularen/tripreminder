@@ -22,11 +22,11 @@ public class TripsDbHelper extends SQLiteOpenHelper {
     private static final String COMMA_SEP = ",";
 
     private static final String SQL_CREATE_ENTRIES =
-            "CREATE TABLE " + TripsPersistenceContract.TaskEntry.TABLE_NAME + " (" +
-                    TripsPersistenceContract.TaskEntry.COLUMN_NAME_TRIP_ID + TEXT_TYPE + " PRIMARY KEY," +
-                    TripsPersistenceContract.TaskEntry.COLUMN_NAME_TITLE + TEXT_TYPE + COMMA_SEP +
-                    TripsPersistenceContract.TaskEntry.COLUMN_NAME_NUM_PERSONS + INTEGER_TYPE +
-            " )";
+            "CREATE TABLE " + TripsPersistenceContract.TripEntry.TABLE_NAME + " (" +
+                    TripsPersistenceContract.TripEntry.COLUMN_NAME_TRIP_ID + TEXT_TYPE + " PRIMARY KEY," +
+                    TripsPersistenceContract.TripEntry.COLUMN_NAME_TITLE + TEXT_TYPE + COMMA_SEP +
+                    TripsPersistenceContract.TripEntry.COLUMN_NAME_NUM_PERSONS + INTEGER_TYPE +
+                    " )";
 
     public TripsDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

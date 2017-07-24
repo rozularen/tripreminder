@@ -1,7 +1,7 @@
 package com.argandevteam.tripreminder.trips;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.argandevteam.tripreminder.R;
 import com.argandevteam.tripreminder.data.source.TripsRepository;
@@ -21,7 +21,7 @@ public class TripsListActivity extends AppCompatActivity {
         TripsListFragment tripsListTripsListFragment =
                 (TripsListFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
 
-        if(tripsListTripsListFragment == null){
+        if (tripsListTripsListFragment == null) {
             //Create fragment
             tripsListTripsListFragment = TripsListFragment.newInstance();
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),

@@ -12,10 +12,15 @@ public final class TripsPersistenceContract {
     private TripsPersistenceContract() {
     }
 
-    public class TaskEntry implements BaseColumns {
+    public class TripEntry implements BaseColumns {
         public static final String TABLE_NAME = "trips";
-        public static final String COLUMN_NAME_TRIP_ID = "tripId";
+
+        public static final String COLUMN_NAME_TRIP_ID = "id";
         public static final String COLUMN_NAME_TITLE = "title";
+        public static final String COLUMN_NAME_START_DATE = "start_date";
+        public static final String COLUMN_NAME_END_DATE = "end_date";
+        public static final String COLUMN_NAME_TOTAL_COST = "total_cost";
         public static final String COLUMN_NAME_NUM_PERSONS = "num_persons";
+
     }
 }

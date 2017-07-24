@@ -10,18 +10,6 @@ import java.util.List;
 
 public interface TripsDataSource {
 
-    interface LoadTripsCallback {
-        void onTripsLoaded(List<Trip> trips);
-
-        void onDataNotAvailable();
-    }
-
-    interface GetTripCallback {
-        void onTripsLoaded(Trip trip);
-
-        void onDataNotAvailable();
-    }
-
     void getTrips(LoadTripsCallback callback);
 
     void getTrip(String tripId, GetTripCallback callback);
@@ -35,5 +23,17 @@ public interface TripsDataSource {
     void deleteAllTrips();
 
     void refreshTrips();
+
+    interface LoadTripsCallback {
+        void onTripsLoaded(List<Trip> trips);
+
+        void onDataNotAvailable();
+    }
+
+    interface GetTripCallback {
+        void onTripsLoaded(Trip trip);
+
+        void onDataNotAvailable();
+    }
 
 }
