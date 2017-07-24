@@ -23,16 +23,16 @@ import butterknife.ButterKnife;
  * Created by markc on 21/07/2017.
  */
 
-public class TripsListAdapter extends RecyclerView.Adapter {
+public class TripsAdapter extends RecyclerView.Adapter {
 
     private List<Trip> tripsList;
     private TripItemListener listener;
 
-    public TripsListAdapter(List<Trip> tripsList) {
+    public TripsAdapter(List<Trip> tripsList) {
         this.tripsList = tripsList;
     }
 
-    public TripsListAdapter(List<Trip> tripsList, TripItemListener listener) {
+    public TripsAdapter(List<Trip> tripsList, TripItemListener listener) {
         this.tripsList = tripsList;
         this.listener = listener;
     }

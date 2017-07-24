@@ -9,23 +9,23 @@ import com.argandevteam.tripreminder.data.source.local.TripsLocalDataSource;
 import com.argandevteam.tripreminder.data.source.remote.TripsRemoteDataSource;
 import com.argandevteam.tripreminder.util.ActivityUtils;
 
-public class TripsListActivity extends AppCompatActivity {
+public class TripsActivity extends AppCompatActivity {
 
-    private TripsListPresenter mTripsListPresenter;
+    private TripsPresenter mTripsPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trips_list);
 
-        TripsListFragment tripsListTripsListFragment =
-                (TripsListFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+        TripsFragment tripsFragment =
+                (TripsFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
 
-        if (tripsListTripsListFragment == null) {
+        if (tripsFragment == null) {
             //Create fragment
-            tripsListTripsListFragment = TripsListFragment.newInstance();
+            tripsFragment = TripsFragment.newInstance();
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
-                    tripsListTripsListFragment, R.id.fragment_container);
+                    tripsFragment, R.id.fragment_container);
         }
 
         //Should use DI framework
@@ -34,7 +34,7 @@ public class TripsListActivity extends AppCompatActivity {
 
         TripsRepository mTripsRepository = new TripsRepository(mTripsLocalDataSource, mTripsRemoteDataSource);
 
-        mTripsListPresenter = new TripsListPresenter(mTripsRepository, tripsListTripsListFragment);
+        mTripsPresenter = new TripsPresenter(mTripsRepository, tripsFragment);
 
     }
 }

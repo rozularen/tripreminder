@@ -216,10 +216,13 @@ public class TripsRepository implements TripsDataSource {
         if (mCachedTrips == null) {
             mCachedTrips = new LinkedHashMap<>();
         }
+
         mCachedTrips.clear();
+
         for (Trip trip : trips) {
             mCachedTrips.put(trip.getId(), trip);
         }
+
         mCacheIsDirty = false;
     }
 }

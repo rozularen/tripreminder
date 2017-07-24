@@ -10,7 +10,7 @@ import java.util.List;
  * Created by markc on 23/07/2017.
  */
 
-public interface TripsListContract {
+public interface TripsContract {
 
     interface View extends BaseView<Presenter> {
 

@@ -15,15 +15,14 @@ import java.util.Map;
 
 public class TripsRemoteDataSource implements TripsDataSource {
 
-    private static final int SERVICE_LATENCY_IN_MILIS = 5000;
+    private static final int SERVICE_LATENCY_IN_MILIS = 3000;
     private static TripsRemoteDataSource INSTANCE;
     private static Map<String, Trip> TRIP_SERVICE_DATA = null;
 
     static {
         TRIP_SERVICE_DATA = new LinkedHashMap<>(2);
-        addTrip("1", "MALAGA", "1465003330000", "1487491870000", 4, "220");
-        addTrip("2", "CADIZ", "1466043360000", "1467243470000", 3, "158");
-
+//        addTrip("1", "MALAGA", "1465003330000", "1487491870000", 4, "220");
+//        addTrip("2", "CADIZ", "1466043360000", "1467243470000", 3, "158");
     }
 
     //SHould prevent direct instantiation

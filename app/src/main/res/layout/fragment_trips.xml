@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#f0f0f0"
-                tools:context="com.argandevteam.tripreminder.trips.TripsListFragment" />
+                tools:context="com.argandevteam.tripreminder.trips.TripsFragment" />
         </android.support.v4.widget.SwipeRefreshLayout>
     </LinearLayout>
 

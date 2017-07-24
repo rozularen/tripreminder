@@ -13,16 +13,16 @@ import java.util.List;
  * Created by markc on 21/07/2017.
  */
 
-public class TripsListPresenter implements TripsListContract.Presenter {
+public class TripsPresenter implements TripsContract.Presenter {
 
     private static final String TAG = "TripsPresenterImpl";
 
     private TripsRepository mTripsRepository = null;
-    private TripsListContract.View mView = null;
+    private TripsContract.View mView = null;
 
     private boolean mFirstLoad = true;
 
-    public TripsListPresenter(TripsRepository mTripsRepository, TripsListContract.View mView) {
+    public TripsPresenter(TripsRepository mTripsRepository, TripsContract.View mView) {
         if (mTripsRepository != null) {
             this.mTripsRepository = mTripsRepository;
             if (mView != null) {

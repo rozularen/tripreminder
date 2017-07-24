@@ -25,7 +25,10 @@ public class TripsDbHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + TripsPersistenceContract.TripEntry.TABLE_NAME + " (" +
                     TripsPersistenceContract.TripEntry.COLUMN_NAME_TRIP_ID + TEXT_TYPE + " PRIMARY KEY," +
                     TripsPersistenceContract.TripEntry.COLUMN_NAME_TITLE + TEXT_TYPE + COMMA_SEP +
-                    TripsPersistenceContract.TripEntry.COLUMN_NAME_NUM_PERSONS + INTEGER_TYPE +
+                    TripsPersistenceContract.TripEntry.COLUMN_NAME_START_DATE + TEXT_TYPE + COMMA_SEP +
+                    TripsPersistenceContract.TripEntry.COLUMN_NAME_END_DATE + TEXT_TYPE + COMMA_SEP +
+                    TripsPersistenceContract.TripEntry.COLUMN_NAME_NUM_PERSONS + INTEGER_TYPE + COMMA_SEP +
+                    TripsPersistenceContract.TripEntry.COLUMN_NAME_TOTAL_COST + TEXT_TYPE +
                     " )";
 
     public TripsDbHelper(Context context) {

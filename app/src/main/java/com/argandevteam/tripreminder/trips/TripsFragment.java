@@ -32,7 +32,7 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.
  */
-public class TripsListFragment extends Fragment implements TripsListContract.View {
+public class TripsFragment extends Fragment implements TripsContract.View {
 //
 //    @BindView(R.id.no_trips_loading_view)
 //    ContentLoadingProgressBar contentLoadingProgressBar;
@@ -52,22 +52,22 @@ public class TripsListFragment extends Fragment implements TripsListContract.Vie
     TextView mNoTripsCreateView;
     @BindView(R.id.trips_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
-    TripsListAdapter.TripItemListener mItemListener = new TripsListAdapter.TripItemListener() {
+    TripsAdapter.TripItemListener mItemListener = new TripsAdapter.TripItemListener() {
         @Override
         public void onTripClick(Trip clickedTrip) {
             Log.d(TAG, "onTripClick: CLICKED BITCH");
         }
     };
     private RecyclerView.LayoutManager mLayoutManager;
-    private TripsListContract.Presenter mPresenter;
-    private TripsListAdapter mAdapter;
+    private TripsContract.Presenter mPresenter;
+    private TripsAdapter mAdapter;
 
-    public TripsListFragment() {
+    public TripsFragment() {
         // Required empty public constructor
     }
 
-    public static TripsListFragment newInstance() {
-        return new TripsListFragment();
+    public static TripsFragment newInstance() {
+        return new TripsFragment();
     }
 
     @Override
@@ -75,7 +75,7 @@ public class TripsListFragment extends Fragment implements TripsListContract.Vie
         super.onCreate(savedInstanceState);
         ArrayList<Trip> tripsList = new ArrayList<>(0);
 
-        mAdapter = new TripsListAdapter(tripsList, mItemListener);
+        mAdapter = new TripsAdapter(tripsList, mItemListener);
     }
 
     @Override
@@ -119,7 +119,7 @@ public class TripsListFragment extends Fragment implements TripsListContract.Vie
     }
 
     @Override
-    public void setPresenter(TripsListContract.Presenter presenter) {
+    public void setPresenter(TripsContract.Presenter presenter) {
         if (presenter != null) {
             this.mPresenter = presenter;
         }
