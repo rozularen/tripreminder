@@ -19,4 +19,16 @@ public class ActivityUtils {
             }
         }
     }
+
+    public static void replaceFragment(FragmentManager fragmentManager,
+                                       Fragment fragment, int frameId) {
+        if (fragmentManager != null) {
+            if (fragment != null) {
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.replace(frameId, fragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        }
+    }
 }

@@ -11,15 +11,19 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.argandevteam.tripreminder.R;
+import com.argandevteam.tripreminder.createedittrip.CreateEditTripFragment;
+import com.argandevteam.tripreminder.createedittrip.CreateEditTripPresenter;
 import com.argandevteam.tripreminder.data.source.TripsRepository;
 import com.argandevteam.tripreminder.data.source.local.TripsLocalDataSource;
 import com.argandevteam.tripreminder.data.source.remote.TripsRemoteDataSource;
+import com.argandevteam.tripreminder.tripsdetail.TripDetailsFragment;
+import com.argandevteam.tripreminder.tripsdetail.TripDetailsPresenter;
 import com.argandevteam.tripreminder.util.ActivityUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class TripsActivity extends AppCompatActivity {
+public class TripsActivity extends AppCompatActivity implements ActivityContract.View {
 
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
@@ -29,6 +33,9 @@ public class TripsActivity extends AppCompatActivity {
     Toolbar toolbar;
 
     private TripsPresenter mTripsPresenter;
+    private ActivityContract.Presenter mPresenter;
+    private TripsRepository mTripsRepository;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +60,8 @@ public class TripsActivity extends AppCompatActivity {
                 (TripsFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
 
         if (tripsFragment == null) {
-            //Create fragment
             tripsFragment = TripsFragment.newInstance();
+
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
                     tripsFragment, R.id.fragment_container);
         }
@@ -63,9 +70,10 @@ public class TripsActivity extends AppCompatActivity {
         TripsLocalDataSource mTripsLocalDataSource = new TripsLocalDataSource(this);
         TripsRemoteDataSource mTripsRemoteDataSource = new TripsRemoteDataSource();
 
-        TripsRepository mTripsRepository = new TripsRepository(mTripsLocalDataSource, mTripsRemoteDataSource);
+        mTripsRepository = new TripsRepository(mTripsLocalDataSource, mTripsRemoteDataSource);
 
-        mTripsPresenter = new TripsPresenter(mTripsRepository, tripsFragment);
+        mPresenter = new ActivityPresenter(this);
+        mTripsPresenter = new TripsPresenter(mTripsRepository, tripsFragment, mPresenter);
 
     }
 
@@ -98,5 +106,58 @@ public class TripsActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    @Override
+    public void showTripDetailsView(String mTripId) {
+        TripDetailsFragment fragment = TripDetailsFragment.newInstance(mTripId);
+
+        ActivityUtils.replaceFragment(getSupportFragmentManager(), fragment, R.id.fragment_container);
+
+        new TripDetailsPresenter(
+                mTripId,
+                mTripsRepository,
+                fragment,
+                mPresenter);
+    }
+
+    @Override
+    public void showCreateTrip(String tripId) {
+        CreateEditTripFragment fragment = null;
+        if (tripId != null) {
+            fragment = CreateEditTripFragment.newInstance(tripId);
+        } else {
+            fragment = CreateEditTripFragment.newInstance();
+        }
+        ActivityUtils.replaceFragment(getSupportFragmentManager(), fragment, R.id.fragment_container);
+
+        //TODO: Should load boolean from savedInstance
+
+        new CreateEditTripPresenter(
+                tripId,
+                mTripsRepository,
+                fragment,
+                true,
+                mPresenter);
+    }
+
+    @Override
+    public void showEditTrip(String tripId) {
+        CreateEditTripFragment fragment = null;
+
+        if (tripId != null) {
+            fragment = CreateEditTripFragment.newInstance(tripId);
+        } else {
+            fragment = CreateEditTripFragment.newInstance();
+        }
+
+        ActivityUtils.replaceFragment(getSupportFragmentManager(), fragment, R.id.fragment_container);
+
+        new CreateEditTripPresenter(
+                tripId,
+                mTripsRepository,
+                fragment,
+                true,
+                mPresenter);
     }
 }

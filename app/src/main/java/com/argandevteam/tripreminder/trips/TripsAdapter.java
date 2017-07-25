@@ -120,20 +120,20 @@ public class TripsAdapter extends RecyclerView.Adapter {
         public void onClick(View view) {
             listener.onTripClick(trip);
 
-            AppCompatActivity activity = (AppCompatActivity) view.getContext();
-            Fragment myFragment = new TripDetailsFragment();
-
-            Bundle args = new Bundle();
-            args.putParcelable("trip", trip);
-            myFragment.setArguments(args);
-
-            FragmentManager supportFragmentManager = activity.getSupportFragmentManager();
-
-            supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, myFragment)
-                    .addToBackStack(null)
-                    .commit();
+//            AppCompatActivity activity = (AppCompatActivity) view.getContext();
+//            Fragment myFragment = new TripDetailsFragment();
+//
+//            Bundle args = new Bundle();
+//            args.putParcelable("trip", trip);
+//            myFragment.setArguments(args);
+//
+//            FragmentManager supportFragmentManager = activity.getSupportFragmentManager();
+//
+//            supportFragmentManager
+//                    .beginTransaction()
+//                    .replace(R.id.fragment_container, myFragment)
+//                    .addToBackStack(null)
+//                    .commit();
 
         }
     }

@@ -95,30 +95,30 @@ public class TripsRepository implements TripsDataSource {
                 Trip cachedTrip = getTripWithId(tripId);
 
                 if (cachedTrip != null) {
-                    callback.onTripsLoaded(cachedTrip);
+                    callback.onTripLoaded(cachedTrip);
                     return;
                 }
 
                 mTripsLocalDataSource.getTrip(tripId, new GetTripCallback() {
                     @Override
-                    public void onTripsLoaded(Trip trip) {
+                    public void onTripLoaded(Trip trip) {
                         if (mCachedTrips == null) {
                             mCachedTrips = new LinkedHashMap<>();
                         }
                         mCachedTrips.put(trip.getId(), trip);
-                        callback.onTripsLoaded(trip);
+                        callback.onTripLoaded(trip);
                     }
 
                     @Override
                     public void onDataNotAvailable() {
                         mTripsRemoteDataSource.getTrip(tripId, new GetTripCallback() {
                             @Override
-                            public void onTripsLoaded(Trip trip) {
+                            public void onTripLoaded(Trip trip) {
                                 if (mCachedTrips == null) {
                                     mCachedTrips = new LinkedHashMap<>();
                                 }
                                 mCachedTrips.put(trip.getId(), trip);
-                                callback.onTripsLoaded(trip);
+                                callback.onTripLoaded(trip);
                             }
 
                             @Override

@@ -31,7 +31,7 @@ public interface TripsDataSource {
     }
 
     interface GetTripCallback {
-        void onTripsLoaded(Trip trip);
+        void onTripLoaded(Trip trip);
 
         void onDataNotAvailable();
     }

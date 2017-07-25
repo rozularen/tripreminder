@@ -15,29 +15,29 @@ import java.util.List;
 public final class Trip implements Parcelable {
 
     private String id;
-    private String title;
-    private String startDate;
-    private String endDate;
-    private int numPersons;
-    private String totalCost;
-    private List<Item> itemsList;
+    private String mTitle;
+    private String mStartDate;
+    private String mEndDate;
+    private int mNumPersons;
+    private String mTotalCost;
+    private List<Item> mItemsList;
 
-    public Trip(String id, String title, String startDate, String endDate, int numPersons, String totalCost) {
-        this(id, title, startDate, endDate, numPersons, totalCost, new ArrayList<Item>());
+    public Trip(String id, String mTitle, String mStartDate, String mEndDate, int mNumPersons, String mTotalCost) {
+        this(id, mTitle, mStartDate, mEndDate, mNumPersons, mTotalCost, new ArrayList<Item>());
     }
 
-    public Trip(String id, String title, String startDate, String endDate, int numPersons, String totalCost, List<Item> itemsList) {
+    public Trip(String id, String mTitle, String mStartDate, String mEndDate, int mNumPersons, String mTotalCost, List<Item> mItemsList) {
         this.id = id;
-        this.title = title;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.numPersons = numPersons;
-        this.totalCost = totalCost;
-        this.itemsList = itemsList;
+        this.mTitle = mTitle;
+        this.mStartDate = mStartDate;
+        this.mEndDate = mEndDate;
+        this.mNumPersons = mNumPersons;
+        this.mTotalCost = mTotalCost;
+        this.mItemsList = mItemsList;
     }
 
     protected Trip(Parcel in) {
-        title = in.readString();
+        mTitle = in.readString();
     }
 
     public String getId() {
@@ -49,51 +49,51 @@ public final class Trip implements Parcelable {
     }
 
     public String getTitle() {
-        return title;
+        return mTitle;
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.mTitle = title;
     }
 
     public String getStartDate() {
-        return startDate;
+        return mStartDate;
     }
 
     public void setStartDate(String startDate) {
-        this.startDate = startDate;
+        this.mStartDate = startDate;
     }
 
     public String getEndDate() {
-        return endDate;
+        return mEndDate;
     }
 
     public void setEndDate(String endDate) {
-        this.endDate = endDate;
+        this.mEndDate = endDate;
     }
 
     public int getNumPersons() {
-        return numPersons;
+        return mNumPersons;
     }
 
     public void setNumPersons(int numPersons) {
-        this.numPersons = numPersons;
+        this.mNumPersons = numPersons;
     }
 
     public List<Item> getItemsList() {
-        return itemsList;
+        return mItemsList;
     }
 
     public void setItemsList(List<Item> itemsList) {
-        this.itemsList = itemsList;
+        this.mItemsList = itemsList;
     }
 
     public String getTotalCost() {
-        return totalCost;
+        return mTotalCost;
     }
 
     public void setTotalCost(String totalCost) {
-        this.totalCost = totalCost;
+        this.mTotalCost = totalCost;
     }
 
     //Parcelable
@@ -116,11 +116,14 @@ public final class Trip implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(title);
+        dest.writeString(mTitle);
     }
 
     //Generic methods
-
+    //TODO: Use TextUtils or Strings to null-check Strings
+    public boolean isEmpty() {
+        return mTitle == null;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -158,12 +161,12 @@ public final class Trip implements Parcelable {
     public String toString() {
         return "Trip{" +
                 "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", startDate='" + startDate + '\'' +
-                ", endDate='" + endDate + '\'' +
-                ", numPersons=" + numPersons +
-                ", totalCost='" + totalCost + '\'' +
-                ", itemsList=" + itemsList +
+                ", mTitle='" + mTitle + '\'' +
+                ", mStartDate='" + mStartDate + '\'' +
+                ", mEndDate='" + mEndDate + '\'' +
+                ", mNumPersons=" + mNumPersons +
+                ", mTotalCost='" + mTotalCost + '\'' +
+                ", mItemsList=" + mItemsList +
                 '}';
     }
 }

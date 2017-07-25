@@ -56,7 +56,7 @@ public class TripsRemoteDataSource implements TripsDataSource {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                callback.onTripsLoaded(trip);
+                callback.onTripLoaded(trip);
             }
         }, SERVICE_LATENCY_IN_MILIS);
     }

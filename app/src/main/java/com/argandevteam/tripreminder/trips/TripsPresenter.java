@@ -15,20 +15,23 @@ import java.util.List;
 
 public class TripsPresenter implements TripsContract.Presenter {
 
-    private static final String TAG = "TripsPresenterImpl";
+    private static final String TAG = "TripsPresenter";
 
     private TripsRepository mTripsRepository = null;
     private TripsContract.View mView = null;
+    private ActivityContract.Presenter mActivityPresenter = null;
 
     private boolean mFirstLoad = true;
 
-    public TripsPresenter(TripsRepository mTripsRepository, TripsContract.View mView) {
+    public TripsPresenter(TripsRepository mTripsRepository, TripsContract.View mView, ActivityContract.Presenter mActivityPresenter) {
         if (mTripsRepository != null) {
             this.mTripsRepository = mTripsRepository;
             if (mView != null) {
                 this.mView = mView;
-
                 mView.setPresenter(this);
+                if (mActivityPresenter != null) {
+                    mView.setActivityPresenter(mActivityPresenter);
+                }
             } else {
                 Log.e(TAG, "Presenter: View can't be null");
             }
@@ -76,7 +79,6 @@ public class TripsPresenter implements TripsContract.Presenter {
                     mView.setLoadingView(false);
                 }
 
-                Log.d(TAG, "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 
                 processTrips(tripsToShow);
             }
@@ -108,6 +110,7 @@ public class TripsPresenter implements TripsContract.Presenter {
     @Override
     public void openTripDetails(Trip requestedTrip) {
         if (requestedTrip != null) {
+
             mView.showTripDetailsView(requestedTrip.getId());
         } else {
             Log.e(TAG, "openTripDetails: Requested Trip can't be null");

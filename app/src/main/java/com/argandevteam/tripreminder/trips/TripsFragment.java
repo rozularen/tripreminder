@@ -4,6 +4,7 @@ package com.argandevteam.tripreminder.trips;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -19,8 +20,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.argandevteam.tripreminder.R;
+import com.argandevteam.tripreminder.createedittrip.CreateEditTripFragment;
 import com.argandevteam.tripreminder.data.Trip;
-import com.argandevteam.tripreminder.tripsdetail.TripDetailsActivity;
+import com.argandevteam.tripreminder.tripsdetail.TripDetailsFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,37 +35,37 @@ import butterknife.ButterKnife;
  * A simple {@link android.support.v4.app.Fragment} subclass.
  */
 public class TripsFragment extends Fragment implements TripsContract.View {
-//
-//    @BindView(R.id.no_trips_loading_view)
-//    ContentLoadingProgressBar contentLoadingProgressBar;
 
-    private static final String TAG = "TripListFragment";
     @BindView(R.id.trip_recycler_view)
-    RecyclerView tripsRecyclerView;
+    RecyclerView mTripsRecyclerView;
+
     @BindView(R.id.trips_view)
     LinearLayout mTripsView;
+
     @BindView(R.id.no_trips_view)
     LinearLayout mNoTripsView;
+
     @BindView(R.id.no_trips_main_text_view)
     TextView mNoTripsMainTextView;
+
     @BindView(R.id.no_trips_image_view)
     ImageView mNoTripsIcon;
+
     @BindView(R.id.no_trips_create_text_view)
     TextView mNoTripsCreateView;
+
     @BindView(R.id.trips_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
-    TripsAdapter.TripItemListener mItemListener = new TripsAdapter.TripItemListener() {
-        @Override
-        public void onTripClick(Trip clickedTrip) {
-            Log.d(TAG, "onTripClick: CLICKED BITCH");
-        }
-    };
+
+    private static final String TAG = "TripListFragment";
+
     private RecyclerView.LayoutManager mLayoutManager;
     private TripsContract.Presenter mPresenter;
     private TripsAdapter mAdapter;
+    private ActivityContract.Presenter mActivityPresenter;
 
+    // Required empty public constructor
     public TripsFragment() {
-        // Required empty public constructor
     }
 
     public static TripsFragment newInstance() {
@@ -92,17 +94,30 @@ public class TripsFragment extends Fragment implements TripsContract.View {
 
         ButterKnife.bind(this, view);
 
+        //Set up RecyclerView
         mLayoutManager = new LinearLayoutManager(getActivity());
-        tripsRecyclerView.setLayoutManager(mLayoutManager);
-        tripsRecyclerView.setHasFixedSize(true);
-        tripsRecyclerView.setAdapter(mAdapter);
+        mTripsRecyclerView.setHasFixedSize(true);
+        mTripsRecyclerView.setLayoutManager(mLayoutManager);
+        mTripsRecyclerView.setAdapter(mAdapter);
 
+        //Set up Floating Action Button
+        FloatingActionButton fab =
+                (FloatingActionButton) getActivity().findViewById(R.id.fab_create_trip);
+
+        fab.setImageResource(R.drawable.ic_create);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.createTrip();
+            }
+        });
+
+        //Set up SwipeRefreshLayout
         swipeRefreshLayout.setColorSchemeColors(
                 ContextCompat.getColor(getActivity(), R.color.colorPrimary),
                 ContextCompat.getColor(getActivity(), R.color.colorAccent),
                 ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark)
         );
-
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -112,6 +127,17 @@ public class TripsFragment extends Fragment implements TripsContract.View {
 
         return view;
     }
+
+    /**
+     * Listener for clicks on Trips in the RecyclerView
+     */
+    TripsAdapter.TripItemListener mItemListener = new TripsAdapter.TripItemListener() {
+        @Override
+        public void onTripClick(Trip clickedTrip) {
+            mPresenter.openTripDetails(clickedTrip);
+        }
+    };
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -126,8 +152,14 @@ public class TripsFragment extends Fragment implements TripsContract.View {
     }
 
     @Override
+    public void setActivityPresenter(ActivityContract.Presenter presenter) {
+        if (presenter != null) {
+            this.mActivityPresenter = presenter;
+        }
+    }
+
+    @Override
     public void setLoadingView(final boolean showLoadingView) {
-//        contentLoadingProgressBar.setVisibility(showLoadingView ? View.VISIBLE : View.GONE);
         if (getView() == null) {
             return;
         }
@@ -149,33 +181,31 @@ public class TripsFragment extends Fragment implements TripsContract.View {
 
     @Override
     public void showTripDetailsView(String tripId) {
-        Intent intent = new Intent(getContext(), TripDetailsActivity.class);
-        intent.putExtra(TripDetailsActivity.EXTRA_TRIP_ID, tripId);
-        startActivity(intent);
+
+        mActivityPresenter.showTripDetailsView(tripId);
+//
+//        getActivity().getSupportFragmentManager()
+//                .beginTransaction()
+//                .replace(R.id.fragment_container, tripDetailsFragment)
+//                .addToBackStack(null)
+//                .commit();
     }
 
     @Override
     public void showCreateTrip() {
-        // TODO: Create trip
 
-        /*
-        Intent intent = new Intent(getContext(), CreateEditTripActivity.class);
-        startActivityForResult(intent, CreateEditTripActivity.REQUEST_ADD_TRIP);
-        */
+        mActivityPresenter.showCreateTrip();
+
+//        getActivity().getSupportFragmentManager()
+//                .beginTransaction()
+//                .replace(R.id.fragment_container, createEditTripFragment)
+//                .addToBackStack(null)
+//                .commit();
     }
 
     @Override
     public void showNoTrips() {
         showNoTripsView("You don't have any trip yet!", R.drawable.ic_basket_black_24dp, true);
-    }
-
-    private void showNoTripsView(String mainText, int iconRes, boolean showCreateView) {
-        mTripsView.setVisibility(View.GONE);
-        mNoTripsView.setVisibility(View.VISIBLE);
-
-        mNoTripsMainTextView.setText(mainText);
-        mNoTripsIcon.setImageDrawable(getResources().getDrawable(iconRes));
-        mNoTripsCreateView.setVisibility(showCreateView ? View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -194,6 +224,19 @@ public class TripsFragment extends Fragment implements TripsContract.View {
     }
 
     private void showMessage(String message) {
-        Snackbar.make(getView(), message, Snackbar.LENGTH_LONG).show();
+        if (getView() != null) {
+            Snackbar.make(getView(), message, Snackbar.LENGTH_LONG).show();
+        } else {
+            Log.e(TAG, "showMessage: getView() is null");
+        }
+    }
+
+    private void showNoTripsView(String mainText, int iconRes, boolean showCreateView) {
+        mTripsView.setVisibility(View.GONE);
+        mNoTripsView.setVisibility(View.VISIBLE);
+
+        mNoTripsMainTextView.setText(mainText);
+        mNoTripsIcon.setImageDrawable(getResources().getDrawable(iconRes));
+        mNoTripsCreateView.setVisibility(showCreateView ? View.VISIBLE : View.GONE);
     }
 }

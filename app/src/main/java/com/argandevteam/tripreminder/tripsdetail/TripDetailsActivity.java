@@ -20,7 +20,6 @@ public class TripDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_trip_details);
 
         String taskId = getIntent().getStringExtra(EXTRA_TRIP_ID);
-        TripDetailsPresenter tripDetailsPresenter = new TripDetailsPresenter();
 
     }
 }

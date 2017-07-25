@@ -119,7 +119,7 @@ public class TripsLocalDataSource implements TripsDataSource {
                 }
                 db.close();
                 if (trip != null) {
-                    callback.onTripsLoaded(trip);
+                    callback.onTripLoaded(trip);
                 } else {
                     callback.onDataNotAvailable();
                 }
