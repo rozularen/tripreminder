@@ -29,7 +29,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/trip_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="start|center"
@@ -58,11 +58,26 @@
                         android:tint="#757575" />
 
                     <TextView
-                        android:id="@+id/tv2"
-                        android:layout_width="match_parent"
+                        android:id="@+id/trip_start_date"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="start|center"
-                        android:text="21/7/17 - 23/7/17"
+                        android:text="21/7/17"
+                        android:textSize="9sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="start|center"
+                        android:text=" - "
+                        android:textSize="9sp" />
+
+                    <TextView
+                        android:id="@+id/trip_end_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="start|center"
+                        android:text="23/7/17"
                         android:textSize="9sp" />
                 </LinearLayout>
 
@@ -81,7 +96,7 @@
                         android:tint="#757575" />
 
                     <TextView
-                        android:id="@+id/tv1"
+                        android:id="@+id/trip_num_persons"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="start|center"
@@ -107,8 +122,8 @@
                         android:tint="#757575" />
 
                     <TextView
-                        android:id="@+id/tv12"
-                        android:layout_width="match_parent"
+                        android:id="@+id/trip_num_items"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="start|center"
                         android:text="4 / 16"
@@ -121,7 +136,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/ssssss"
+            android:id="@+id/trip_total_cost"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="end|center"

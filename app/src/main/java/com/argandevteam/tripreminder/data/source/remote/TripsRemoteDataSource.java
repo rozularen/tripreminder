@@ -4,9 +4,11 @@ import android.os.Handler;
 
 import com.argandevteam.tripreminder.data.Trip;
 import com.argandevteam.tripreminder.data.source.TripsDataSource;
+import com.argandevteam.tripreminder.tripsdetail.Item;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,16 +23,16 @@ public class TripsRemoteDataSource implements TripsDataSource {
 
     static {
         TRIP_SERVICE_DATA = new LinkedHashMap<>(2);
-//        addTrip("1", "MALAGA", "1465003330000", "1487491870000", 4, "220");
-//        addTrip("2", "CADIZ", "1466043360000", "1467243470000", 3, "158");
+        addTrip("1", "MALAGA", "1465003330000", "1487491870000", 4, "220€", new ArrayList<Item>());
+        addTrip("2", "CADIZ", "1466043360000", "1467243470000", 3, "158€", new ArrayList<Item>());
     }
 
-    //SHould prevent direct instantiation
+    //Should prevent direct instantiation
     public TripsRemoteDataSource() {
     }
 
-    private static void addTrip(String id, String title, String startDate, String endDate, int numPersons, String totalCost) {
-        Trip newTrip = new Trip(id, title, startDate, endDate, numPersons, totalCost);
+    private static void addTrip(String id, String title, String startDate, String endDate, int numPersons, String totalCost, List<Item> itemsList) {
+        Trip newTrip = new Trip(id, title, startDate, endDate, numPersons, totalCost, itemsList);
         TRIP_SERVICE_DATA.put(newTrip.getId(), newTrip);
     }
 

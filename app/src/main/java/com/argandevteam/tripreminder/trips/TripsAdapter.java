@@ -14,6 +14,9 @@ import com.argandevteam.tripreminder.R;
 import com.argandevteam.tripreminder.data.Trip;
 import com.argandevteam.tripreminder.tripsdetail.TripDetailsFragment;
 
+import java.security.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -74,10 +77,21 @@ public class TripsAdapter extends RecyclerView.Adapter {
 
     class TripViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        @BindView(R.id.textView)
-        TextView textView;
+        @BindView(R.id.trip_title)
+        TextView tripTitle;
 
-        private String name;
+        @BindView(R.id.trip_start_date)
+        TextView tripStartDate;
+
+        @BindView(R.id.trip_end_date)
+        TextView tripEndDate;
+
+        @BindView(R.id.trip_num_persons)
+        TextView tripNumPersons;
+
+        @BindView(R.id.trip_total_cost)
+        TextView tripTotalCost;
+
         private Trip trip;
         private TripItemListener listener;
 
@@ -90,7 +104,16 @@ public class TripsAdapter extends RecyclerView.Adapter {
 
         public void setData(Trip trip) {
             this.trip = trip;
-            textView.setText(trip.getTitle());
+            tripTitle.setText(trip.getTitle());
+
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            Date startDate = new Date(Long.parseLong(trip.getStartDate()));
+            Date endDate = new Date(Long.parseLong(trip.getEndDate()));
+
+            tripStartDate.setText(simpleDateFormat.format(startDate));
+            tripEndDate.setText(simpleDateFormat.format(endDate));
+            tripNumPersons.setText(Integer.toString(trip.getNumPersons()));
+            tripTotalCost.setText(trip.getTotalCost());
         }
 
         @Override

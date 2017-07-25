@@ -111,6 +111,7 @@ public class TripsLocalDataSource implements TripsDataSource {
                     int numPersons = cursor.getInt(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_NUM_PERSONS));
                     String totalCost = cursor.getString(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_TOTAL_COST));
 
+                    //TODO: Fetch items associated
                     trip = new Trip(id, title, startDate, endDate, numPersons, totalCost);
                 }
                 if (cursor != null) {

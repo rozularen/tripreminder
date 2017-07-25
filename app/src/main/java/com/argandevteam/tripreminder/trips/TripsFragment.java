@@ -85,10 +85,10 @@ public class TripsFragment extends Fragment implements TripsContract.View {
     }
 
     @Override
-    public android.view.View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                          Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        android.view.View view = inflater.inflate(R.layout.fragment_trips, container, false);
+        View view = inflater.inflate(R.layout.fragment_trips, container, false);
 
         ButterKnife.bind(this, view);
 
@@ -166,7 +166,7 @@ public class TripsFragment extends Fragment implements TripsContract.View {
 
     @Override
     public void showNoTrips() {
-        showNoTripsView("You don't have any trip yet!", R.drawable.ic_group_black_24dp, false);
+        showNoTripsView("You don't have any trip yet!", R.drawable.ic_basket_black_24dp, true);
     }
 
     private void showNoTripsView(String mainText, int iconRes, boolean showCreateView) {
