@@ -5,6 +5,8 @@ import android.text.Editable;
 import com.argandevteam.tripreminder.BasePresenter;
 import com.argandevteam.tripreminder.BaseView;
 
+import java.util.Date;
+
 /**
  * Created by markc on 25/07/2017.
  */
@@ -21,11 +23,18 @@ public interface CreateEditTripContract {
 
         void showTripsList();
 
+        void setStartDate(String startDate);
+
+        void setEndDate(String endDate);
+
+        void setNumPersons(String numPersons);
+
+        void setTotalCost(String totalCost);
     }
 
     interface Presenter extends BasePresenter {
         boolean isDataMissing();
 
-        void saveTrip(String text);
+        void saveTrip(String title, String startDate, String endDate, int numPersons, String totalCost);
     }
 }

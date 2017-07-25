@@ -105,7 +105,7 @@ public class TripsRepository implements TripsDataSource {
                         if (mCachedTrips == null) {
                             mCachedTrips = new LinkedHashMap<>();
                         }
-                        mCachedTrips.put(trip.getId(), trip);
+                        mCachedTrips.put(String.valueOf(trip.getId()), trip);
                         callback.onTripLoaded(trip);
                     }
 
@@ -117,7 +117,7 @@ public class TripsRepository implements TripsDataSource {
                                 if (mCachedTrips == null) {
                                     mCachedTrips = new LinkedHashMap<>();
                                 }
-                                mCachedTrips.put(trip.getId(), trip);
+                                mCachedTrips.put(String.valueOf(trip.getId()), trip);
                                 callback.onTripLoaded(trip);
                             }
 
@@ -142,14 +142,28 @@ public class TripsRepository implements TripsDataSource {
                 mCachedTrips = new LinkedHashMap<>();
             }
 
-            mCachedTrips.put(trip.getId(), trip);
+            mCachedTrips.put(String.valueOf(trip.getId()), trip);
+        }
+    }
+
+    @Override
+    public void updateTrip(Trip trip) {
+        if (trip != null) {
+            mTripsRemoteDataSource.updateTrip(trip);
+            mTripsLocalDataSource.updateTrip(trip);
+
+            if (mCachedTrips == null) {
+                mCachedTrips = new LinkedHashMap<>();
+            }
+
+            mCachedTrips.put(String.valueOf(trip.getId()), trip);
         }
     }
 
     @Override
     public void deleteTrip(Trip trip) {
-        mTripsRemoteDataSource.deleteTrip(trip.getId());
-        mTripsLocalDataSource.deleteTrip(trip.getId());
+        mTripsRemoteDataSource.deleteTrip(String.valueOf(trip.getId()));
+        mTripsLocalDataSource.deleteTrip(String.valueOf(trip.getId()));
 
         mCachedTrips.remove(trip.getId());
     }
@@ -220,7 +234,7 @@ public class TripsRepository implements TripsDataSource {
         mCachedTrips.clear();
 
         for (Trip trip : trips) {
-            mCachedTrips.put(trip.getId(), trip);
+            mCachedTrips.put(String.valueOf(trip.getId()), trip);
         }
 
         mCacheIsDirty = false;

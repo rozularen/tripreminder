@@ -14,6 +14,8 @@ public interface ActivityContract {
         void showCreateTrip(String tripId);
 
         void showEditTrip(String tripId);
+
+        void showTripsList();
     }
 
     interface Presenter {
@@ -22,6 +24,8 @@ public interface ActivityContract {
         void showCreateTrip();
 
         void showEditTrip(String tripId);
+
+        void showTripsList();
     }
 
 }

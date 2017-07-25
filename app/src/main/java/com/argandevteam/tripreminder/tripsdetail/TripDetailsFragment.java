@@ -3,7 +3,6 @@ package com.argandevteam.tripreminder.tripsdetail;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -15,9 +14,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.argandevteam.tripreminder.R;
-import com.argandevteam.tripreminder.createedittrip.CreateEditTripFragment;
 import com.argandevteam.tripreminder.trips.ActivityContract;
 import com.argandevteam.tripreminder.trips.TripsFragment;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,13 +29,21 @@ import butterknife.ButterKnife;
  */
 public class TripDetailsFragment extends Fragment implements TripDetailsContract.View {
 
+    @BindView(R.id.trip_title)
+    TextView mTripTitle;
+    @BindView(R.id.trip_start_date)
+    TextView mTripStartDate;
+    @BindView(R.id.trip_end_date)
+    TextView mTripEndDate;
+    @BindView(R.id.trip_num_persons)
+    TextView mTripNumPersons;
+    @BindView(R.id.trip_total_cost)
+    TextView mTripTotalCost;
+
     @NonNull
     private static final String ARG_TRIP_ID = "TRIP_ID";
     @NonNull
     private static final int REQUEST_EDIT_TRIP = 1;
-
-    @BindView(R.id.trip_title)
-    TextView mTripTitle;
 
     private TripDetailsContract.Presenter mPresenter;
     private ActivityContract.Presenter mActivityPresenter;
@@ -129,17 +138,26 @@ public class TripDetailsFragment extends Fragment implements TripDetailsContract
     }
 
     @Override
-    public void showTitle(String title) {
+    public void showTrip(String title, String startDate, String endDate, int numPersons, String totalCost) {
         mTripTitle.setVisibility(View.VISIBLE);
+        mTripStartDate.setVisibility(View.VISIBLE);
         mTripTitle.setText(title);
+
+        mTripStartDate.setText(startDate);
+        mTripEndDate.setText(endDate);
+
+        mTripNumPersons.setText(String.valueOf(numPersons));
+        mTripTotalCost.setText(totalCost);
     }
 
     @Override
     public void showTripDeleted() {
-        getActivity().getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_container, new TripsFragment())
-                .commit();
+        //TODO:DELTE TRIP
+
+//        getActivity().getSupportFragmentManager()
+//                .beginTransaction()
+//                .replace(R.id.fragment_container, new TripsFragment())
+//                .commit();
     }
 
 

@@ -16,6 +16,10 @@ public class TripsDbHelper extends SQLiteOpenHelper {
 
     private static final String TEXT_TYPE = " TEXT";
 
+    private static final String LONG_TYPE = " BIGINT";
+
+    private static final String DATE_TYPE = " DATE";
+
     private static final String BOOLEAN_TYPE = " INTEGER",
             INTEGER_TYPE = " INTEGER";
 
@@ -23,10 +27,10 @@ public class TripsDbHelper extends SQLiteOpenHelper {
 
     private static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + TripsPersistenceContract.TripEntry.TABLE_NAME + " (" +
-                    TripsPersistenceContract.TripEntry.COLUMN_NAME_TRIP_ID + TEXT_TYPE + " PRIMARY KEY," +
+                    TripsPersistenceContract.TripEntry.COLUMN_NAME_TRIP_ID + LONG_TYPE + " PRIMARY KEY," +
                     TripsPersistenceContract.TripEntry.COLUMN_NAME_TITLE + TEXT_TYPE + COMMA_SEP +
-                    TripsPersistenceContract.TripEntry.COLUMN_NAME_START_DATE + TEXT_TYPE + COMMA_SEP +
-                    TripsPersistenceContract.TripEntry.COLUMN_NAME_END_DATE + TEXT_TYPE + COMMA_SEP +
+                    TripsPersistenceContract.TripEntry.COLUMN_NAME_START_DATE + LONG_TYPE + COMMA_SEP +
+                    TripsPersistenceContract.TripEntry.COLUMN_NAME_END_DATE + DATE_TYPE + COMMA_SEP +
                     TripsPersistenceContract.TripEntry.COLUMN_NAME_NUM_PERSONS + INTEGER_TYPE + COMMA_SEP +
                     TripsPersistenceContract.TripEntry.COLUMN_NAME_TOTAL_COST + TEXT_TYPE +
                     " )";

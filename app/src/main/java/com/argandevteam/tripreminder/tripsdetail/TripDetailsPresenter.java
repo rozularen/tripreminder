@@ -7,6 +7,9 @@ import com.argandevteam.tripreminder.data.source.TripsDataSource;
 import com.argandevteam.tripreminder.data.source.TripsRepository;
 import com.argandevteam.tripreminder.trips.ActivityContract;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by markc on 23/07/2017.
  */
@@ -74,15 +77,21 @@ public class TripDetailsPresenter implements TripDetailsContract.Presenter {
     }
 
     private void showTrip(Trip trip) {
-        String title = trip.getTitle();
-        int numPersons = trip.getNumPersons();
-        String startDate = trip.getStartDate();
-        String endDate = trip.getEndDate();
 
         //TODO:Consider using TextUtils
-        if (title != null) {
-            mView.showTitle(title);
+        if (trip != null) {
+            String title = trip.getTitle();
+            int numPersons = trip.getNumPersons();
+            Date startDate = trip.getStartDate();
+            Date endDate = trip.getEndDate();
+            String totalCost = trip.getTotalCost();
+
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+            mView.showTrip(title, simpleDateFormat.format(startDate), simpleDateFormat.format(endDate), numPersons, totalCost);
         }
+
+
     }
 
     @Override

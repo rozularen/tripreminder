@@ -112,7 +112,7 @@ public class TripsActivity extends AppCompatActivity implements ActivityContract
     public void showTripDetailsView(String mTripId) {
         TripDetailsFragment fragment = TripDetailsFragment.newInstance(mTripId);
 
-        ActivityUtils.replaceFragment(getSupportFragmentManager(), fragment, R.id.fragment_container);
+        ActivityUtils.replaceFragment(getSupportFragmentManager(), fragment, R.id.fragment_container, true);
 
         new TripDetailsPresenter(
                 mTripId,
@@ -129,7 +129,7 @@ public class TripsActivity extends AppCompatActivity implements ActivityContract
         } else {
             fragment = CreateEditTripFragment.newInstance();
         }
-        ActivityUtils.replaceFragment(getSupportFragmentManager(), fragment, R.id.fragment_container);
+        ActivityUtils.replaceFragment(getSupportFragmentManager(), fragment, R.id.fragment_container, true);
 
         //TODO: Should load boolean from savedInstance
 
@@ -151,7 +151,7 @@ public class TripsActivity extends AppCompatActivity implements ActivityContract
             fragment = CreateEditTripFragment.newInstance();
         }
 
-        ActivityUtils.replaceFragment(getSupportFragmentManager(), fragment, R.id.fragment_container);
+        ActivityUtils.replaceFragment(getSupportFragmentManager(), fragment, R.id.fragment_container, true);
 
         new CreateEditTripPresenter(
                 tripId,
@@ -159,5 +159,17 @@ public class TripsActivity extends AppCompatActivity implements ActivityContract
                 fragment,
                 true,
                 mPresenter);
+    }
+
+    @Override
+    public void showTripsList() {
+        TripsFragment tripsFragment = TripsFragment.newInstance();
+        ActivityUtils.replaceFragment(getSupportFragmentManager(), tripsFragment, R.id.fragment_container, false);
+        new TripsPresenter(
+                mTripsRepository,
+                tripsFragment,
+                mPresenter
+        );
+
     }
 }

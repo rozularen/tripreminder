@@ -106,9 +106,9 @@ public class TripsAdapter extends RecyclerView.Adapter {
             this.trip = trip;
             tripTitle.setText(trip.getTitle());
 
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
-            Date startDate = new Date(Long.parseLong(trip.getStartDate()));
-            Date endDate = new Date(Long.parseLong(trip.getEndDate()));
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            Date startDate = trip.getStartDate();
+            Date endDate = trip.getEndDate();
 
             tripStartDate.setText(simpleDateFormat.format(startDate));
             tripEndDate.setText(simpleDateFormat.format(endDate));

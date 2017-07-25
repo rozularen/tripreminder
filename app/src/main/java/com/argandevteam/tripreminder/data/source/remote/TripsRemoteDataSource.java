@@ -5,6 +5,7 @@ import android.os.Handler;
 import com.argandevteam.tripreminder.data.Trip;
 import com.argandevteam.tripreminder.data.source.TripsDataSource;
 import com.argandevteam.tripreminder.tripsdetail.Item;
+import com.argandevteam.tripreminder.util.Utils;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -23,17 +24,17 @@ public class TripsRemoteDataSource implements TripsDataSource {
 
     static {
         TRIP_SERVICE_DATA = new LinkedHashMap<>(2);
-        addTrip("1", "MALAGA", "1465003330000", "1487491870000", 4, "220€", new ArrayList<Item>());
-        addTrip("2", "CADIZ", "1466043360000", "1467243470000", 3, "158€", new ArrayList<Item>());
+        addTrip(1L, "MALAGA", "21/11/2017", "23/11/2017", 4, "220€", new ArrayList<Item>());
+        addTrip(2L, "CADIZ", "10/12/2017", "14/12/2017", 3, "158€", new ArrayList<Item>());
     }
 
     //Should prevent direct instantiation
     public TripsRemoteDataSource() {
     }
 
-    private static void addTrip(String id, String title, String startDate, String endDate, int numPersons, String totalCost, List<Item> itemsList) {
-        Trip newTrip = new Trip(id, title, startDate, endDate, numPersons, totalCost, itemsList);
-        TRIP_SERVICE_DATA.put(newTrip.getId(), newTrip);
+    private static void addTrip(long id, String title, String startDate, String endDate, int numPersons, String totalCost, List<Item> itemsList) {
+        Trip newTrip = new Trip(id, title, Utils.fromStringToDate(startDate), Utils.fromStringToDate(endDate), numPersons, totalCost, itemsList);
+        TRIP_SERVICE_DATA.put(String.valueOf(newTrip.getId()), newTrip);
     }
 
     @Override
@@ -63,7 +64,12 @@ public class TripsRemoteDataSource implements TripsDataSource {
 
     @Override
     public void saveTrip(Trip trip) {
-        TRIP_SERVICE_DATA.put(trip.getId(), trip);
+        TRIP_SERVICE_DATA.put(String.valueOf(trip.getId()), trip);
+    }
+
+    @Override
+    public void updateTrip(Trip trip) {
+        TRIP_SERVICE_DATA.put(String.valueOf(trip.getId()), trip);
     }
 
     @Override

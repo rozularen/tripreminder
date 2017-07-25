@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.argandevteam.tripreminder.data.Trip;
 import com.argandevteam.tripreminder.data.source.TripsDataSource;
 import com.argandevteam.tripreminder.data.source.local.TripsPersistenceContract.TripEntry;
+import com.argandevteam.tripreminder.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,14 +55,15 @@ public class TripsLocalDataSource implements TripsDataSource {
 
             if (cursor != null && cursor.getCount() > 0) {
                 while (cursor.moveToNext()) {
-                    String itemId = cursor.getString(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_TRIP_ID));
+                    long itemId = cursor.getLong(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_TRIP_ID));
                     String title = cursor.getString(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_TITLE));
-                    String startDate = cursor.getString(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_START_DATE));
-                    String endDate = cursor.getString(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_END_DATE));
+                    long startDate = cursor.getLong(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_START_DATE));
+                    long endDate = cursor.getLong(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_END_DATE));
                     int numPersons = cursor.getInt(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_NUM_PERSONS));
                     String totalCost = cursor.getString(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_TOTAL_COST));
 
-                    Trip trip = new Trip(itemId, title, startDate, endDate, numPersons, totalCost);
+                    Trip trip = new Trip(itemId, title, Utils.fromLongToDate(startDate),
+                            Utils.fromLongToDate(endDate), numPersons, totalCost);
                     trips.add(trip);
                 }
             }
@@ -104,15 +106,15 @@ public class TripsLocalDataSource implements TripsDataSource {
 
                 if (cursor != null && cursor.getCount() > 0) {
                     cursor.moveToFirst();
-                    String id = cursor.getString(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_TRIP_ID));
+                    long id = cursor.getLong(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_TRIP_ID));
                     String title = cursor.getString(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_TITLE));
-                    String startDate = cursor.getString(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_START_DATE));
-                    String endDate = cursor.getString(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_END_DATE));
+                    long startDate = cursor.getLong(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_START_DATE));
+                    long endDate = cursor.getLong(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_END_DATE));
                     int numPersons = cursor.getInt(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_NUM_PERSONS));
                     String totalCost = cursor.getString(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_TOTAL_COST));
 
                     //TODO: Fetch items associated
-                    trip = new Trip(id, title, startDate, endDate, numPersons, totalCost);
+                    trip = new Trip(id, title, Utils.fromLongToDate(startDate), Utils.fromLongToDate(endDate), numPersons, totalCost);
                 }
                 if (cursor != null) {
                     cursor.close();
@@ -133,14 +135,38 @@ public class TripsLocalDataSource implements TripsDataSource {
             SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
             ContentValues contentValues = new ContentValues();
-            contentValues.put(TripEntry.COLUMN_NAME_TRIP_ID, trip.getId());
             contentValues.put(TripEntry.COLUMN_NAME_TITLE, trip.getTitle());
-            contentValues.put(TripEntry.COLUMN_NAME_START_DATE, trip.getStartDate());
-            contentValues.put(TripEntry.COLUMN_NAME_END_DATE, trip.getEndDate());
+            contentValues.put(TripEntry.COLUMN_NAME_START_DATE, Utils.fromDateToMillis(trip.getStartDate()));
+            contentValues.put(TripEntry.COLUMN_NAME_END_DATE, Utils.fromDateToMillis(trip.getEndDate()));
             contentValues.put(TripEntry.COLUMN_NAME_NUM_PERSONS, trip.getNumPersons());
             contentValues.put(TripEntry.COLUMN_NAME_TOTAL_COST, trip.getTotalCost());
 
-            db.insert(TripEntry.TABLE_NAME, null, contentValues);
+            long tripId = db.insert(TripEntry.TABLE_NAME, null, contentValues);
+
+            contentValues.put(TripEntry.COLUMN_NAME_TRIP_ID, tripId);
+
+            db.close();
+        }
+    }
+
+    @Override
+    public void updateTrip(Trip trip) {
+        if (trip != null) {
+            SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+            ContentValues contentValues = new ContentValues();
+
+            contentValues.put(TripEntry.COLUMN_NAME_TRIP_ID, trip.getId());
+            contentValues.put(TripEntry.COLUMN_NAME_TITLE, trip.getTitle());
+            contentValues.put(TripEntry.COLUMN_NAME_START_DATE, Utils.fromDateToMillis(trip.getStartDate()));
+            contentValues.put(TripEntry.COLUMN_NAME_END_DATE, Utils.fromDateToMillis(trip.getEndDate()));
+            contentValues.put(TripEntry.COLUMN_NAME_NUM_PERSONS, trip.getNumPersons());
+            contentValues.put(TripEntry.COLUMN_NAME_TOTAL_COST, trip.getTotalCost());
+
+            String whereClause = TripEntry.COLUMN_NAME_TRIP_ID + "=?";
+            String[] args = new String[]{String.valueOf(trip.getId())};
+
+            db.update(TripEntry.TABLE_NAME, contentValues, whereClause, args);
 
             db.close();
         }
@@ -151,7 +177,7 @@ public class TripsLocalDataSource implements TripsDataSource {
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
         String selection = TripEntry.COLUMN_NAME_TRIP_ID + " LIKE ?";
-        String[] selectionArgs = {trip.getId()};
+        String[] selectionArgs = {String.valueOf(trip.getId())};
 
         db.delete(TripEntry.TABLE_NAME, selection, selectionArgs);
 

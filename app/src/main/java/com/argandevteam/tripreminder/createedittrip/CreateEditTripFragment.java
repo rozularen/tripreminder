@@ -23,7 +23,20 @@ import butterknife.ButterKnife;
 public class CreateEditTripFragment extends Fragment implements CreateEditTripContract.View {
 
     @BindView(R.id.trip_title)
-    EditText tripTitle;
+    EditText mTripTitle;
+
+    @BindView(R.id.trip_start_date)
+    EditText mTripStartDate;
+
+    @BindView(R.id.trip_end_date)
+    EditText mTripEndDate;
+
+    @BindView(R.id.trip_num_persons)
+    EditText mTripNumPersons;
+
+    @BindView(R.id.trip_total_cost)
+    EditText mTripTotalCost;
+
 
     private static final String ARGS_TRIP_ID = "TRIP_ID";
 
@@ -53,7 +66,13 @@ public class CreateEditTripFragment extends Fragment implements CreateEditTripCo
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPresenter.saveTrip(tripTitle.getText().toString());
+                mPresenter.saveTrip(
+                        mTripTitle.getText().toString(),
+                        mTripStartDate.getText().toString(),
+                        mTripEndDate.getText().toString(),
+                        Integer.parseInt(mTripNumPersons.getText().toString()),
+                        mTripTotalCost.getText().toString()
+                );
             }
         });
         return view;
@@ -93,7 +112,7 @@ public class CreateEditTripFragment extends Fragment implements CreateEditTripCo
 
     @Override
     public void setTitle(String title) {
-        tripTitle.setText(title);
+        mTripTitle.setText(title);
     }
 
     @Override
@@ -103,7 +122,27 @@ public class CreateEditTripFragment extends Fragment implements CreateEditTripCo
 
     @Override
     public void showTripsList() {
+        mActivityPresenter.showTripsList();
+    }
 
+    @Override
+    public void setStartDate(String startDate) {
+        mTripStartDate.setText(startDate);
+    }
+
+    @Override
+    public void setEndDate(String endDate) {
+        mTripEndDate.setText(endDate);
+    }
+
+    @Override
+    public void setNumPersons(String numPersons) {
+        mTripNumPersons.setText(numPersons);
+    }
+
+    @Override
+    public void setTotalCost(String totalCost) {
+        mTripTotalCost.setText(totalCost);
     }
 
     private void showMessage(String message) {

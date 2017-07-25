@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import com.argandevteam.tripreminder.tripsdetail.Item;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,19 +15,28 @@ import java.util.List;
 
 public final class Trip implements Parcelable {
 
-    private String id;
+    private long id;
     private String mTitle;
-    private String mStartDate;
-    private String mEndDate;
+    private Date mStartDate;
+    private Date mEndDate;
     private int mNumPersons;
     private String mTotalCost;
     private List<Item> mItemsList;
 
-    public Trip(String id, String mTitle, String mStartDate, String mEndDate, int mNumPersons, String mTotalCost) {
+    public Trip(String mTitle, Date mStartDate, Date mEndDate, int mNumPersons, String mTotalCost) {
+        this.mTitle = mTitle;
+        this.mStartDate = mStartDate;
+        this.mEndDate = mEndDate;
+        this.mNumPersons = mNumPersons;
+        this.mTotalCost = mTotalCost;
+        this.mItemsList = new ArrayList<Item>(0);
+    }
+
+    public Trip(long id, String mTitle, Date mStartDate, Date mEndDate, int mNumPersons, String mTotalCost) {
         this(id, mTitle, mStartDate, mEndDate, mNumPersons, mTotalCost, new ArrayList<Item>());
     }
 
-    public Trip(String id, String mTitle, String mStartDate, String mEndDate, int mNumPersons, String mTotalCost, List<Item> mItemsList) {
+    public Trip(long id, String mTitle, Date mStartDate, Date mEndDate, int mNumPersons, String mTotalCost, List<Item> mItemsList) {
         this.id = id;
         this.mTitle = mTitle;
         this.mStartDate = mStartDate;
@@ -40,11 +50,11 @@ public final class Trip implements Parcelable {
         mTitle = in.readString();
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -56,19 +66,19 @@ public final class Trip implements Parcelable {
         this.mTitle = title;
     }
 
-    public String getStartDate() {
+    public Date getStartDate() {
         return mStartDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(Date startDate) {
         this.mStartDate = startDate;
     }
 
-    public String getEndDate() {
+    public Date getEndDate() {
         return mEndDate;
     }
 
-    public void setEndDate(String endDate) {
+    public void setEndDate(Date endDate) {
         this.mEndDate = endDate;
     }
 
@@ -132,28 +142,28 @@ public final class Trip implements Parcelable {
 
         Trip trip = (Trip) o;
 
-        if (getNumPersons() != trip.getNumPersons()) return false;
-        if (!getId().equals(trip.getId())) return false;
-        if (!getTitle().equals(trip.getTitle())) return false;
-        if (getStartDate() != null ? !getStartDate().equals(trip.getStartDate()) : trip.getStartDate() != null)
+        if (getId() != trip.getId()) return false;
+        if (mNumPersons != trip.mNumPersons) return false;
+        if (mTitle != null ? !mTitle.equals(trip.mTitle) : trip.mTitle != null) return false;
+        if (mStartDate != null ? !mStartDate.equals(trip.mStartDate) : trip.mStartDate != null)
             return false;
-        if (getEndDate() != null ? !getEndDate().equals(trip.getEndDate()) : trip.getEndDate() != null)
+        if (mEndDate != null ? !mEndDate.equals(trip.mEndDate) : trip.mEndDate != null)
             return false;
-        if (getTotalCost() != null ? !getTotalCost().equals(trip.getTotalCost()) : trip.getTotalCost() != null)
+        if (mTotalCost != null ? !mTotalCost.equals(trip.mTotalCost) : trip.mTotalCost != null)
             return false;
-        return getItemsList() != null ? getItemsList().equals(trip.getItemsList()) : trip.getItemsList() == null;
+        return mItemsList != null ? mItemsList.equals(trip.mItemsList) : trip.mItemsList == null;
 
     }
 
     @Override
     public int hashCode() {
-        int result = getId().hashCode();
-        result = 31 * result + getTitle().hashCode();
-        result = 31 * result + (getStartDate() != null ? getStartDate().hashCode() : 0);
-        result = 31 * result + (getEndDate() != null ? getEndDate().hashCode() : 0);
-        result = 31 * result + getNumPersons();
-        result = 31 * result + (getTotalCost() != null ? getTotalCost().hashCode() : 0);
-        result = 31 * result + (getItemsList() != null ? getItemsList().hashCode() : 0);
+        int result = (int) (getId() ^ (getId() >>> 32));
+        result = 31 * result + (mTitle != null ? mTitle.hashCode() : 0);
+        result = 31 * result + (mStartDate != null ? mStartDate.hashCode() : 0);
+        result = 31 * result + (mEndDate != null ? mEndDate.hashCode() : 0);
+        result = 31 * result + mNumPersons;
+        result = 31 * result + (mTotalCost != null ? mTotalCost.hashCode() : 0);
+        result = 31 * result + (mItemsList != null ? mItemsList.hashCode() : 0);
         return result;
     }
 

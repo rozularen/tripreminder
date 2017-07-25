@@ -16,6 +16,8 @@ public interface TripsDataSource {
 
     void saveTrip(Trip trip);
 
+    void updateTrip(Trip trip);
+
     void deleteTrip(Trip trip);
 
     void deleteTrip(String tripid);

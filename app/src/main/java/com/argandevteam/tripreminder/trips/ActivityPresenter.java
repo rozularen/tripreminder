@@ -30,4 +30,9 @@ public class ActivityPresenter implements ActivityContract.Presenter {
     public void showEditTrip(String tripId) {
         mView.showEditTrip(tripId);
     }
+
+    @Override
+    public void showTripsList() {
+        mView.showTripsList();
+    }
 }

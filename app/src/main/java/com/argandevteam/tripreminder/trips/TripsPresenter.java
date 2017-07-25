@@ -111,7 +111,7 @@ public class TripsPresenter implements TripsContract.Presenter {
     public void openTripDetails(Trip requestedTrip) {
         if (requestedTrip != null) {
 
-            mView.showTripDetailsView(requestedTrip.getId());
+            mView.showTripDetailsView(String.valueOf(requestedTrip.getId()));
         } else {
             Log.e(TAG, "openTripDetails: Requested Trip can't be null");
         }

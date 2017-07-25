@@ -4,6 +4,8 @@ import com.argandevteam.tripreminder.BasePresenter;
 import com.argandevteam.tripreminder.BaseView;
 import com.argandevteam.tripreminder.data.Trip;
 
+import java.util.Date;
+
 /**
  * Created by markc on 23/07/2017.
  */
@@ -18,7 +20,7 @@ public interface TripDetailsContract {
 
         boolean isActive();
 
-        void showTitle(String title);
+        void showTrip(String title, String startDate, String endDate, int numPersons, String totalCost);
 
         void showTripDeleted();
     }

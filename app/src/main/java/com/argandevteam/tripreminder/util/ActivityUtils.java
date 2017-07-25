@@ -21,12 +21,14 @@ public class ActivityUtils {
     }
 
     public static void replaceFragment(FragmentManager fragmentManager,
-                                       Fragment fragment, int frameId) {
+                                       Fragment fragment, int frameId, boolean addToBackStack) {
         if (fragmentManager != null) {
             if (fragment != null) {
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.replace(frameId, fragment);
-                transaction.addToBackStack(null);
+                if (addToBackStack) {
+                    transaction.addToBackStack(null);
+                }
                 transaction.commit();
             }
         }

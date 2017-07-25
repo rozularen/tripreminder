@@ -12,6 +12,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="140dp"
+            android:background="@color/color_material_gray"
             android:contentDescription="contentDescription" />
 
         <TextView
@@ -21,9 +22,33 @@
             android:layout_marginStart="40dp"
             android:layout_marginTop="90dp"
             android:text="MALAGA"
-            android:textColor="@color/color_black"
+            android:textColor="@color/color_white"
             android:textSize="28sp" />
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/trip_num_persons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="4" />
+
+    <TextView
+        android:id="@+id/trip_start_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="22/7/2017" />
+
+    <TextView
+        android:id="@+id/trip_end_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="28/7/2017" />
+
+    <TextView
+        android:id="@+id/trip_total_cost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="220 €" />
 
     <TextView
         android:layout_width="wrap_content"
