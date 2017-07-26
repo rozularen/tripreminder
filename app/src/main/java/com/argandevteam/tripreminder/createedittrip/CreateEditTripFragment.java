@@ -145,6 +145,16 @@ public class CreateEditTripFragment extends Fragment implements CreateEditTripCo
         mTripTotalCost.setText(totalCost);
     }
 
+    @Override
+    public void onTripCreated() {
+        showMessage("Trip creado con exito");
+    }
+
+    @Override
+    public void onTripCreateError() {
+        showMessage("No se ha podido crear el Trip");
+    }
+
     private void showMessage(String message) {
         if (getView() != null) {
             Snackbar.make(getView(), message, Snackbar.LENGTH_LONG).show();

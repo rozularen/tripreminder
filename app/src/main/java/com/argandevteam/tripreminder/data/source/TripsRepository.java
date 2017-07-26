@@ -133,10 +133,42 @@ public class TripsRepository implements TripsDataSource {
     }
 
     @Override
-    public void saveTrip(Trip trip) {
+    public void saveTrip(final Trip trip, final SaveTripCallback callback) {
         if (trip != null) {
-            mTripsRemoteDataSource.saveTrip(trip);
-            mTripsLocalDataSource.saveTrip(trip);
+            mTripsRemoteDataSource.saveTrip(trip, new SaveTripCallback() {
+                @Override
+                public void onTripSaved(Trip trip) {
+                    mTripsLocalDataSource.saveTrip(trip, new SaveTripCallback() {
+                        @Override
+                        public void onTripSaved(Trip trip) {
+                            callback.onTripSaved(trip);
+                        }
+
+                        @Override
+                        public void onDataNotAvailable() {
+                            Log.e(TAG, "onDataNotAvailable: LocalRepository can't insert new Trip");
+                            callback.onDataNotAvailable();
+                        }
+                    });
+                }
+
+                @Override
+                public void onDataNotAvailable() {
+                    mTripsLocalDataSource.saveTrip(trip, new SaveTripCallback() {
+                        @Override
+                        public void onTripSaved(Trip trip) {
+                            callback.onTripSaved(trip);
+                        }
+
+                        @Override
+                        public void onDataNotAvailable() {
+                            Log.e(TAG, "onDataNotAvailable: LocalRepository can't insert new Trip");
+                            callback.onDataNotAvailable();
+                        }
+                    });
+                    Log.e(TAG, "onDataNotAvailable: RemoteRepository can't insert new Trip");
+                }
+            });
 
             if (mCachedTrips == null) {
                 mCachedTrips = new LinkedHashMap<>();

@@ -106,7 +106,17 @@ public class CreateEditTripPresenter implements CreateEditTripContract.Presenter
         if (newTrip.isEmpty()) {
             mView.showEmptyTripError();
         } else {
-            mTripsRepository.saveTrip(newTrip);
+            mTripsRepository.saveTrip(newTrip, new TripsDataSource.SaveTripCallback() {
+                @Override
+                public void onTripSaved(Trip trip) {
+                    mView.onTripCreated();
+                }
+
+                @Override
+                public void onDataNotAvailable() {
+                    mView.onTripCreateError();
+                }
+            });
             mView.showTripsList();
         }
     }

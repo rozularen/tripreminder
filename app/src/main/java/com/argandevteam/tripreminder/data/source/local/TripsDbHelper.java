@@ -3,6 +3,7 @@ package com.argandevteam.tripreminder.data.source.local;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 /**
  * Created by markc on 23/07/2017.
@@ -10,9 +11,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class TripsDbHelper extends SQLiteOpenHelper {
 
+    private static final String TAG = "DBHelper";
+
     private static final int DATABASE_VERSION = 1;
 
     private static final String DATABASE_NAME = "Trips.db";
+
+    private static final String AUTO_INCREMENT = " AUTOINCREMENT";
 
     private static final String TEXT_TYPE = " TEXT";
 
@@ -27,7 +32,8 @@ public class TripsDbHelper extends SQLiteOpenHelper {
 
     private static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + TripsPersistenceContract.TripEntry.TABLE_NAME + " (" +
-                    TripsPersistenceContract.TripEntry.COLUMN_NAME_TRIP_ID + LONG_TYPE + " PRIMARY KEY," +
+                    TripsPersistenceContract.TripEntry.COLUMN_NAME_TRIP_ID + LONG_TYPE + AUTO_INCREMENT + " PRIMARY KEY," +
+                    TripsPersistenceContract.TripEntry.COLUMN_NAME_TRIP_REMOTE_ID + LONG_TYPE + COMMA_SEP +
                     TripsPersistenceContract.TripEntry.COLUMN_NAME_TITLE + TEXT_TYPE + COMMA_SEP +
                     TripsPersistenceContract.TripEntry.COLUMN_NAME_START_DATE + LONG_TYPE + COMMA_SEP +
                     TripsPersistenceContract.TripEntry.COLUMN_NAME_END_DATE + DATE_TYPE + COMMA_SEP +
@@ -42,7 +48,11 @@ public class TripsDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(SQL_CREATE_ENTRIES);
+        try {
+            db.execSQL(SQL_CREATE_ENTRIES);
+        } catch (Exception e) {
+            Log.e(TAG, "onCreate: ", e);
+        }
     }
 
     @Override

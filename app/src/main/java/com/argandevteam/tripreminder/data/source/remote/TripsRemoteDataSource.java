@@ -24,8 +24,8 @@ public class TripsRemoteDataSource implements TripsDataSource {
 
     static {
         TRIP_SERVICE_DATA = new LinkedHashMap<>(2);
-        addTrip(1L, "MALAGA", "21/11/2017", "23/11/2017", 4, "220€", new ArrayList<Item>());
-        addTrip(2L, "CADIZ", "10/12/2017", "14/12/2017", 3, "158€", new ArrayList<Item>());
+//        addTrip(1L, "MALAGA", "21/11/2017", "23/11/2017", 4, "220€", new ArrayList<Item>());
+//        addTrip(2L, "CADIZ", "10/12/2017", "14/12/2017", 3, "158€", new ArrayList<Item>());
     }
 
     //Should prevent direct instantiation
@@ -63,8 +63,9 @@ public class TripsRemoteDataSource implements TripsDataSource {
     }
 
     @Override
-    public void saveTrip(Trip trip) {
+    public void saveTrip(Trip trip, SaveTripCallback callback) {
         TRIP_SERVICE_DATA.put(String.valueOf(trip.getId()), trip);
+        callback.onTripSaved(trip);
     }
 
     @Override

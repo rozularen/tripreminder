@@ -19,6 +19,7 @@ import com.argandevteam.tripreminder.data.source.remote.TripsRemoteDataSource;
 import com.argandevteam.tripreminder.tripsdetail.TripDetailsFragment;
 import com.argandevteam.tripreminder.tripsdetail.TripDetailsPresenter;
 import com.argandevteam.tripreminder.util.ActivityUtils;
+import com.idescout.sql.SqlScoutServer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,6 +44,8 @@ public class TripsActivity extends AppCompatActivity implements ActivityContract
         setContentView(R.layout.activity_trips);
 
         ButterKnife.bind(this);
+
+        SqlScoutServer.create(this, getPackageName());
 
         //Set up the Toolbar
         setSupportActionBar(toolbar);

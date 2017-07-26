@@ -22,5 +22,6 @@ public final class TripsPersistenceContract {
         public static final String COLUMN_NAME_TOTAL_COST = "total_cost";
         public static final String COLUMN_NAME_NUM_PERSONS = "num_persons";
 
+        public static final String COLUMN_NAME_TRIP_REMOTE_ID = "remote_id";
     }
 }

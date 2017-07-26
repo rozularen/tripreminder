@@ -30,6 +30,10 @@ public interface CreateEditTripContract {
         void setNumPersons(String numPersons);
 
         void setTotalCost(String totalCost);
+
+        void onTripCreated();
+
+        void onTripCreateError();
     }
 
     interface Presenter extends BasePresenter {

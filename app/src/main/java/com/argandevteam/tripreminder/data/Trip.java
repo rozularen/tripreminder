@@ -16,6 +16,7 @@ import java.util.List;
 public final class Trip implements Parcelable {
 
     private long id;
+    private long remoteId;
     private String mTitle;
     private Date mStartDate;
     private Date mEndDate;
@@ -104,6 +105,14 @@ public final class Trip implements Parcelable {
 
     public void setTotalCost(String totalCost) {
         this.mTotalCost = totalCost;
+    }
+
+    public long getRemoteId() {
+        return remoteId;
+    }
+
+    public void setRemoteId(long remoteId) {
+        this.remoteId = remoteId;
     }
 
     //Parcelable
