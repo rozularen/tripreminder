@@ -1,12 +1,11 @@
 package com.argandevteam.tripreminder.createedittrip;
 
+import android.util.Log;
+
 import com.argandevteam.tripreminder.data.Trip;
 import com.argandevteam.tripreminder.data.source.TripsDataSource;
 import com.argandevteam.tripreminder.data.source.TripsRepository;
 import com.argandevteam.tripreminder.trips.ActivityContract;
-import com.argandevteam.tripreminder.util.Utils;
-
-import java.util.Date;
 
 /**
  * Created by markc on 25/07/2017.
@@ -14,6 +13,7 @@ import java.util.Date;
 
 public class CreateEditTripPresenter implements CreateEditTripContract.Presenter {
 
+    private static final String TAG = "CETripPresenter";
     private final ActivityContract.Presenter mActivityPresenter = null;
     private TripsRepository mTripsRepository;
     private CreateEditTripContract.View mView;
@@ -87,18 +87,22 @@ public class CreateEditTripPresenter implements CreateEditTripContract.Presenter
         if (isNewTrip()) {
             createTrip(title, startDate, endDate, numPersons, totalCost);
         } else {
-            updateTrip(title, startDate, endDate, numPersons, totalCost);
+            //TODO: Type mismatch id is string and integer
+            updateTrip(Integer.valueOf(mTripId), title, startDate, endDate, numPersons, totalCost);
         }
     }
 
-    private void updateTrip(String title, String startDate, String endDate, int numPersons, String totalCost) {
+
+    private void updateTrip(int tripId, String title, String startDate, String endDate, int numPersons, String totalCost) {
         if (isNewTrip()) {
             throw new RuntimeException("updateTrip() was called but Trip is new");
         }
-        Trip updatedTrip = new Trip(title, startDate, endDate, numPersons, totalCost);
+        Trip updatedTrip = new Trip(tripId, title, startDate, endDate, numPersons, totalCost);
+
         mTripsRepository.updateTrip(updatedTrip);
         mView.showTripsList();
     }
+
 
     private void createTrip(String title, String startDate, String endDate, int numPersons, String totalCost) {
         Trip newTrip = new Trip(title, startDate, endDate, numPersons, totalCost);
@@ -107,6 +111,8 @@ public class CreateEditTripPresenter implements CreateEditTripContract.Presenter
             mView.showEmptyTripError();
         } else {
             mTripsRepository.saveTrip(newTrip);
+            mView.showTripsList();
+
 //            mTripsRepository.saveTrip(newTrip, new TripsDataSource.SaveTripCallback() {
 //                @Override
 //                public void onTripSaved(Trip trip) {
@@ -118,7 +124,6 @@ public class CreateEditTripPresenter implements CreateEditTripContract.Presenter
 //                    mView.onTripCreateError();
 //                }
 //            });
-            mView.showTripsList();
         }
     }
 }

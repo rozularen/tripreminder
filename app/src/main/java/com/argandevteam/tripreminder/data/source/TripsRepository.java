@@ -132,17 +132,21 @@ public class TripsRepository implements TripsDataSource {
         }
     }
 
+    //TODO: Should return something???
     @Override
-    public void saveTrip(Trip trip) {
+    public int saveTrip(Trip trip) {
         if (trip != null) {
             mTripsRemoteDataSource.saveTrip(trip);
-            mTripsLocalDataSource.saveTrip(trip);
-
+            int id = mTripsLocalDataSource.saveTrip(trip);
+            trip.setId(id);
             if (mCachedTrips == null) {
                 mCachedTrips = new LinkedHashMap<>();
             }
-            mCachedTrips.put(String.valueOf(trip.getId()), trip);
-
+            //TODO: Retrieve the last inserted id in local storage
+            mCachedTrips.put(String.valueOf(id), trip);
+            return 1;
+        } else {
+            return -1;
         }
     }
 

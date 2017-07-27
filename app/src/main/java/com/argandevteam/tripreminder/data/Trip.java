@@ -6,7 +6,6 @@ import android.os.Parcelable;
 import com.argandevteam.tripreminder.tripsdetail.Item;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -15,7 +14,7 @@ import java.util.List;
 
 public final class Trip implements Parcelable {
 
-    private long id;
+    private int id;
     private long remoteId;
     private String mTitle;
     private String mStartDate;
@@ -33,11 +32,11 @@ public final class Trip implements Parcelable {
         this.mItemsList = new ArrayList<Item>(0);
     }
 
-    public Trip(long id, String mTitle, String mStartDate, String mEndDate, int mNumPersons, String mTotalCost) {
+    public Trip(int id, String mTitle, String mStartDate, String mEndDate, int mNumPersons, String mTotalCost) {
         this(id, mTitle, mStartDate, mEndDate, mNumPersons, mTotalCost, new ArrayList<Item>());
     }
 
-    public Trip(long id, String mTitle, String mStartDate, String mEndDate, int mNumPersons, String mTotalCost, List<Item> mItemsList) {
+    public Trip(int id, String mTitle, String mStartDate, String mEndDate, int mNumPersons, String mTotalCost, List<Item> mItemsList) {
         this.id = id;
         this.mTitle = mTitle;
         this.mStartDate = mStartDate;
@@ -51,11 +50,11 @@ public final class Trip implements Parcelable {
         mTitle = in.readString();
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

@@ -23,6 +23,7 @@ public class TripsLocalDataSource implements TripsDataSource {
 
     private TripsDbHelper mDbHelper;
 
+
     public TripsLocalDataSource(Context context) {
         if (context != null) {
             mDbHelper = new TripsDbHelper(context);
@@ -56,7 +57,7 @@ public class TripsLocalDataSource implements TripsDataSource {
 
             if (cursor != null && cursor.getCount() > 0) {
                 while (cursor.moveToNext()) {
-                    long itemId = cursor.getLong(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_TRIP_ID));
+                    int itemId = cursor.getInt(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_TRIP_ID));
                     long remoteId = cursor.getLong(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_TRIP_REMOTE_ID));
                     String title = cursor.getString(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_TITLE));
                     long startDate = cursor.getLong(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_START_DATE));
@@ -108,7 +109,7 @@ public class TripsLocalDataSource implements TripsDataSource {
 
                 if (cursor != null && cursor.getCount() > 0) {
                     cursor.moveToFirst();
-                    long id = cursor.getLong(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_TRIP_ID));
+                    int id = cursor.getInt(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_TRIP_ID));
                     String title = cursor.getString(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_TITLE));
                     String startDate = cursor.getString(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_START_DATE));
                     String endDate = cursor.getString(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_END_DATE));
@@ -132,7 +133,7 @@ public class TripsLocalDataSource implements TripsDataSource {
     }
 
     @Override
-    public void saveTrip(Trip trip) {
+    public int saveTrip(Trip trip) {
         if (trip != null) {
             SQLiteDatabase db = mDbHelper.getWritableDatabase();
             ContentValues contentValues = new ContentValues();
@@ -144,11 +145,16 @@ public class TripsLocalDataSource implements TripsDataSource {
             contentValues.put(TripEntry.COLUMN_NAME_NUM_PERSONS, trip.getNumPersons());
             contentValues.put(TripEntry.COLUMN_NAME_TOTAL_COST, trip.getTotalCost());
 
-            db.insert(TripEntry.TABLE_NAME, null, contentValues);
+            int lastId = (int) db.insert(TripEntry.TABLE_NAME, null, contentValues);
 
             db.close();
+
+            return lastId;
+        } else {
+            return 0;
         }
     }
+
 
     //
 //    @Override

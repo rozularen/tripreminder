@@ -31,7 +31,7 @@ public class TripsRemoteDataSource implements TripsDataSource {
     public TripsRemoteDataSource() {
     }
 
-    private static void addTrip(long id, String title, String startDate, String endDate, int numPersons, String totalCost, List<Item> itemsList) {
+    private static void addTrip(int id, String title, String startDate, String endDate, int numPersons, String totalCost, List<Item> itemsList) {
         Trip newTrip = new Trip(id, title, startDate, endDate, numPersons, totalCost, itemsList);
         TRIP_SERVICE_DATA.put(String.valueOf(newTrip.getId()), newTrip);
     }
@@ -69,8 +69,14 @@ public class TripsRemoteDataSource implements TripsDataSource {
 
 
     @Override
-    public void saveTrip(Trip trip) {
-        TRIP_SERVICE_DATA.put(String.valueOf(trip.getId()), trip);
+    public int saveTrip(Trip trip) {
+        try {
+            TRIP_SERVICE_DATA.put(String.valueOf(trip.getId()), trip);
+            return 1;
+        } catch (Exception e) {
+            //TODO: Manage exception when saving to server
+            return -1;
+        }
     }
 
     @Override

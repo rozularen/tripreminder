@@ -40,5 +40,7 @@ public interface CreateEditTripContract {
         boolean isDataMissing();
 
         void saveTrip(String title, String startDate, String endDate, int numPersons, String totalCost);
+
+
     }
 }

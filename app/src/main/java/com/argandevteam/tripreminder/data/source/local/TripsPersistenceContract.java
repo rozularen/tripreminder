@@ -15,7 +15,7 @@ public final class TripsPersistenceContract {
     public class TripEntry implements BaseColumns {
         public static final String TABLE_NAME = "trips";
 
-        public static final String COLUMN_NAME_TRIP_ID = "id";
+        public static final String COLUMN_NAME_TRIP_ID = "trip_id";
         public static final String COLUMN_NAME_TITLE = "title";
         public static final String COLUMN_NAME_START_DATE = "start_date";
         public static final String COLUMN_NAME_END_DATE = "end_date";
