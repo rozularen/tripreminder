@@ -53,8 +53,8 @@ public class CreateEditTripPresenter implements CreateEditTripContract.Presenter
                 public void onTripLoaded(Trip trip) {
                     if (mView.isActive()) {
                         mView.setTitle(trip.getTitle());
-                        mView.setStartDate(Utils.fromDateToString(trip.getStartDate()));
-                        mView.setEndDate(Utils.fromDateToString(trip.getEndDate()));
+                        mView.setStartDate(trip.getStartDate());
+                        mView.setEndDate(trip.getEndDate());
                         mView.setNumPersons(String.valueOf(trip.getNumPersons()));
                         mView.setTotalCost(trip.getTotalCost());
                         //TODO: populate trip
@@ -85,13 +85,13 @@ public class CreateEditTripPresenter implements CreateEditTripContract.Presenter
     @Override
     public void saveTrip(String title, String startDate, String endDate, int numPersons, String totalCost) {
         if (isNewTrip()) {
-            createTrip(title, Utils.fromStringToDate(startDate), Utils.fromStringToDate(endDate), numPersons, totalCost);
+            createTrip(title, startDate, endDate, numPersons, totalCost);
         } else {
-            updateTrip(title, Utils.fromStringToDate(startDate), Utils.fromStringToDate(endDate), numPersons, totalCost);
+            updateTrip(title, startDate, endDate, numPersons, totalCost);
         }
     }
 
-    private void updateTrip(String title, Date startDate, Date endDate, int numPersons, String totalCost) {
+    private void updateTrip(String title, String startDate, String endDate, int numPersons, String totalCost) {
         if (isNewTrip()) {
             throw new RuntimeException("updateTrip() was called but Trip is new");
         }
@@ -100,23 +100,24 @@ public class CreateEditTripPresenter implements CreateEditTripContract.Presenter
         mView.showTripsList();
     }
 
-    private void createTrip(String title, Date startDate, Date endDate, int numPersons, String totalCost) {
+    private void createTrip(String title, String startDate, String endDate, int numPersons, String totalCost) {
         Trip newTrip = new Trip(title, startDate, endDate, numPersons, totalCost);
 
         if (newTrip.isEmpty()) {
             mView.showEmptyTripError();
         } else {
-            mTripsRepository.saveTrip(newTrip, new TripsDataSource.SaveTripCallback() {
-                @Override
-                public void onTripSaved(Trip trip) {
-                    mView.onTripCreated();
-                }
-
-                @Override
-                public void onDataNotAvailable() {
-                    mView.onTripCreateError();
-                }
-            });
+            mTripsRepository.saveTrip(newTrip);
+//            mTripsRepository.saveTrip(newTrip, new TripsDataSource.SaveTripCallback() {
+//                @Override
+//                public void onTripSaved(Trip trip) {
+//                    mView.onTripCreated();
+//                }
+//
+//                @Override
+//                public void onDataNotAvailable() {
+//                    mView.onTripCreateError();
+//                }
+//            });
             mView.showTripsList();
         }
     }

@@ -64,8 +64,7 @@ public class TripsLocalDataSource implements TripsDataSource {
                     int numPersons = cursor.getInt(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_NUM_PERSONS));
                     String totalCost = cursor.getString(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_TOTAL_COST));
 
-                    Trip trip = new Trip(itemId, title, Utils.fromLongToDate(startDate),
-                            Utils.fromLongToDate(endDate), numPersons, totalCost);
+                    Trip trip = new Trip(itemId, title, Utils.fromMillisToText(startDate), Utils.fromMillisToText(endDate), numPersons, totalCost);
                     trips.add(trip);
                 }
             }
@@ -91,6 +90,7 @@ public class TripsLocalDataSource implements TripsDataSource {
 
                 String[] projection = {
                         TripEntry.COLUMN_NAME_TRIP_ID,
+                        TripEntry.COLUMN_NAME_TRIP_REMOTE_ID,
                         TripEntry.COLUMN_NAME_TITLE,
                         TripEntry.COLUMN_NAME_START_DATE,
                         TripEntry.COLUMN_NAME_END_DATE,
@@ -110,13 +110,13 @@ public class TripsLocalDataSource implements TripsDataSource {
                     cursor.moveToFirst();
                     long id = cursor.getLong(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_TRIP_ID));
                     String title = cursor.getString(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_TITLE));
-                    long startDate = cursor.getLong(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_START_DATE));
-                    long endDate = cursor.getLong(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_END_DATE));
+                    String startDate = cursor.getString(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_START_DATE));
+                    String endDate = cursor.getString(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_END_DATE));
                     int numPersons = cursor.getInt(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_NUM_PERSONS));
                     String totalCost = cursor.getString(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_TOTAL_COST));
 
                     //TODO: Fetch items associated
-                    trip = new Trip(id, title, Utils.fromLongToDate(startDate), Utils.fromLongToDate(endDate), numPersons, totalCost);
+                    trip = new Trip(id, title, startDate, endDate, numPersons, totalCost);
                 }
                 if (cursor != null) {
                     cursor.close();
@@ -132,29 +132,53 @@ public class TripsLocalDataSource implements TripsDataSource {
     }
 
     @Override
-    public void saveTrip(Trip trip, SaveTripCallback callback) {
+    public void saveTrip(Trip trip) {
         if (trip != null) {
             SQLiteDatabase db = mDbHelper.getWritableDatabase();
-
             ContentValues contentValues = new ContentValues();
+
             contentValues.put(TripEntry.COLUMN_NAME_TITLE, trip.getTitle());
             contentValues.put(TripEntry.COLUMN_NAME_TRIP_REMOTE_ID, trip.getRemoteId());
-            contentValues.put(TripEntry.COLUMN_NAME_START_DATE, Utils.fromDateToMillis(trip.getStartDate()));
-            contentValues.put(TripEntry.COLUMN_NAME_END_DATE, Utils.fromDateToMillis(trip.getEndDate()));
+            contentValues.put(TripEntry.COLUMN_NAME_START_DATE, trip.getStartDate());
+            contentValues.put(TripEntry.COLUMN_NAME_END_DATE, trip.getEndDate());
             contentValues.put(TripEntry.COLUMN_NAME_NUM_PERSONS, trip.getNumPersons());
             contentValues.put(TripEntry.COLUMN_NAME_TOTAL_COST, trip.getTotalCost());
 
-            long tripId = db.insert(TripEntry.TABLE_NAME, null, contentValues);
-
-            contentValues.put(TripEntry.COLUMN_NAME_TRIP_ID, tripId);
+            db.insert(TripEntry.TABLE_NAME, null, contentValues);
 
             db.close();
-
-            callback.onTripSaved(trip);
-        } else {
-            callback.onDataNotAvailable();
         }
     }
+
+    //
+//    @Override
+//    public void saveTrip(Trip trip, SaveTripCallback callback) {
+//        if (trip != null) {
+//            SQLiteDatabase db = mDbHelper.getWritableDatabase();
+//
+//            ContentValues contentValues = new ContentValues();
+//
+//            contentValues.put(TripEntry.COLUMN_NAME_TITLE, trip.getTitle());
+//            contentValues.put(TripEntry.COLUMN_NAME_TRIP_REMOTE_ID, trip.getRemoteId());
+//            contentValues.put(TripEntry.COLUMN_NAME_START_DATE, trip.getStartDate());
+//            contentValues.put(TripEntry.COLUMN_NAME_END_DATE, trip.getEndDate());
+//            contentValues.put(TripEntry.COLUMN_NAME_NUM_PERSONS, trip.getNumPersons());
+//            contentValues.put(TripEntry.COLUMN_NAME_TOTAL_COST, trip.getTotalCost());
+//
+//            db.insert(TripEntry.TABLE_NAME, null, contentValues);
+////            long tripId = db.insert(TripEntry.TABLE_NAME, null, contentValues);
+////            int tripId = (int) db.insert(TripEntry.TABLE_NAME, null, contentValues);
+//
+////            contentValues.put(TripEntry.COLUMN_NAME_TRIP_ID, tripId);
+//
+//            db.close();
+//
+//            callback.onTripSaved(trip);
+//
+//        } else {
+//            callback.onDataNotAvailable();
+//        }
+//    }
 
     @Override
     public void updateTrip(Trip trip) {
@@ -166,8 +190,8 @@ public class TripsLocalDataSource implements TripsDataSource {
             contentValues.put(TripEntry.COLUMN_NAME_TRIP_ID, trip.getId());
             contentValues.put(TripEntry.COLUMN_NAME_TRIP_REMOTE_ID, trip.getRemoteId());
             contentValues.put(TripEntry.COLUMN_NAME_TITLE, trip.getTitle());
-            contentValues.put(TripEntry.COLUMN_NAME_START_DATE, Utils.fromDateToMillis(trip.getStartDate()));
-            contentValues.put(TripEntry.COLUMN_NAME_END_DATE, Utils.fromDateToMillis(trip.getEndDate()));
+            contentValues.put(TripEntry.COLUMN_NAME_START_DATE, trip.getStartDate());
+            contentValues.put(TripEntry.COLUMN_NAME_END_DATE, trip.getEndDate());
             contentValues.put(TripEntry.COLUMN_NAME_NUM_PERSONS, trip.getNumPersons());
             contentValues.put(TripEntry.COLUMN_NAME_TOTAL_COST, trip.getTotalCost());
 

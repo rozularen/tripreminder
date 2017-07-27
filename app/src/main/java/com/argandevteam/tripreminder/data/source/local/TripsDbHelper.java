@@ -30,13 +30,15 @@ public class TripsDbHelper extends SQLiteOpenHelper {
 
     private static final String COMMA_SEP = ",";
 
+    private static final String PRIMARY_KEY = " PRIMARY KEY";
+
     private static final String SQL_CREATE_ENTRIES =
-            "CREATE TABLE " + TripsPersistenceContract.TripEntry.TABLE_NAME + " (" +
-                    TripsPersistenceContract.TripEntry.COLUMN_NAME_TRIP_ID + LONG_TYPE + AUTO_INCREMENT + " PRIMARY KEY," +
-                    TripsPersistenceContract.TripEntry.COLUMN_NAME_TRIP_REMOTE_ID + LONG_TYPE + COMMA_SEP +
+            "CREATE TABLE IF NOT EXISTS " + TripsPersistenceContract.TripEntry.TABLE_NAME + " (" +
+                    TripsPersistenceContract.TripEntry.COLUMN_NAME_TRIP_ID + INTEGER_TYPE + PRIMARY_KEY + COMMA_SEP +
+                    TripsPersistenceContract.TripEntry.COLUMN_NAME_TRIP_REMOTE_ID + INTEGER_TYPE + COMMA_SEP +
                     TripsPersistenceContract.TripEntry.COLUMN_NAME_TITLE + TEXT_TYPE + COMMA_SEP +
-                    TripsPersistenceContract.TripEntry.COLUMN_NAME_START_DATE + LONG_TYPE + COMMA_SEP +
-                    TripsPersistenceContract.TripEntry.COLUMN_NAME_END_DATE + DATE_TYPE + COMMA_SEP +
+                    TripsPersistenceContract.TripEntry.COLUMN_NAME_START_DATE + TEXT_TYPE + COMMA_SEP +
+                    TripsPersistenceContract.TripEntry.COLUMN_NAME_END_DATE + TEXT_TYPE + COMMA_SEP +
                     TripsPersistenceContract.TripEntry.COLUMN_NAME_NUM_PERSONS + INTEGER_TYPE + COMMA_SEP +
                     TripsPersistenceContract.TripEntry.COLUMN_NAME_TOTAL_COST + TEXT_TYPE +
                     " )";

@@ -47,7 +47,7 @@ public class TripsRepository implements TripsDataSource {
     @Override
     public void getTrips(final LoadTripsCallback callback) {
         if (callback != null) {
-            //Respond inmediatly with cache if available and not dirty
+            //Respond immediately with cache if available and not dirty
             if (mCachedTrips != null && !mCacheIsDirty) {
                 callback.onTripsLoaded(new ArrayList<Trip>(mCachedTrips.values()));
                 return;
@@ -55,7 +55,7 @@ public class TripsRepository implements TripsDataSource {
             if (mCacheIsDirty && mCachedTrips != null) {
                 //If cache is dirty and we have cache from before
                 getTripsFromRemoteDataSource(callback);
-            } else if (mCacheIsDirty && mCachedTrips == null) {
+            } else if (mCacheIsDirty) {
                 //If we dont have cache and dirty flag is set
                 mTripsLocalDataSource.getTrips(new LoadTripsCallback() {
                     @Override
@@ -133,50 +133,64 @@ public class TripsRepository implements TripsDataSource {
     }
 
     @Override
-    public void saveTrip(final Trip trip, final SaveTripCallback callback) {
+    public void saveTrip(Trip trip) {
         if (trip != null) {
-            mTripsRemoteDataSource.saveTrip(trip, new SaveTripCallback() {
-                @Override
-                public void onTripSaved(Trip trip) {
-                    mTripsLocalDataSource.saveTrip(trip, new SaveTripCallback() {
-                        @Override
-                        public void onTripSaved(Trip trip) {
-                            callback.onTripSaved(trip);
-                        }
-
-                        @Override
-                        public void onDataNotAvailable() {
-                            Log.e(TAG, "onDataNotAvailable: LocalRepository can't insert new Trip");
-                            callback.onDataNotAvailable();
-                        }
-                    });
-                }
-
-                @Override
-                public void onDataNotAvailable() {
-                    mTripsLocalDataSource.saveTrip(trip, new SaveTripCallback() {
-                        @Override
-                        public void onTripSaved(Trip trip) {
-                            callback.onTripSaved(trip);
-                        }
-
-                        @Override
-                        public void onDataNotAvailable() {
-                            Log.e(TAG, "onDataNotAvailable: LocalRepository can't insert new Trip");
-                            callback.onDataNotAvailable();
-                        }
-                    });
-                    Log.e(TAG, "onDataNotAvailable: RemoteRepository can't insert new Trip");
-                }
-            });
+            mTripsRemoteDataSource.saveTrip(trip);
+            mTripsLocalDataSource.saveTrip(trip);
 
             if (mCachedTrips == null) {
                 mCachedTrips = new LinkedHashMap<>();
             }
-
             mCachedTrips.put(String.valueOf(trip.getId()), trip);
+
         }
     }
+
+    //    @Override
+//    public void saveTrip(final Trip trip, final SaveTripCallback callback) {
+//        if (trip != null) {
+//            mTripsRemoteDataSource.saveTrip(trip, new SaveTripCallback() {
+//                @Override
+//                public void onTripSaved(Trip trip) {
+//                    mTripsLocalDataSource.saveTrip(trip, new SaveTripCallback() {
+//                        @Override
+//                        public void onTripSaved(Trip trip) {
+//                            callback.onTripSaved(trip);
+//                        }
+//
+//                        @Override
+//                        public void onDataNotAvailable() {
+//                            Log.e(TAG, "onDataNotAvailable: LocalRepository can't insert new Trip");
+//                            callback.onDataNotAvailable();
+//                        }
+//                    });
+//                }
+//
+//                @Override
+//                public void onDataNotAvailable() {
+//                    mTripsLocalDataSource.saveTrip(trip, new SaveTripCallback() {
+//                        @Override
+//                        public void onTripSaved(Trip trip) {
+//                            callback.onTripSaved(trip);
+//                        }
+//
+//                        @Override
+//                        public void onDataNotAvailable() {
+//                            Log.e(TAG, "onDataNotAvailable: LocalRepository can't insert new Trip");
+//                            callback.onDataNotAvailable();
+//                        }
+//                    });
+//                    Log.e(TAG, "onDataNotAvailable: RemoteRepository can't insert new Trip");
+//                }
+//            });
+//
+//            if (mCachedTrips == null) {
+//                mCachedTrips = new LinkedHashMap<>();
+//            }
+//
+//            mCachedTrips.put(String.valueOf(trip.getId()), trip);
+//        }
+//    }
 
     @Override
     public void updateTrip(Trip trip) {

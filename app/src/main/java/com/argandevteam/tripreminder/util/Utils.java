@@ -22,6 +22,10 @@ public class Utils {
         return new Date(year - 1900, month, day);
     }
 
+    public static String fromMillisToText(long millis) {
+        return Long.toString(millis);
+    }
+
     public static long fromDateToMillis(Date date) {
         return date.getTime();
     }

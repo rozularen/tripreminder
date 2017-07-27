@@ -48,7 +48,8 @@ public class TripsPresenter implements TripsContract.Presenter {
 
     @Override
     public void loadTrips(boolean forceUpdate) {
-        loadTrips(forceUpdate || mFirstLoad, true);
+//        loadTrips(forceUpdate || mFirstLoad, true);
+        loadTrips(forceUpdate, true);
         mFirstLoad = false;
     }
 

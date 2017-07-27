@@ -18,13 +18,13 @@ public final class Trip implements Parcelable {
     private long id;
     private long remoteId;
     private String mTitle;
-    private Date mStartDate;
-    private Date mEndDate;
+    private String mStartDate;
+    private String mEndDate;
     private int mNumPersons;
     private String mTotalCost;
     private List<Item> mItemsList;
 
-    public Trip(String mTitle, Date mStartDate, Date mEndDate, int mNumPersons, String mTotalCost) {
+    public Trip(String mTitle, String mStartDate, String mEndDate, int mNumPersons, String mTotalCost) {
         this.mTitle = mTitle;
         this.mStartDate = mStartDate;
         this.mEndDate = mEndDate;
@@ -33,11 +33,11 @@ public final class Trip implements Parcelable {
         this.mItemsList = new ArrayList<Item>(0);
     }
 
-    public Trip(long id, String mTitle, Date mStartDate, Date mEndDate, int mNumPersons, String mTotalCost) {
+    public Trip(long id, String mTitle, String mStartDate, String mEndDate, int mNumPersons, String mTotalCost) {
         this(id, mTitle, mStartDate, mEndDate, mNumPersons, mTotalCost, new ArrayList<Item>());
     }
 
-    public Trip(long id, String mTitle, Date mStartDate, Date mEndDate, int mNumPersons, String mTotalCost, List<Item> mItemsList) {
+    public Trip(long id, String mTitle, String mStartDate, String mEndDate, int mNumPersons, String mTotalCost, List<Item> mItemsList) {
         this.id = id;
         this.mTitle = mTitle;
         this.mStartDate = mStartDate;
@@ -67,19 +67,19 @@ public final class Trip implements Parcelable {
         this.mTitle = title;
     }
 
-    public Date getStartDate() {
+    public String getStartDate() {
         return mStartDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(String startDate) {
         this.mStartDate = startDate;
     }
 
-    public Date getEndDate() {
+    public String getEndDate() {
         return mEndDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(String endDate) {
         this.mEndDate = endDate;
     }
 

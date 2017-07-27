@@ -66,6 +66,8 @@ public class CreateEditTripFragment extends Fragment implements CreateEditTripCo
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //TODO: Handle time coming as String but formated as a date
+
                 mPresenter.saveTrip(
                         mTripTitle.getText().toString(),
                         mTripStartDate.getText().toString(),
@@ -123,6 +125,8 @@ public class CreateEditTripFragment extends Fragment implements CreateEditTripCo
     @Override
     public void showTripsList() {
         mActivityPresenter.showTripsList();
+        showMessage("Trip creado con exito");
+
     }
 
     @Override

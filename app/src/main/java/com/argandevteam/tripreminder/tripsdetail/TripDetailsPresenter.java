@@ -82,13 +82,13 @@ public class TripDetailsPresenter implements TripDetailsContract.Presenter {
         if (trip != null) {
             String title = trip.getTitle();
             int numPersons = trip.getNumPersons();
-            Date startDate = trip.getStartDate();
-            Date endDate = trip.getEndDate();
+            String startDate = trip.getStartDate();
+            String endDate = trip.getEndDate();
             String totalCost = trip.getTotalCost();
 
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
-            mView.showTrip(title, simpleDateFormat.format(startDate), simpleDateFormat.format(endDate), numPersons, totalCost);
+            mView.showTrip(title, startDate, endDate, numPersons, totalCost);
         }
 
 

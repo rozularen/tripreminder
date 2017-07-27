@@ -5,7 +5,6 @@ import android.os.Handler;
 import com.argandevteam.tripreminder.data.Trip;
 import com.argandevteam.tripreminder.data.source.TripsDataSource;
 import com.argandevteam.tripreminder.tripsdetail.Item;
-import com.argandevteam.tripreminder.util.Utils;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -33,7 +32,7 @@ public class TripsRemoteDataSource implements TripsDataSource {
     }
 
     private static void addTrip(long id, String title, String startDate, String endDate, int numPersons, String totalCost, List<Item> itemsList) {
-        Trip newTrip = new Trip(id, title, Utils.fromStringToDate(startDate), Utils.fromStringToDate(endDate), numPersons, totalCost, itemsList);
+        Trip newTrip = new Trip(id, title, startDate, endDate, numPersons, totalCost, itemsList);
         TRIP_SERVICE_DATA.put(String.valueOf(newTrip.getId()), newTrip);
     }
 
@@ -62,10 +61,16 @@ public class TripsRemoteDataSource implements TripsDataSource {
         }, SERVICE_LATENCY_IN_MILIS);
     }
 
+//    @Override
+//    public void saveTrip(Trip trip, SaveTripCallback callback) {
+//        TRIP_SERVICE_DATA.put(String.valueOf(trip.getId()), trip);
+//        callback.onTripSaved(trip);
+//    }
+
+
     @Override
-    public void saveTrip(Trip trip, SaveTripCallback callback) {
+    public void saveTrip(Trip trip) {
         TRIP_SERVICE_DATA.put(String.valueOf(trip.getId()), trip);
-        callback.onTripSaved(trip);
     }
 
     @Override
