@@ -28,6 +28,8 @@ public interface TripsContract {
 
         void showSuccessfullySavedTrip();
 
+        void setActivityPresenter(ActivityContract.Presenter activityPresenter);
+
 
         boolean isActive();
     }

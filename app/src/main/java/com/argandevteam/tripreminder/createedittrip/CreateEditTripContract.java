@@ -1,11 +1,8 @@
 package com.argandevteam.tripreminder.createedittrip;
 
-import android.text.Editable;
-
 import com.argandevteam.tripreminder.BasePresenter;
 import com.argandevteam.tripreminder.BaseView;
-
-import java.util.Date;
+import com.argandevteam.tripreminder.trips.ActivityContract;
 
 /**
  * Created by markc on 25/07/2017.
@@ -30,6 +27,8 @@ public interface CreateEditTripContract {
         void setNumPersons(String numPersons);
 
         void setTotalCost(String totalCost);
+
+        void setActivityPresenter(ActivityContract.Presenter activityPresenter);
 
         void onTripCreated();
 

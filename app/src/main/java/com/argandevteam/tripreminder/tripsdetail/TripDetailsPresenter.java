@@ -8,7 +8,6 @@ import com.argandevteam.tripreminder.data.source.TripsRepository;
 import com.argandevteam.tripreminder.trips.ActivityContract;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * Created by markc on 23/07/2017.

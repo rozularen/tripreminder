@@ -2,6 +2,7 @@ package com.argandevteam.tripreminder.createedittrip;
 
 import android.util.Log;
 
+import com.argandevteam.tripreminder.BaseActivityContract;
 import com.argandevteam.tripreminder.data.Trip;
 import com.argandevteam.tripreminder.data.source.TripsDataSource;
 import com.argandevteam.tripreminder.data.source.TripsRepository;

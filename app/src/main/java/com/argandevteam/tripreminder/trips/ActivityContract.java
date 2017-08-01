@@ -1,5 +1,6 @@
 package com.argandevteam.tripreminder.trips;
 
+import com.argandevteam.tripreminder.BaseActivityContract;
 import com.argandevteam.tripreminder.createedittrip.CreateEditTripFragment;
 import com.argandevteam.tripreminder.tripsdetail.TripDetailsFragment;
 
@@ -7,7 +8,7 @@ import com.argandevteam.tripreminder.tripsdetail.TripDetailsFragment;
  * Created by markc on 25/07/2017.
  */
 
-public interface ActivityContract {
+public interface ActivityContract extends BaseActivityContract {
     interface View {
         void showTripDetailsView(String tripId);
 

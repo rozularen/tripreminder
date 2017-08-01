@@ -10,6 +10,6 @@ import com.argandevteam.tripreminder.trips.ActivityContract;
 public interface BaseView<T> {
     void setPresenter(T presenter);
 
-    void setActivityPresenter(ActivityContract.Presenter mActivityPresenter);
+//    void setActivityPresenter(T activityPresenter);
 
 }

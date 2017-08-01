@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.argandevteam.tripreminder.BaseActivityContract;
 import com.argandevteam.tripreminder.R;
 import com.argandevteam.tripreminder.trips.ActivityContract;
 

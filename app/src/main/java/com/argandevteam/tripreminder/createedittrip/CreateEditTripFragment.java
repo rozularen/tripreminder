@@ -87,10 +87,6 @@ public class CreateEditTripFragment extends Fragment implements CreateEditTripCo
         }
     }
 
-    @Override
-    public void setActivityPresenter(ActivityContract.Presenter mActivityPresenter) {
-        this.mActivityPresenter = mActivityPresenter;
-    }
 
     public static CreateEditTripFragment newInstance() {
         return new CreateEditTripFragment();
@@ -147,6 +143,11 @@ public class CreateEditTripFragment extends Fragment implements CreateEditTripCo
     @Override
     public void setTotalCost(String totalCost) {
         mTripTotalCost.setText(totalCost);
+    }
+
+    @Override
+    public void setActivityPresenter(ActivityContract.Presenter activityPresenter) {
+        this.mActivityPresenter = activityPresenter;
     }
 
     @Override
