@@ -1,5 +1,6 @@
 package com.argandevteam.tripreminder.createtalk;
 
+import com.appgree.core.rest.model.LoginData;
 import com.appgree.core.rest.model.Talk;
 import com.appgree.core.task.ApiResponseException;
 import com.appgree.sdk.AppgreeSDK;
@@ -35,7 +36,26 @@ public class CreateTalkPresenter implements Presenter {
 
     @Override
     public void start() {
+        checkUserIsLogged();
+    }
 
+    private void checkUserIsLogged() {
+        AppgreeSDK.API.getUserData(new Callbacks.GenericCallback<LoginData>() {
+            @Override
+            public void onSuccess(LoginData loginData) {
+
+            }
+
+            @Override
+            public void onError(ApiResponseException e, Exception e1) {
+                if (e != null) {
+                    mView.showCreateTalkError(e.getMessage());
+                } else {
+                    mView.showCreateTalkError(e1.getMessage());
+                }
+                mView.showUserNotLogged();
+            }
+        });
     }
 
     @Override
