@@ -88,6 +88,13 @@ public class CreateTalkFragment extends Fragment implements CreateTalkContract.V
     }
 
     @Override
+    public void showUserNotLogged() {
+        //Presentar error al usuario y dejarle que se logee / registre
+        Toast.makeText(getContext(), "USER NOT LOGGED", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.create_talk:

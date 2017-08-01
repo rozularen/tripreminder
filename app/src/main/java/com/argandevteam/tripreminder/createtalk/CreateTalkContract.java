@@ -15,7 +15,10 @@ public interface CreateTalkContract {
         void navigateToTalk(String talkId);
 
         void showCreateTalkError(String message);
+
+        void showUserNotLogged();
     }
+
 
     interface Presenter extends BasePresenter {
 
