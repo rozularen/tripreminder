@@ -34,18 +34,21 @@ public class TripsDbHelper extends SQLiteOpenHelper {
 
     private static final String NOT_NULL = " NOT NULL";
 
+
     private static final String TRIPS_CREATE_TABLE =
-            "CREATE TABLE IF NOT EXISTS " + TripsPersistenceContract.TripEntry.TABLE_NAME + " (" +
+            "CREATE TABLE " + TripsPersistenceContract.TripEntry.TABLE_NAME + " (" +
                     TripsPersistenceContract.TripEntry.COLUMN_NAME_TRIP_ID + INTEGER_TYPE + PRIMARY_KEY + AUTO_INCREMENT + NOT_NULL + COMMA_SEP +
                     TripsPersistenceContract.TripEntry.COLUMN_NAME_TRIP_REMOTE_ID + INTEGER_TYPE + COMMA_SEP +
                     TripsPersistenceContract.TripEntry.COLUMN_NAME_TITLE + TEXT_TYPE + COMMA_SEP +
                     TripsPersistenceContract.TripEntry.COLUMN_NAME_START_DATE + TEXT_TYPE + COMMA_SEP +
                     TripsPersistenceContract.TripEntry.COLUMN_NAME_END_DATE + TEXT_TYPE + COMMA_SEP +
                     TripsPersistenceContract.TripEntry.COLUMN_NAME_NUM_PERSONS + INTEGER_TYPE + COMMA_SEP +
-                    TripsPersistenceContract.TripEntry.COLUMN_NAME_TOTAL_COST + TEXT_TYPE +
+                    TripsPersistenceContract.TripEntry.COLUMN_NAME_TOTAL_COST + TEXT_TYPE + COMMA_SEP +
+                    TripsPersistenceContract.TripEntry.COLUMN_NAME_TALK_ID + TEXT_TYPE +
                     " )";
+
     private static final String ITEMS_CREATE_TABLE =
-            "CREATE TABLE IF NOT EXISTS " + ItemsPersistenceContract.ItemEntry.TABLE_NAME + " (" +
+            "CREATE TABLE " + ItemsPersistenceContract.ItemEntry.TABLE_NAME + " (" +
                     ItemsPersistenceContract.ItemEntry.COLUMN_NAME_ITEM_ID + INTEGER_TYPE + PRIMARY_KEY + COMMA_SEP +
                     ItemsPersistenceContract.ItemEntry.COLUMN_NAME_NAME + TEXT_TYPE +
                     " )";

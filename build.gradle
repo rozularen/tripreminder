@@ -16,6 +16,13 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        maven {
+            url "https://api.bitbucket.org/1.0/repositories/appgree/android-sdk/raw/releases"
+            credentials {
+                username 'appgree'
+                password '02NPGROC'
+            }
+        }
     }
 }
 
