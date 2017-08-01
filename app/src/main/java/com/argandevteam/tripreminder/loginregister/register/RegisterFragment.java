@@ -9,8 +9,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.argandevteam.tripreminder.ActivityNavigator;
 import com.argandevteam.tripreminder.R;
-import com.argandevteam.tripreminder.loginregister.LoginRegisterContract;
+import com.argandevteam.tripreminder.MainActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,10 +37,13 @@ public class RegisterFragment extends Fragment implements RegisterContract.View,
     Button registerUser;
 
     private RegisterContract.Presenter mPresenter;
-    private LoginRegisterContract.Presenter mActivityPresenter;
 
     public RegisterFragment() {
         // Required empty public constructor
+    }
+
+    public static RegisterFragment newInstance() {
+        return new RegisterFragment();
     }
 
     @Override
@@ -67,14 +71,9 @@ public class RegisterFragment extends Fragment implements RegisterContract.View,
     }
 
     @Override
-    public void setActivityPresenter(LoginRegisterContract.Presenter activityPresenter) {
-        mActivityPresenter = activityPresenter;
-    }
-
-    @Override
     public void registerSuccess() {
-        //Show message
-        mActivityPresenter.showMainActivity();
+        ActivityNavigator activityNavigator = new ActivityNavigator();
+        activityNavigator.navigateTo(getActivity(), MainActivity.class);
     }
 
     @Override
@@ -91,9 +90,5 @@ public class RegisterFragment extends Fragment implements RegisterContract.View,
             default:
                 break;
         }
-    }
-
-    public static RegisterFragment newInstance() {
-        return new RegisterFragment();
     }
 }

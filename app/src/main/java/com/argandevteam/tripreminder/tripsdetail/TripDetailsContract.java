@@ -1,14 +1,9 @@
 package com.argandevteam.tripreminder.tripsdetail;
 
-import com.appgree.core.rest.model.TalkData;
 import com.appgree.core.task.ApiResponseException;
 import com.appgree.sdk.Callbacks;
 import com.argandevteam.tripreminder.BasePresenter;
 import com.argandevteam.tripreminder.BaseView;
-import com.argandevteam.tripreminder.data.Trip;
-import com.argandevteam.tripreminder.trips.ActivityContract;
-
-import java.util.Date;
 
 /**
  * Created by markc on 23/07/2017.
@@ -39,8 +34,6 @@ public interface TripDetailsContract {
         void navigateToTalkView();
 
         void navigateToCreateTalkView();
-
-        void setActivityPresenter(ActivityContract.Presenter activityPresenter);
 
     }
 

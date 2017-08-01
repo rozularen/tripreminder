@@ -7,7 +7,7 @@ import com.appgree.sdk.AppgreeSDK;
 import com.appgree.sdk.Callbacks;
 import com.argandevteam.tripreminder.createtalk.CreateTalkContract.Presenter;
 import com.argandevteam.tripreminder.data.source.TripsRepository;
-import com.argandevteam.tripreminder.trips.ActivityContract;
+import com.argandevteam.tripreminder.loginregister.LoginRegisterContract;
 
 /**
  * Created by markc on 01/08/2017.
@@ -19,17 +19,15 @@ public class CreateTalkPresenter implements Presenter {
 
     private TripsRepository mTripsRepository;
     private CreateTalkContract.View mView;
-    private ActivityContract.Presenter mActivityPresenter;
+    private LoginRegisterContract.Presenter mActivityPresenter;
 
-    public CreateTalkPresenter(TripsRepository tripsRepository, CreateTalkContract.View view, ActivityContract.Presenter activityPresenter) {
+    public CreateTalkPresenter(TripsRepository tripsRepository, CreateTalkContract.View view) {
         if (tripsRepository != null) {
             mTripsRepository = tripsRepository;
             if (view != null) {
                 mView = view;
-                mActivityPresenter = activityPresenter;
 
                 mView.setPresenter(this);
-                mView.setActivityPresenter(mActivityPresenter);
             }
         }
     }

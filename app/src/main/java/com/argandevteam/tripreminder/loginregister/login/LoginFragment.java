@@ -1,7 +1,7 @@
 package com.argandevteam.tripreminder.loginregister.login;
 
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,10 +9,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.argandevteam.tripreminder.BaseActivityContract;
+import com.argandevteam.tripreminder.ActivityNavigator;
 import com.argandevteam.tripreminder.R;
 import com.argandevteam.tripreminder.loginregister.LoginRegisterContract;
-import com.argandevteam.tripreminder.trips.ActivityContract;
+import com.argandevteam.tripreminder.MainActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -67,12 +67,6 @@ public class LoginFragment extends Fragment implements LoginContract.View, View.
         mPresenter = presenter;
     }
 
-//    @Override
-//    public void setActivityPresenter(BaseActivityContract activityPresenter) {
-//        mActivityPresenter = (LoginRegisterContract.Presenter) activityPresenter;
-//    }
-
-
     @Override
     public void setActivityPresenter(LoginRegisterContract.Presenter activityPresenter) {
         mActivityPresenter = activityPresenter;
@@ -80,7 +74,8 @@ public class LoginFragment extends Fragment implements LoginContract.View, View.
 
     @Override
     public void loginSuccess() {
-//        mActivityPresenter.showTripsList();
+        ActivityNavigator activityNavigator = new ActivityNavigator();
+        activityNavigator.navigateTo(getActivity(), MainActivity.class);
     }
 
     @Override

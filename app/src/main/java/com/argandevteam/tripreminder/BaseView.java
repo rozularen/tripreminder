@@ -1,8 +1,6 @@
 package com.argandevteam.tripreminder;
 
 
-import com.argandevteam.tripreminder.trips.ActivityContract;
-
 /**
  * Created by markc on 23/07/2017.
  */

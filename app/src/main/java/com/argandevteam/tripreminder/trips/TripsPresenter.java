@@ -2,7 +2,6 @@ package com.argandevteam.tripreminder.trips;
 
 import android.util.Log;
 
-import com.argandevteam.tripreminder.BaseActivityContract;
 import com.argandevteam.tripreminder.data.Trip;
 import com.argandevteam.tripreminder.data.source.TripsDataSource;
 import com.argandevteam.tripreminder.data.source.TripsRepository;
@@ -20,19 +19,15 @@ public class TripsPresenter implements TripsContract.Presenter {
 
     private TripsRepository mTripsRepository = null;
     private TripsContract.View mView = null;
-    private ActivityContract.Presenter mActivityPresenter = null;
 
     private boolean mFirstLoad = true;
 
-    public TripsPresenter(TripsRepository mTripsRepository, TripsContract.View mView, ActivityContract.Presenter mActivityPresenter) {
+    public TripsPresenter(TripsRepository mTripsRepository, TripsContract.View mView) {
         if (mTripsRepository != null) {
             this.mTripsRepository = mTripsRepository;
             if (mView != null) {
                 this.mView = mView;
                 mView.setPresenter(this);
-                if (mActivityPresenter != null) {
-                    mView.setActivityPresenter(mActivityPresenter);
-                }
             } else {
                 Log.e(TAG, "Presenter: View can't be null");
             }

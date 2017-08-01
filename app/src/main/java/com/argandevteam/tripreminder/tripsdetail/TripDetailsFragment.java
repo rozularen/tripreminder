@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import com.appgree.sdk.AppgreeSDK;
 import com.argandevteam.tripreminder.R;
-import com.argandevteam.tripreminder.trips.ActivityContract;
+import com.argandevteam.tripreminder.MainActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,6 +27,10 @@ import butterknife.ButterKnife;
  */
 public class TripDetailsFragment extends Fragment implements TripDetailsContract.View {
 
+    @NonNull
+    private static final String ARG_TRIP_ID = "TRIP_ID";
+    @NonNull
+    private static final int REQUEST_EDIT_TRIP = 1;
     @BindView(R.id.trip_title)
     TextView mTripTitle;
     @BindView(R.id.trip_start_date)
@@ -37,16 +41,8 @@ public class TripDetailsFragment extends Fragment implements TripDetailsContract
     TextView mTripNumPersons;
     @BindView(R.id.trip_total_cost)
     TextView mTripTotalCost;
-
     private Menu mMenu;
-
-    @NonNull
-    private static final String ARG_TRIP_ID = "TRIP_ID";
-    @NonNull
-    private static final int REQUEST_EDIT_TRIP = 1;
-
     private TripDetailsContract.Presenter mPresenter;
-    private ActivityContract.Presenter mActivityPresenter;
 
     public TripDetailsFragment() {
         // Required empty public constructor
@@ -127,13 +123,9 @@ public class TripDetailsFragment extends Fragment implements TripDetailsContract
     }
 
     @Override
-    public void setActivityPresenter(ActivityContract.Presenter mActivityPresenter) {
-        this.mActivityPresenter = mActivityPresenter;
-    }
-
-    @Override
     public void showEditTrip(String tripId) {
-        mActivityPresenter.showEditTrip(tripId);
+        MainActivity activity = (MainActivity) getActivity();
+        activity.showEditTrip(tripId);
     }
 
     @Override
@@ -178,7 +170,8 @@ public class TripDetailsFragment extends Fragment implements TripDetailsContract
 
     @Override
     public void showTripDeleted() {
-        mActivityPresenter.showTripsList();
+        MainActivity activity = (MainActivity) getActivity();
+        activity.showTripsList();
     }
 
     @Override
@@ -198,6 +191,7 @@ public class TripDetailsFragment extends Fragment implements TripDetailsContract
 
     @Override
     public void navigateToCreateTalkView() {
-        mActivityPresenter.showCreateTalkView();
+        MainActivity activity = (MainActivity) getActivity();
+        activity.showCreateTalkView();
     }
 }

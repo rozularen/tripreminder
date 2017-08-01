@@ -1,12 +1,8 @@
 package com.argandevteam.tripreminder.createedittrip;
 
-import android.util.Log;
-
-import com.argandevteam.tripreminder.BaseActivityContract;
 import com.argandevteam.tripreminder.data.Trip;
 import com.argandevteam.tripreminder.data.source.TripsDataSource;
 import com.argandevteam.tripreminder.data.source.TripsRepository;
-import com.argandevteam.tripreminder.trips.ActivityContract;
 
 /**
  * Created by markc on 25/07/2017.
@@ -15,7 +11,6 @@ import com.argandevteam.tripreminder.trips.ActivityContract;
 public class CreateEditTripPresenter implements CreateEditTripContract.Presenter {
 
     private static final String TAG = "CETripPresenter";
-    private final ActivityContract.Presenter mActivityPresenter = null;
     private TripsRepository mTripsRepository;
     private CreateEditTripContract.View mView;
     private String mTripId;
@@ -24,8 +19,7 @@ public class CreateEditTripPresenter implements CreateEditTripContract.Presenter
     public CreateEditTripPresenter(String tripId,
                                    TripsRepository mTripsRepository,
                                    CreateEditTripContract.View mView,
-                                   boolean shouldLoadDataFromRepo,
-                                   ActivityContract.Presenter mPresenter) {
+                                   boolean shouldLoadDataFromRepo) {
         mTripId = tripId;
         if (mTripsRepository != null) {
             this.mTripsRepository = mTripsRepository;
@@ -33,7 +27,6 @@ public class CreateEditTripPresenter implements CreateEditTripContract.Presenter
             if (mView != null) {
                 this.mView = mView;
                 mView.setPresenter(this);
-                mView.setActivityPresenter(mPresenter);
             }
         }
     }

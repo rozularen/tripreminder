@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.argandevteam.tripreminder.R;
-import com.argandevteam.tripreminder.trips.ActivityContract;
+import com.argandevteam.tripreminder.MainActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,7 +30,6 @@ public class CreateTalkFragment extends Fragment implements CreateTalkContract.V
     @BindView(R.id.create_talk)
     Button createTalk;
 
-    private ActivityContract.Presenter mActivityPresenter;
     private CreateTalkContract.Presenter mPresenter;
 
     public CreateTalkFragment() {
@@ -68,13 +67,9 @@ public class CreateTalkFragment extends Fragment implements CreateTalkContract.V
     }
 
     @Override
-    public void setActivityPresenter(ActivityContract.Presenter activityPresenter) {
-        mActivityPresenter = activityPresenter;
-    }
-
-    @Override
     public void navigateToTalk(String talkId) {
-        mActivityPresenter.showTalkView(talkId);
+        MainActivity activity = (MainActivity) getActivity();
+        activity.showTalkView(talkId);
     }
 
     @Override

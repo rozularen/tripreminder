@@ -17,6 +17,7 @@ public interface CreateTalkContract {
         void showCreateTalkError(String message);
 
         void showUserNotLogged();
+
     }
 
 

@@ -9,7 +9,7 @@ import com.argandevteam.tripreminder.loginregister.login.LoginFragment;
 import com.argandevteam.tripreminder.loginregister.login.LoginPresenter;
 import com.argandevteam.tripreminder.loginregister.register.RegisterFragment;
 import com.argandevteam.tripreminder.loginregister.register.RegisterPresenter;
-import com.argandevteam.tripreminder.trips.TripsActivity;
+import com.argandevteam.tripreminder.MainActivity;
 import com.argandevteam.tripreminder.util.ActivityUtils;
 
 import butterknife.ButterKnife;
@@ -45,7 +45,7 @@ public class LoginRegisterActivity extends AppCompatActivity implements LoginReg
 
     @Override
     public void showMainActivity() {
-        Intent intent = new Intent(this, TripsActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
     }
@@ -61,8 +61,7 @@ public class LoginRegisterActivity extends AppCompatActivity implements LoginReg
                 true);
 
         new RegisterPresenter(
-                registerFragment,
-                mPresenter
+                registerFragment
         );
     }
 }

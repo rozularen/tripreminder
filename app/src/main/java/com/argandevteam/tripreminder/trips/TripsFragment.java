@@ -19,11 +19,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.argandevteam.tripreminder.BaseActivityContract;
+import com.argandevteam.tripreminder.MainActivity;
 import com.argandevteam.tripreminder.R;
-import com.argandevteam.tripreminder.createedittrip.CreateEditTripFragment;
 import com.argandevteam.tripreminder.data.Trip;
-import com.argandevteam.tripreminder.tripsdetail.TripDetailsFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,33 +35,33 @@ import butterknife.ButterKnife;
  */
 public class TripsFragment extends Fragment implements TripsContract.View {
 
+    private static final String TAG = "TripListFragment";
     @BindView(R.id.trip_recycler_view)
     RecyclerView mTripsRecyclerView;
-
     @BindView(R.id.trips_view)
     LinearLayout mTripsView;
-
     @BindView(R.id.no_trips_view)
     LinearLayout mNoTripsView;
-
     @BindView(R.id.no_trips_main_text_view)
     TextView mNoTripsMainTextView;
-
     @BindView(R.id.no_trips_image_view)
     ImageView mNoTripsIcon;
-
     @BindView(R.id.no_trips_create_text_view)
     TextView mNoTripsCreateView;
-
     @BindView(R.id.trips_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
-
-    private static final String TAG = "TripListFragment";
-
     private RecyclerView.LayoutManager mLayoutManager;
     private TripsContract.Presenter mPresenter;
+    /**
+     * Listener for clicks on Trips in the RecyclerView
+     */
+    TripsAdapter.TripItemListener mItemListener = new TripsAdapter.TripItemListener() {
+        @Override
+        public void onTripClick(Trip clickedTrip) {
+            mPresenter.openTripDetails(clickedTrip);
+        }
+    };
     private TripsAdapter mAdapter;
-    private ActivityContract.Presenter mActivityPresenter;
 
     // Required empty public constructor
     public TripsFragment() {
@@ -129,17 +127,6 @@ public class TripsFragment extends Fragment implements TripsContract.View {
         return view;
     }
 
-    /**
-     * Listener for clicks on Trips in the RecyclerView
-     */
-    TripsAdapter.TripItemListener mItemListener = new TripsAdapter.TripItemListener() {
-        @Override
-        public void onTripClick(Trip clickedTrip) {
-            mPresenter.openTripDetails(clickedTrip);
-        }
-    };
-
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         mPresenter.result(requestCode, resultCode);
@@ -149,13 +136,6 @@ public class TripsFragment extends Fragment implements TripsContract.View {
     public void setPresenter(TripsContract.Presenter presenter) {
         if (presenter != null) {
             this.mPresenter = presenter;
-        }
-    }
-
-    @Override
-    public void setActivityPresenter(ActivityContract.Presenter presenter) {
-        if (presenter != null) {
-            this.mActivityPresenter = presenter;
         }
     }
 
@@ -182,26 +162,14 @@ public class TripsFragment extends Fragment implements TripsContract.View {
 
     @Override
     public void showTripDetailsView(String tripId) {
-
-        mActivityPresenter.showTripDetailsView(tripId);
-//
-//        getActivity().getSupportFragmentManager()
-//                .beginTransaction()
-//                .replace(R.id.fragment_container, tripDetailsFragment)
-//                .addToBackStack(null)
-//                .commit();
+        MainActivity activity = (MainActivity) getActivity();
+        activity.showTripDetailsView(tripId);
     }
 
     @Override
     public void showCreateTrip() {
-
-        mActivityPresenter.showCreateTrip();
-
-//        getActivity().getSupportFragmentManager()
-//                .beginTransaction()
-//                .replace(R.id.fragment_container, createEditTripFragment)
-//                .addToBackStack(null)
-//                .commit();
+        MainActivity activity = (MainActivity) getActivity();
+        activity.showCreateTrip(null);
     }
 
     @Override

@@ -10,8 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.argandevteam.tripreminder.MainActivity;
 import com.argandevteam.tripreminder.R;
-import com.argandevteam.tripreminder.trips.ActivityContract;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,26 +22,32 @@ import butterknife.ButterKnife;
 
 public class CreateEditTripFragment extends Fragment implements CreateEditTripContract.View {
 
+    private static final String ARGS_TRIP_ID = "TRIP_ID";
     @BindView(R.id.trip_title)
     EditText mTripTitle;
-
     @BindView(R.id.trip_start_date)
     EditText mTripStartDate;
-
     @BindView(R.id.trip_end_date)
     EditText mTripEndDate;
-
     @BindView(R.id.trip_num_persons)
     EditText mTripNumPersons;
-
     @BindView(R.id.trip_total_cost)
     EditText mTripTotalCost;
-
-
-    private static final String ARGS_TRIP_ID = "TRIP_ID";
-
     private CreateEditTripContract.Presenter mPresenter;
-    private ActivityContract.Presenter mActivityPresenter;
+
+    public static CreateEditTripFragment newInstance() {
+        return new CreateEditTripFragment();
+    }
+
+    public static CreateEditTripFragment newInstance(String mTripId) {
+        CreateEditTripFragment createEditTripFragment = new CreateEditTripFragment();
+
+        Bundle args = new Bundle();
+        args.putString(ARGS_TRIP_ID, mTripId);
+        createEditTripFragment.setArguments(args);
+
+        return createEditTripFragment;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,22 +93,6 @@ public class CreateEditTripFragment extends Fragment implements CreateEditTripCo
         }
     }
 
-
-    public static CreateEditTripFragment newInstance() {
-        return new CreateEditTripFragment();
-    }
-
-
-    public static CreateEditTripFragment newInstance(String mTripId) {
-        CreateEditTripFragment createEditTripFragment = new CreateEditTripFragment();
-
-        Bundle args = new Bundle();
-        args.putString(ARGS_TRIP_ID, mTripId);
-        createEditTripFragment.setArguments(args);
-
-        return createEditTripFragment;
-    }
-
     @Override
     public boolean isActive() {
         return isAdded();
@@ -120,7 +110,9 @@ public class CreateEditTripFragment extends Fragment implements CreateEditTripCo
 
     @Override
     public void showTripsList() {
-        mActivityPresenter.showTripsList();
+        MainActivity activity = (MainActivity) getActivity();
+        activity.showTripsList();
+
         showMessage("Trip creado con exito");
     }
 
@@ -142,11 +134,6 @@ public class CreateEditTripFragment extends Fragment implements CreateEditTripCo
     @Override
     public void setTotalCost(String totalCost) {
         mTripTotalCost.setText(totalCost);
-    }
-
-    @Override
-    public void setActivityPresenter(ActivityContract.Presenter activityPresenter) {
-        this.mActivityPresenter = activityPresenter;
     }
 
     @Override

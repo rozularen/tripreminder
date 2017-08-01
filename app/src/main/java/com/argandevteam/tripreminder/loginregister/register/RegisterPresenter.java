@@ -11,11 +11,9 @@ public class RegisterPresenter implements RegisterContract.Presenter {
     private RegisterContract.View mView;
     private LoginRegisterContract.Presenter mActivityPresenter;
 
-    public RegisterPresenter(RegisterContract.View view, LoginRegisterContract.Presenter activityPresenter) {
+    public RegisterPresenter(RegisterContract.View view) {
         mView = view;
-        mActivityPresenter = activityPresenter;
         mView.setPresenter(this);
-        mView.setActivityPresenter(mActivityPresenter);
     }
 
     @Override
@@ -26,7 +24,7 @@ public class RegisterPresenter implements RegisterContract.Presenter {
     @Override
     public void registerUser(String email, String firstName, String lastName, String password) {
         //Registrer user
-
+        // Proceso input y registro usuario
         mView.registerSuccess();
     }
 }

@@ -1,4 +1,4 @@
-package com.argandevteam.tripreminder.trips;
+package com.argandevteam.tripreminder;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,7 +13,6 @@ import android.view.MenuItem;
 import com.appgree.core.AppgreeNotInitializeException;
 import com.appgree.sdk.AppgreeSDK;
 import com.appgree.sdk.TalkView;
-import com.argandevteam.tripreminder.R;
 import com.argandevteam.tripreminder.createedittrip.CreateEditTripFragment;
 import com.argandevteam.tripreminder.createedittrip.CreateEditTripPresenter;
 import com.argandevteam.tripreminder.createtalk.CreateTalkFragment;
@@ -21,6 +20,8 @@ import com.argandevteam.tripreminder.createtalk.CreateTalkPresenter;
 import com.argandevteam.tripreminder.data.source.TripsRepository;
 import com.argandevteam.tripreminder.data.source.local.TripsLocalDataSource;
 import com.argandevteam.tripreminder.data.source.remote.TripsRemoteDataSource;
+import com.argandevteam.tripreminder.trips.TripsFragment;
+import com.argandevteam.tripreminder.trips.TripsPresenter;
 import com.argandevteam.tripreminder.tripsdetail.TripDetailsFragment;
 import com.argandevteam.tripreminder.tripsdetail.TripDetailsPresenter;
 import com.argandevteam.tripreminder.util.ActivityUtils;
@@ -28,7 +29,7 @@ import com.argandevteam.tripreminder.util.ActivityUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class TripsActivity extends AppCompatActivity implements ActivityContract.View {
+public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
@@ -38,7 +39,6 @@ public class TripsActivity extends AppCompatActivity implements ActivityContract
     Toolbar toolbar;
 
     private TripsPresenter mTripsPresenter;
-    private ActivityContract.Presenter mPresenter;
     private TripsRepository mTripsRepository;
 
 
@@ -51,7 +51,6 @@ public class TripsActivity extends AppCompatActivity implements ActivityContract
 
         //Set up Appgree SDK
         AppgreeSDK.setDebugMode(true);
-
 
         //Set up the Toolbar
         setSupportActionBar(toolbar);
@@ -81,8 +80,7 @@ public class TripsActivity extends AppCompatActivity implements ActivityContract
 
         mTripsRepository = new TripsRepository(mTripsLocalDataSource, mTripsRemoteDataSource);
 
-        mPresenter = new ActivityPresenter(this);
-        mTripsPresenter = new TripsPresenter(mTripsRepository, tripsFragment, mPresenter);
+        mTripsPresenter = new TripsPresenter(mTripsRepository, tripsFragment);
 
     }
 
@@ -120,7 +118,6 @@ public class TripsActivity extends AppCompatActivity implements ActivityContract
         });
     }
 
-    @Override
     public void showTripDetailsView(String mTripId) {
         TripDetailsFragment fragment = TripDetailsFragment.newInstance(mTripId);
 
@@ -133,11 +130,9 @@ public class TripsActivity extends AppCompatActivity implements ActivityContract
         new TripDetailsPresenter(
                 mTripId,
                 mTripsRepository,
-                fragment,
-                mPresenter);
+                fragment);
     }
 
-    @Override
     public void showCreateTrip(String tripId) {
         CreateEditTripFragment fragment = null;
         if (tripId != null) {
@@ -158,11 +153,9 @@ public class TripsActivity extends AppCompatActivity implements ActivityContract
                 tripId,
                 mTripsRepository,
                 fragment,
-                true,
-                mPresenter);
+                true);
     }
 
-    @Override
     public void showEditTrip(String tripId) {
         CreateEditTripFragment fragment = null;
 
@@ -182,11 +175,9 @@ public class TripsActivity extends AppCompatActivity implements ActivityContract
                 tripId,
                 mTripsRepository,
                 fragment,
-                true,
-                mPresenter);
+                true);
     }
 
-    @Override
     public void showTripsList() {
         TripsFragment tripsFragment = TripsFragment.newInstance();
 
@@ -198,12 +189,10 @@ public class TripsActivity extends AppCompatActivity implements ActivityContract
 
         new TripsPresenter(
                 mTripsRepository,
-                tripsFragment,
-                mPresenter
+                tripsFragment
         );
     }
 
-    @Override
     public void showCreateTalkView() {
         CreateTalkFragment createTalkFragment = CreateTalkFragment.newInstance();
 
@@ -215,12 +204,10 @@ public class TripsActivity extends AppCompatActivity implements ActivityContract
 
         new CreateTalkPresenter(
                 mTripsRepository,
-                createTalkFragment,
-                mPresenter
+                createTalkFragment
         );
     }
 
-    @Override
     public void showTalkView(String talkId) {
         try {
             AppgreeSDK.ViewLoader.loadTalk(this, talkId, new TalkView.Delegate());

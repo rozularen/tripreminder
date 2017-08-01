@@ -14,6 +14,18 @@ import java.util.List;
 
 public final class Trip implements Parcelable {
 
+    //Parcelable
+    public static final Creator<Trip> CREATOR = new Creator<Trip>() {
+        @Override
+        public Trip createFromParcel(Parcel in) {
+            return new Trip(in);
+        }
+
+        @Override
+        public Trip[] newArray(int size) {
+            return new Trip[size];
+        }
+    };
     private int id;
     private long remoteId;
     private String mTitle;
@@ -115,7 +127,6 @@ public final class Trip implements Parcelable {
         this.remoteId = remoteId;
     }
 
-
     public String getTalkId() {
         return talkId;
     }
@@ -123,19 +134,6 @@ public final class Trip implements Parcelable {
     public void setTalkId(String talkId) {
         this.talkId = talkId;
     }
-
-    //Parcelable
-    public static final Creator<Trip> CREATOR = new Creator<Trip>() {
-        @Override
-        public Trip createFromParcel(Parcel in) {
-            return new Trip(in);
-        }
-
-        @Override
-        public Trip[] newArray(int size) {
-            return new Trip[size];
-        }
-    };
 
     @Override
     public int describeContents() {

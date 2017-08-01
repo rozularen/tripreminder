@@ -2,14 +2,10 @@ package com.argandevteam.tripreminder.tripsdetail;
 
 import android.util.Log;
 
-import com.appgree.core.rest.model.Talk;
 import com.appgree.core.task.ApiResponseException;
-import com.appgree.sdk.AppgreeSDK;
-import com.appgree.sdk.Callbacks;
 import com.argandevteam.tripreminder.data.Trip;
 import com.argandevteam.tripreminder.data.source.TripsDataSource;
 import com.argandevteam.tripreminder.data.source.TripsRepository;
-import com.argandevteam.tripreminder.trips.ActivityContract;
 
 import java.text.SimpleDateFormat;
 
@@ -25,14 +21,13 @@ public class TripDetailsPresenter implements TripDetailsContract.Presenter {
     private TripDetailsContract.View mView = null;
     private String mTripId;
 
-    public TripDetailsPresenter(String mTripId, TripsRepository mTripsRepository, TripDetailsContract.View mView, ActivityContract.Presenter activityPresenter) {
+    public TripDetailsPresenter(String mTripId, TripsRepository mTripsRepository, TripDetailsContract.View mView) {
         this.mTripId = mTripId;
         if (mTripsRepository != null) {
             this.mTripsRepository = mTripsRepository;
             if (mView != null) {
                 this.mView = mView;
                 mView.setPresenter(this);
-                mView.setActivityPresenter(activityPresenter);
             } else {
                 Log.e(TAG, "TripDetailsPresenter: View can't be null");
             }
