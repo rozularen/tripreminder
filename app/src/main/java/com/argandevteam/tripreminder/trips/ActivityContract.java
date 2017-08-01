@@ -16,6 +16,10 @@ public interface ActivityContract {
         void showEditTrip(String tripId);
 
         void showTripsList();
+
+        void showCreateTalkView();
+
+        void showTalkView(String talkId);
     }
 
     interface Presenter {
@@ -26,6 +30,10 @@ public interface ActivityContract {
         void showEditTrip(String tripId);
 
         void showTripsList();
+
+        void showCreateTalkView();
+
+        void showTalkView(String talkId);
     }
 
 }

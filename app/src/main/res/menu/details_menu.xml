@@ -3,4 +3,12 @@
     <item
         android:id="@+id/delete_trip"
         android:title="Eliminar" />
+    <item
+        android:id="@+id/navigate_talk"
+        android:title="Ir a Talk Privado"
+        android:visible="false" />
+    <item
+        android:id="@+id/create_talk"
+        android:title="Crear Talk Privado"
+        android:visible="false" />
 </menu>

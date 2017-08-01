@@ -2,13 +2,16 @@ package com.argandevteam.tripreminder.tripsdetail;
 
 import android.util.Log;
 
+import com.appgree.core.rest.model.Talk;
+import com.appgree.core.task.ApiResponseException;
+import com.appgree.sdk.AppgreeSDK;
+import com.appgree.sdk.Callbacks;
 import com.argandevteam.tripreminder.data.Trip;
 import com.argandevteam.tripreminder.data.source.TripsDataSource;
 import com.argandevteam.tripreminder.data.source.TripsRepository;
 import com.argandevteam.tripreminder.trips.ActivityContract;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * Created by markc on 23/07/2017.
@@ -110,5 +113,66 @@ public class TripDetailsPresenter implements TripDetailsContract.Presenter {
             mTripsRepository.deleteTrip(mTripId);
             mView.showTripDeleted();
         }
+    }
+
+    @Override
+    public void onSuccess(Void aVoid) {
+        mView.showMessage("On Success Appgree");
+        checkIfHasTalk();
+    }
+
+    private void checkIfHasTalk() {
+        mTripsRepository.getTrip(mTripId, new TripsDataSource.GetTripCallback() {
+            @Override
+            public void onTripLoaded(Trip trip) {
+                if (trip.getTalkId() != null) {
+                    mView.showTalk();
+                } else {
+                    mView.showCreateTalk();
+                }
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+                mView.showMessage("Trip Not Available");
+            }
+        });
+    }
+
+    @Override
+    public void onError(ApiResponseException e, Exception e1) {
+        if (e != null) {
+            mView.showErrorAppgree(e.getMessage());
+        } else {
+            mView.showErrorAppgree(e1.getMessage());
+        }
+    }
+
+    @Override
+    public void navigateToTalk() {
+//        AppgreeSDK.API.getTalk();
+        mView.navigateToTalkView();
+    }
+
+    @Override
+    public void createTalk() {
+        mView.navigateToCreateTalkView();
+//
+//        Talk talkData = new Talk();
+//
+//        talkData.setPrivateTalk(true);
+//        talkData.setTitle("");
+//
+//        AppgreeSDK.API.createTalk(talkData, new Callbacks.GenericCallback<Talk>() {
+//            @Override
+//            public void onSuccess(Talk talk) {
+//
+//            }
+//
+//            @Override
+//            public void onError(ApiResponseException e, Exception e1) {
+//
+//            }
+//        });
     }
 }

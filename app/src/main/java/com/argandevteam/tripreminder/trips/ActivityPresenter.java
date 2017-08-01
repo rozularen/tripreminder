@@ -35,4 +35,14 @@ public class ActivityPresenter implements ActivityContract.Presenter {
     public void showTripsList() {
         mView.showTripsList();
     }
+
+    @Override
+    public void showCreateTalkView() {
+        mView.showCreateTalkView();
+    }
+
+    @Override
+    public void showTalkView(String talkId) {
+        mView.showTalkView(talkId);
+    }
 }

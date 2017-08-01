@@ -12,7 +12,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.appgree.sdk.AppgreeSDK;
 import com.argandevteam.tripreminder.R;
 import com.argandevteam.tripreminder.trips.ActivityContract;
 
@@ -35,6 +37,8 @@ public class TripDetailsFragment extends Fragment implements TripDetailsContract
     TextView mTripNumPersons;
     @BindView(R.id.trip_total_cost)
     TextView mTripTotalCost;
+
+    private Menu mMenu;
 
     @NonNull
     private static final String ARG_TRIP_ID = "TRIP_ID";
@@ -72,6 +76,9 @@ public class TripDetailsFragment extends Fragment implements TripDetailsContract
 
         setHasOptionsMenu(true);
 
+
+        AppgreeSDK.Initializer.startSocial(getContext(), AppgreeSDK.SDKEnvironment.DEV, mPresenter);
+
         //Set up Floating Action Button
         FloatingActionButton fab =
                 (FloatingActionButton) getActivity().findViewById(R.id.fab_create_trip);
@@ -93,6 +100,12 @@ public class TripDetailsFragment extends Fragment implements TripDetailsContract
             case R.id.delete_trip:
                 mPresenter.deleteTrip();
                 return true;
+            case R.id.navigate_talk:
+                mPresenter.navigateToTalk();
+                return true;
+            case R.id.create_talk:
+                mPresenter.createTalk();
+                return true;
             default:
                 break;
         }
@@ -101,6 +114,7 @@ public class TripDetailsFragment extends Fragment implements TripDetailsContract
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        mMenu = menu;
         inflater.inflate(R.menu.details_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -147,9 +161,43 @@ public class TripDetailsFragment extends Fragment implements TripDetailsContract
     }
 
     @Override
+    public void showTalk() {
+        MenuItem navigateItem = mMenu.findItem(R.id.navigate_talk);
+        MenuItem createItem = mMenu.findItem(R.id.create_talk);
+        navigateItem.setVisible(true);
+        createItem.setVisible(false);
+    }
+
+    @Override
+    public void showCreateTalk() {
+        MenuItem navigateItem = mMenu.findItem(R.id.navigate_talk);
+        MenuItem createItem = mMenu.findItem(R.id.create_talk);
+        navigateItem.setVisible(false);
+        createItem.setVisible(true);
+    }
+
+    @Override
     public void showTripDeleted() {
         mActivityPresenter.showTripsList();
     }
 
+    @Override
+    public void showErrorAppgree(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
 
+    @Override
+    public void showMessage(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void navigateToTalkView() {
+
+    }
+
+    @Override
+    public void navigateToCreateTalkView() {
+        mActivityPresenter.showCreateTalkView();
+    }
 }
