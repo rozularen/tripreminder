@@ -21,6 +21,7 @@ public final class Trip implements Parcelable {
     private String mEndDate;
     private int mNumPersons;
     private String mTotalCost;
+    private String talkId;
     private List<Item> mItemsList;
 
     public Trip(String mTitle, String mStartDate, String mEndDate, int mNumPersons, String mTotalCost) {
@@ -112,6 +113,15 @@ public final class Trip implements Parcelable {
 
     public void setRemoteId(long remoteId) {
         this.remoteId = remoteId;
+    }
+
+
+    public String getTalkId() {
+        return talkId;
+    }
+
+    public void setTalkId(String talkId) {
+        this.talkId = talkId;
     }
 
     //Parcelable

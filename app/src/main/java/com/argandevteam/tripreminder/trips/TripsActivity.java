@@ -10,9 +10,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.appgree.core.AppgreeNotInitializeException;
+import com.appgree.sdk.AppgreeSDK;
+import com.appgree.sdk.TalkView;
 import com.argandevteam.tripreminder.R;
 import com.argandevteam.tripreminder.createedittrip.CreateEditTripFragment;
 import com.argandevteam.tripreminder.createedittrip.CreateEditTripPresenter;
+import com.argandevteam.tripreminder.createtalk.CreateTalkFragment;
+import com.argandevteam.tripreminder.createtalk.CreateTalkPresenter;
 import com.argandevteam.tripreminder.data.source.TripsRepository;
 import com.argandevteam.tripreminder.data.source.local.TripsLocalDataSource;
 import com.argandevteam.tripreminder.data.source.remote.TripsRemoteDataSource;
@@ -43,6 +48,10 @@ public class TripsActivity extends AppCompatActivity implements ActivityContract
         setContentView(R.layout.activity_trips);
 
         ButterKnife.bind(this);
+
+        //Set up Appgree SDK
+        AppgreeSDK.setDebugMode(true);
+
 
         //Set up the Toolbar
         setSupportActionBar(toolbar);
@@ -115,7 +124,11 @@ public class TripsActivity extends AppCompatActivity implements ActivityContract
     public void showTripDetailsView(String mTripId) {
         TripDetailsFragment fragment = TripDetailsFragment.newInstance(mTripId);
 
-        ActivityUtils.replaceFragment(getSupportFragmentManager(), fragment, R.id.fragment_container, true);
+        ActivityUtils.replaceFragment(
+                getSupportFragmentManager(),
+                fragment,
+                R.id.fragment_container,
+                true);
 
         new TripDetailsPresenter(
                 mTripId,
@@ -132,7 +145,12 @@ public class TripsActivity extends AppCompatActivity implements ActivityContract
         } else {
             fragment = CreateEditTripFragment.newInstance();
         }
-        ActivityUtils.replaceFragment(getSupportFragmentManager(), fragment, R.id.fragment_container, true);
+
+        ActivityUtils.replaceFragment(
+                getSupportFragmentManager(),
+                fragment,
+                R.id.fragment_container,
+                true);
 
         //TODO: Should load boolean from savedInstance
 
@@ -154,7 +172,11 @@ public class TripsActivity extends AppCompatActivity implements ActivityContract
             fragment = CreateEditTripFragment.newInstance();
         }
 
-        ActivityUtils.replaceFragment(getSupportFragmentManager(), fragment, R.id.fragment_container, true);
+        ActivityUtils.replaceFragment(
+                getSupportFragmentManager(),
+                fragment,
+                R.id.fragment_container,
+                true);
 
         new CreateEditTripPresenter(
                 tripId,
@@ -167,12 +189,43 @@ public class TripsActivity extends AppCompatActivity implements ActivityContract
     @Override
     public void showTripsList() {
         TripsFragment tripsFragment = TripsFragment.newInstance();
-        ActivityUtils.replaceFragment(getSupportFragmentManager(), tripsFragment, R.id.fragment_container, false);
+
+        ActivityUtils.replaceFragment(
+                getSupportFragmentManager(),
+                tripsFragment,
+                R.id.fragment_container,
+                false);
+
         new TripsPresenter(
                 mTripsRepository,
                 tripsFragment,
                 mPresenter
         );
+    }
 
+    @Override
+    public void showCreateTalkView() {
+        CreateTalkFragment createTalkFragment = CreateTalkFragment.newInstance();
+
+        ActivityUtils.replaceFragment(
+                getSupportFragmentManager(),
+                createTalkFragment,
+                R.id.fragment_container,
+                false);
+
+        new CreateTalkPresenter(
+                mTripsRepository,
+                createTalkFragment,
+                mPresenter
+        );
+    }
+
+    @Override
+    public void showTalkView(String talkId) {
+        try {
+            AppgreeSDK.ViewLoader.loadTalk(this, talkId, new TalkView.Delegate());
+        } catch (AppgreeNotInitializeException e) {
+            e.printStackTrace();
+        }
     }
 }

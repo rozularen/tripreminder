@@ -17,6 +17,10 @@ public interface ActivityContract extends BaseActivityContract {
         void showEditTrip(String tripId);
 
         void showTripsList();
+
+        void showCreateTalkView();
+
+        void showTalkView(String talkId);
     }
 
     interface Presenter {
@@ -27,6 +31,10 @@ public interface ActivityContract extends BaseActivityContract {
         void showEditTrip(String tripId);
 
         void showTripsList();
+
+        void showCreateTalkView();
+
+        void showTalkView(String talkId);
     }
 
 }

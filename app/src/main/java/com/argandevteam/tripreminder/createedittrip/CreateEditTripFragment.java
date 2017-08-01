@@ -122,7 +122,6 @@ public class CreateEditTripFragment extends Fragment implements CreateEditTripCo
     public void showTripsList() {
         mActivityPresenter.showTripsList();
         showMessage("Trip creado con exito");
-
     }
 
     @Override
