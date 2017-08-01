@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- TODO: do it good -->
     <item
-        android:id="@+id/Hola"
-        android:title="Hola" />
+        android:id="@+id/trips_list"
+        android:title="Viajes" />
     <item
-        android:id="@+id/buenas"
-        android:title="Buenas" />
+        android:id="@+id/user_profile"
+        android:title="Perfil" />
 </menu>

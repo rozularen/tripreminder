@@ -15,10 +15,6 @@ import android.widget.TextView;
 
 import com.argandevteam.tripreminder.R;
 import com.argandevteam.tripreminder.trips.ActivityContract;
-import com.argandevteam.tripreminder.trips.TripsFragment;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -94,7 +90,7 @@ public class TripDetailsFragment extends Fragment implements TripDetailsContract
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.edit_trip:
+            case R.id.delete_trip:
                 mPresenter.deleteTrip();
                 return true;
             default:
@@ -152,12 +148,7 @@ public class TripDetailsFragment extends Fragment implements TripDetailsContract
 
     @Override
     public void showTripDeleted() {
-        //TODO:DELTE TRIP
-
-//        getActivity().getSupportFragmentManager()
-//                .beginTransaction()
-//                .replace(R.id.fragment_container, new TripsFragment())
-//                .commit();
+        mActivityPresenter.showTripsList();
     }
 
 

@@ -33,7 +33,8 @@ public class TripsDbHelper extends SQLiteOpenHelper {
     private static final String PRIMARY_KEY = " PRIMARY KEY";
 
     private static final String NOT_NULL = " NOT NULL";
-    private static final String SQL_CREATE_ENTRIES =
+
+    private static final String TRIPS_CREATE_TABLE =
             "CREATE TABLE IF NOT EXISTS " + TripsPersistenceContract.TripEntry.TABLE_NAME + " (" +
                     TripsPersistenceContract.TripEntry.COLUMN_NAME_TRIP_ID + INTEGER_TYPE + PRIMARY_KEY + AUTO_INCREMENT + NOT_NULL + COMMA_SEP +
                     TripsPersistenceContract.TripEntry.COLUMN_NAME_TRIP_REMOTE_ID + INTEGER_TYPE + COMMA_SEP +
@@ -42,6 +43,11 @@ public class TripsDbHelper extends SQLiteOpenHelper {
                     TripsPersistenceContract.TripEntry.COLUMN_NAME_END_DATE + TEXT_TYPE + COMMA_SEP +
                     TripsPersistenceContract.TripEntry.COLUMN_NAME_NUM_PERSONS + INTEGER_TYPE + COMMA_SEP +
                     TripsPersistenceContract.TripEntry.COLUMN_NAME_TOTAL_COST + TEXT_TYPE +
+                    " )";
+    private static final String ITEMS_CREATE_TABLE =
+            "CREATE TABLE IF NOT EXISTS " + ItemsPersistenceContract.ItemEntry.TABLE_NAME + " (" +
+                    ItemsPersistenceContract.ItemEntry.COLUMN_NAME_ITEM_ID + INTEGER_TYPE + PRIMARY_KEY + COMMA_SEP +
+                    ItemsPersistenceContract.ItemEntry.COLUMN_NAME_NAME + TEXT_TYPE +
                     " )";
 
     public TripsDbHelper(Context context) {
@@ -52,7 +58,7 @@ public class TripsDbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         try {
-            db.execSQL(SQL_CREATE_ENTRIES);
+            db.execSQL(TRIPS_CREATE_TABLE);
         } catch (Exception e) {
             Log.e(TAG, "onCreate: ", e);
         }
