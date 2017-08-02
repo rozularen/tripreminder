@@ -48,7 +48,7 @@ public class TripDetailsPresenter implements TripDetailsContract.Presenter {
             mView.showMissingTrip();
             return;
         }
-        checkIfHasTalk();
+//        checkIfHasTalk();
         //Set loading UI
         mTripsRepository.getTrip(mTripId, new TripsDataSource.GetTripCallback() {
             @Override
