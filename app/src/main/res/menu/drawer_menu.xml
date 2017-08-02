@@ -6,4 +6,7 @@
     <item
         android:id="@+id/user_profile"
         android:title="Perfil" />
+    <item
+        android:id="@+id/user_logout"
+        android:title="Salir" />
 </menu>

@@ -11,7 +11,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.appgree.core.AppgreeNotInitializeException;
+import com.appgree.core.task.ApiResponseException;
 import com.appgree.sdk.AppgreeSDK;
+import com.appgree.sdk.Callbacks;
 import com.appgree.sdk.TalkView;
 import com.argandevteam.tripreminder.createedittrip.CreateEditTripFragment;
 import com.argandevteam.tripreminder.createedittrip.CreateEditTripPresenter;
@@ -20,6 +22,7 @@ import com.argandevteam.tripreminder.createtalk.CreateTalkPresenter;
 import com.argandevteam.tripreminder.data.source.TripsRepository;
 import com.argandevteam.tripreminder.data.source.local.TripsLocalDataSource;
 import com.argandevteam.tripreminder.data.source.remote.TripsRemoteDataSource;
+import com.argandevteam.tripreminder.loginregister.LoginRegisterActivity;
 import com.argandevteam.tripreminder.trips.TripsFragment;
 import com.argandevteam.tripreminder.trips.TripsPresenter;
 import com.argandevteam.tripreminder.tripsdetail.TripDetailsFragment;
@@ -107,6 +110,10 @@ public class MainActivity extends AppCompatActivity {
                         //TODO: User profile
 //                        showUserProfile();
                         break;
+                    case R.id.user_logout:
+                        //Do logout
+                        doLogout();
+                        break;
                     default:
                         break;
                 }
@@ -116,6 +123,25 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    private void doLogout() {
+        AppgreeSDK.API.doLogout(new Callbacks.GenericCallback<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                showLoginView();
+            }
+
+            @Override
+            public void onError(ApiResponseException e, Exception e1) {
+                //TODO: Eror while doing logout
+            }
+        });
+    }
+
+    private void showLoginView() {
+        ActivityNavigator activityNavigator = new ActivityNavigator();
+        activityNavigator.navigateTo(this, LoginRegisterActivity.class, true);
     }
 
     public void showTripDetailsView(String mTripId) {
