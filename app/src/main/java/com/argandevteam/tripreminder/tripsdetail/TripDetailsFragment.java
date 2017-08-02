@@ -27,10 +27,7 @@ import butterknife.ButterKnife;
  */
 public class TripDetailsFragment extends Fragment implements TripDetailsContract.View {
 
-    @NonNull
-    private static final String ARG_TRIP_ID = "TRIP_ID";
-    @NonNull
-    private static final int REQUEST_EDIT_TRIP = 1;
+
     @BindView(R.id.trip_title)
     TextView mTripTitle;
     @BindView(R.id.trip_start_date)
@@ -41,6 +38,12 @@ public class TripDetailsFragment extends Fragment implements TripDetailsContract
     TextView mTripNumPersons;
     @BindView(R.id.trip_total_cost)
     TextView mTripTotalCost;
+
+    @NonNull
+    private static final String ARG_TRIP_ID = "TRIP_ID";
+    @NonNull
+    private static final int REQUEST_EDIT_TRIP = 1;
+
     private Menu mMenu;
     private TripDetailsContract.Presenter mPresenter;
 
@@ -106,6 +109,7 @@ public class TripDetailsFragment extends Fragment implements TripDetailsContract
         }
         return false;
     }
+
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

@@ -37,7 +37,7 @@ public interface TripDetailsContract {
 
     }
 
-    interface Presenter extends BasePresenter, Callbacks.GenericCallback<Void> {
+    interface Presenter extends BasePresenter {
 
         void openTrip();
 
@@ -48,12 +48,6 @@ public interface TripDetailsContract {
         void navigateToTalk();
 
         void createTalk();
-
-        @Override
-        void onSuccess(Void aVoid);
-
-        @Override
-        void onError(ApiResponseException e, Exception e1);
 
     }
 }

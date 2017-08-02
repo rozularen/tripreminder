@@ -48,7 +48,7 @@ public class TripDetailsPresenter implements TripDetailsContract.Presenter {
             mView.showMissingTrip();
             return;
         }
-
+        checkIfHasTalk();
         //Set loading UI
         mTripsRepository.getTrip(mTripId, new TripsDataSource.GetTripCallback() {
             @Override
@@ -110,12 +110,6 @@ public class TripDetailsPresenter implements TripDetailsContract.Presenter {
         }
     }
 
-    @Override
-    public void onSuccess(Void aVoid) {
-        mView.showMessage("On Success Appgree");
-        checkIfHasTalk();
-    }
-
     private void checkIfHasTalk() {
         mTripsRepository.getTrip(mTripId, new TripsDataSource.GetTripCallback() {
             @Override
@@ -135,39 +129,12 @@ public class TripDetailsPresenter implements TripDetailsContract.Presenter {
     }
 
     @Override
-    public void onError(ApiResponseException e, Exception e1) {
-        if (e != null) {
-            mView.showErrorAppgree(e.getMessage());
-        } else {
-            mView.showErrorAppgree(e1.getMessage());
-        }
-    }
-
-    @Override
     public void navigateToTalk() {
-//        AppgreeSDK.API.getTalk();
         mView.navigateToTalkView();
     }
 
     @Override
     public void createTalk() {
         mView.navigateToCreateTalkView();
-//
-//        Talk talkData = new Talk();
-//
-//        talkData.setPrivateTalk(true);
-//        talkData.setTitle("");
-//
-//        AppgreeSDK.API.createTalk(talkData, new Callbacks.GenericCallback<Talk>() {
-//            @Override
-//            public void onSuccess(Talk talk) {
-//
-//            }
-//
-//            @Override
-//            public void onError(ApiResponseException e, Exception e1) {
-//
-//            }
-//        });
     }
 }
