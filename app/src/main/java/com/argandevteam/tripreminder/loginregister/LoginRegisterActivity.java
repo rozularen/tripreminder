@@ -2,8 +2,14 @@ package com.argandevteam.tripreminder.loginregister;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.widget.Toast;
 
+import com.appgree.core.task.ApiResponseException;
+import com.appgree.sdk.AppgreeSDK;
+import com.appgree.sdk.Callbacks;
 import com.argandevteam.tripreminder.R;
 import com.argandevteam.tripreminder.loginregister.login.LoginFragment;
 import com.argandevteam.tripreminder.loginregister.login.LoginPresenter;
@@ -17,7 +23,7 @@ import butterknife.ButterKnife;
 public class LoginRegisterActivity extends AppCompatActivity implements LoginRegisterContract.View {
 
     private LoginRegisterContract.Presenter mPresenter;
-
+    private static final String TAG = "LoginRegisterAct";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +31,32 @@ public class LoginRegisterActivity extends AppCompatActivity implements LoginReg
         setContentView(R.layout.activity_login_register);
 
         ButterKnife.bind(this);
+
+        // Set up Appgree SDK
+//        AppgreeSDK.Initializer.startSocial(this, AppgreeSDK.SDKEnvironment.DEV, new Callbacks.GenericCallback<Void>() {
+//            @Override
+//            public void onSuccess(Void aVoid) {
+//                Log.d(TAG, "onSuccessInitialize: ");
+//            }
+//
+//            @Override
+//            public void onError(ApiResponseException e, Exception e1) {
+//                Log.e(TAG, "onError: ", e);
+//                Log.e(TAG, "onError: ", e1);
+//            }
+//        });
+        AppgreeSDK.Initializer.startSocial(this, AppgreeSDK.SDKEnvironment.DEV, "", new Callbacks.GenericCallback<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(LoginRegisterActivity.this, "SDK Initialized", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(ApiResponseException e, Exception e1) {
+                Toast.makeText(LoginRegisterActivity.this, "ERROR INITIALIZING", Toast.LENGTH_SHORT).show();
+
+            }
+        });
 
         mPresenter = new LoginRegisterPresenter(this);
 

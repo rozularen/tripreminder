@@ -14,8 +14,11 @@ public class ActivityNavigator {
 //        this.context = context;
 //    }
 
-    public void navigateTo(Activity from, Class to) {
+    public void navigateTo(Activity from, Class to, boolean finishAfterIntent) {
         Intent intent = new Intent(from, to);
         from.startActivity(intent);
+        if (finishAfterIntent) {
+            from.finish();
+        }
     }
 }

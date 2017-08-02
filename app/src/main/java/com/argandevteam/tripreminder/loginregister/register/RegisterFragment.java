@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.argandevteam.tripreminder.ActivityNavigator;
 import com.argandevteam.tripreminder.R;
@@ -73,7 +74,12 @@ public class RegisterFragment extends Fragment implements RegisterContract.View,
     @Override
     public void registerSuccess() {
         ActivityNavigator activityNavigator = new ActivityNavigator();
-        activityNavigator.navigateTo(getActivity(), MainActivity.class);
+        activityNavigator.navigateTo(getActivity(), MainActivity.class, true);
+    }
+
+    @Override
+    public void registerError() {
+        Toast.makeText(getContext(), "Error while registering", Toast.LENGTH_SHORT).show();
     }
 
     @Override

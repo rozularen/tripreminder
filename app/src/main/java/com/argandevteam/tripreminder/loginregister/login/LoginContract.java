@@ -14,6 +14,8 @@ public interface LoginContract {
         void setActivityPresenter(LoginRegisterContract.Presenter activityPresenter);
 
         void loginSuccess();
+
+        void loginError();
     }
 
     interface Presenter extends BasePresenter {

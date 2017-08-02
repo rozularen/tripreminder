@@ -75,7 +75,13 @@ public class LoginFragment extends Fragment implements LoginContract.View, View.
     @Override
     public void loginSuccess() {
         ActivityNavigator activityNavigator = new ActivityNavigator();
-        activityNavigator.navigateTo(getActivity(), MainActivity.class);
+        activityNavigator.navigateTo(getActivity(), MainActivity.class, true);
+    }
+
+    @Override
+    public void loginError() {
+        //TODO: Show login error on edittext
+        userEmail.setError("Error");
     }
 
     @Override

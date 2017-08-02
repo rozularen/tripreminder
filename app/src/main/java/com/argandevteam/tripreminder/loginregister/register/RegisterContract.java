@@ -11,6 +11,8 @@ public interface RegisterContract {
     interface View extends BaseView<Presenter> {
 
         void registerSuccess();
+
+        void registerError();
     }
 
     interface Presenter extends BasePresenter {

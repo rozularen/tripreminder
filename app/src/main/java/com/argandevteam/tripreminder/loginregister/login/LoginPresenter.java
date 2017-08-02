@@ -1,6 +1,10 @@
 package com.argandevteam.tripreminder.loginregister.login;
 
 
+import com.appgree.core.AppUser;
+import com.appgree.core.task.ApiResponseException;
+import com.appgree.sdk.AppgreeSDK;
+import com.appgree.sdk.Callbacks;
 import com.argandevteam.tripreminder.loginregister.LoginRegisterContract;
 
 /**
@@ -30,9 +34,17 @@ public class LoginPresenter implements LoginContract.Presenter {
         // TODO: Do login
         //Query local or remote Database for user etc etc
         // is it good?
-        mView.loginSuccess();
-        //else
-        //mView.loginError();
+        AppgreeSDK.API.doLogin(email, password, new Callbacks.GenericCallback<AppUser>() {
+            @Override
+            public void onSuccess(AppUser appUser) {
+                mView.loginSuccess();
+            }
+
+            @Override
+            public void onError(ApiResponseException e, Exception e1) {
+                mView.loginError();
+            }
+        });
     }
 
 }

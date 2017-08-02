@@ -73,7 +73,6 @@ public class TripDetailsFragment extends Fragment implements TripDetailsContract
         setHasOptionsMenu(true);
 
 
-        AppgreeSDK.Initializer.startSocial(getContext(), AppgreeSDK.SDKEnvironment.DEV, mPresenter);
 
         //Set up Floating Action Button
         FloatingActionButton fab =
