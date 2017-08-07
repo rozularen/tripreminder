@@ -103,6 +103,7 @@ public class TripDetailsFragment extends Fragment implements TripDetailsContract
         View view = inflater.inflate(R.layout.fragment_trip_details, container, false);
 
         ButterKnife.bind(this, view);
+
         setHasOptionsMenu(true);
 
         //Set up RecyclerView

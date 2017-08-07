@@ -89,7 +89,6 @@ public class TripDetailsPresenter implements TripDetailsContract.Presenter {
             mView.showTrip(title, startDate, endDate, numPersons, totalCost);
         }
 
-
     }
 
     @Override
