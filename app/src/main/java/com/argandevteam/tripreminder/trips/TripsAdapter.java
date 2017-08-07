@@ -101,13 +101,6 @@ public class TripsAdapter extends RecyclerView.Adapter {
             String startDate = trip.getStartDate();
             String endDate = trip.getEndDate();
 
-//            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-//
-//            Date startDateFormat = new Date(Long.valueOf(startDate));
-//            Date endDateFormat = new Date(Long.valueOf(endDate));
-//
-//            tripStartDate.setText(simpleDateFormat.format(startDate));
-//            tripEndDate.setText(simpleDateFormat.format(endDate));
             tripStartDate.setText(trip.getStartDate());
             tripEndDate.setText(trip.getEndDate());
 
@@ -118,21 +111,6 @@ public class TripsAdapter extends RecyclerView.Adapter {
         @Override
         public void onClick(View view) {
             listener.onTripClick(trip);
-
-//            AppCompatActivity activity = (AppCompatActivity) view.getContext();
-//            Fragment myFragment = new TripDetailsFragment();
-//
-//            Bundle args = new Bundle();
-//            args.putParcelable("trip", trip);
-//            myFragment.setArguments(args);
-//
-//            FragmentManager supportFragmentManager = activity.getSupportFragmentManager();
-//
-//            supportFragmentManager
-//                    .beginTransaction()
-//                    .replace(R.id.fragment_container, myFragment)
-//                    .addToBackStack(null)
-//                    .commit();
 
         }
     }
