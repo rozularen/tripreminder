@@ -14,7 +14,7 @@ public interface TripsDataSource {
 
     void getTrip(String tripId, GetTripCallback callback);
 
-    int saveTrip(Trip trip);
+    void saveTrip(Trip trip, SaveTripCallback callback);
 
     void updateTrip(Trip trip);
 

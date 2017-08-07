@@ -82,12 +82,12 @@ public class CreateEditTripPresenter implements CreateEditTripContract.Presenter
             createTrip(title, startDate, endDate, numPersons, totalCost);
         } else {
             //TODO: Type mismatch id is string and integer
-            updateTrip(Integer.valueOf(mTripId), title, startDate, endDate, numPersons, totalCost);
+            updateTrip(mTripId, title, startDate, endDate, numPersons, totalCost);
         }
     }
 
 
-    private void updateTrip(int tripId, String title, String startDate, String endDate, int numPersons, String totalCost) {
+    private void updateTrip(String tripId, String title, String startDate, String endDate, int numPersons, String totalCost) {
         if (isNewTrip()) {
             throw new RuntimeException("updateTrip() was called but Trip is new");
         }
@@ -101,10 +101,20 @@ public class CreateEditTripPresenter implements CreateEditTripContract.Presenter
     private void createTrip(String title, String startDate, String endDate, int numPersons, String totalCost) {
         Trip newTrip = new Trip(title, startDate, endDate, numPersons, totalCost);
 
-        if (newTrip.isEmpty()) {
+        if (newTrip.getTitle().equals("")) {
             mView.showEmptyTripError();
         } else {
-            mTripsRepository.saveTrip(newTrip);
+            mTripsRepository.saveTrip(newTrip, new TripsDataSource.SaveTripCallback() {
+                @Override
+                public void onTripSaved(Trip trip) {
+                    mView.onTripCreated();
+                }
+
+                @Override
+                public void onDataNotAvailable() {
+                    mView.onTripCreateError();
+                }
+            });
             mView.showTripsList();
 
 //            mTripsRepository.saveTrip(newTrip, new TripsDataSource.SaveTripCallback() {

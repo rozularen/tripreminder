@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.argandevteam.tripreminder.data.Trip;
 import com.argandevteam.tripreminder.data.source.TripsDataSource;
@@ -13,12 +14,16 @@ import com.argandevteam.tripreminder.util.Utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.Realm;
+import io.realm.RealmResults;
+
 /**
  * Created by markc on 23/07/2017.
  */
 
 public class TripsLocalDataSource implements TripsDataSource {
 
+    private static final String TAG = "LocalDataSrc";
     private static TripsLocalDataSource INSTANCE;
 
     private TripsDbHelper mDbHelper;
@@ -39,51 +44,92 @@ public class TripsLocalDataSource implements TripsDataSource {
 
     @Override
     public void getTrips(LoadTripsCallback callback) {
+        Realm realm = Realm.getDefaultInstance();
+        RealmResults trips = realm.where(Trip.class).findAll();
         if (callback != null) {
-            List<Trip> trips = new ArrayList<Trip>();
-            SQLiteDatabase db = mDbHelper.getReadableDatabase();
-
-            String[] projection = {
-                    TripEntry.COLUMN_NAME_TRIP_ID,
-                    TripEntry.COLUMN_NAME_TRIP_REMOTE_ID,
-                    TripEntry.COLUMN_NAME_TITLE,
-                    TripEntry.COLUMN_NAME_START_DATE,
-                    TripEntry.COLUMN_NAME_END_DATE,
-                    TripEntry.COLUMN_NAME_NUM_PERSONS,
-                    TripEntry.COLUMN_NAME_TOTAL_COST
-            };
-
-            Cursor cursor = db.query(TripEntry.TABLE_NAME, projection, null, null, null, null, null);
-
-            if (cursor != null && cursor.getCount() > 0) {
-                while (cursor.moveToNext()) {
-                    int itemId = cursor.getInt(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_TRIP_ID));
-                    long remoteId = cursor.getLong(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_TRIP_REMOTE_ID));
-                    String title = cursor.getString(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_TITLE));
-                    long startDate = cursor.getLong(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_START_DATE));
-                    long endDate = cursor.getLong(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_END_DATE));
-                    int numPersons = cursor.getInt(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_NUM_PERSONS));
-                    String totalCost = cursor.getString(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_TOTAL_COST));
-
-                    Trip trip = new Trip(itemId, title, Utils.fromMillisToText(startDate), Utils.fromMillisToText(endDate), numPersons, totalCost);
-                    trips.add(trip);
-                }
-            }
-            if (cursor != null) {
-                cursor.close();
-            }
-
-            db.close();
-
-            if (!trips.isEmpty()) {
-                callback.onTripsLoaded(trips);
-            } else {
-                callback.onDataNotAvailable();
-            }
+            callback.onTripsLoaded(trips);
         }
     }
 
     @Override
+    public void getTrip(String tripId, GetTripCallback callback) {
+        if (callback != null) {
+            Realm realm = Realm.getDefaultInstance();
+            Trip trip = realm.where(Trip.class).equalTo("id", "s").findFirst();
+            callback.onTripLoaded(trip);
+        } else {
+            Log.d(TAG, "getTrip: CANT BE NULL!!");
+        }
+
+    }
+
+    @Override
+    public void saveTrip(Trip trip, SaveTripCallback callback) {
+        // Obtain a Realm instance
+        if (callback != null) {
+            Realm realm = Realm.getDefaultInstance();
+
+            realm.beginTransaction();
+
+            Trip newTrip = realm.copyToRealm(trip);
+
+            realm.commitTransaction();
+
+            callback.onTripSaved(newTrip);
+        } else {
+            Log.d(TAG, "saveTrip: Save trip local cant be null");
+        }
+    }
+
+    /*
+        @Override
+        public void getTrips(LoadTripsCallback callback) {
+            if (callback != null) {
+                List<Trip> trips = new ArrayList<Trip>();
+                SQLiteDatabase db = mDbHelper.getReadableDatabase();
+
+                String[] projection = {
+                        TripEntry.COLUMN_NAME_TRIP_ID,
+                        TripEntry.COLUMN_NAME_TRIP_REMOTE_ID,
+                        TripEntry.COLUMN_NAME_TITLE,
+                        TripEntry.COLUMN_NAME_START_DATE,
+                        TripEntry.COLUMN_NAME_END_DATE,
+                        TripEntry.COLUMN_NAME_NUM_PERSONS,
+                        TripEntry.COLUMN_NAME_TOTAL_COST
+                };
+
+                Cursor cursor = db.query(TripEntry.TABLE_NAME, projection, null, null, null, null, null);
+
+                if (cursor != null && cursor.getCount() > 0) {
+                    while (cursor.moveToNext()) {
+                        int itemId = cursor.getInt(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_TRIP_ID));
+                        long remoteId = cursor.getLong(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_TRIP_REMOTE_ID));
+                        String title = cursor.getString(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_TITLE));
+                        long startDate = cursor.getLong(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_START_DATE));
+                        long endDate = cursor.getLong(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_END_DATE));
+                        int numPersons = cursor.getInt(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_NUM_PERSONS));
+                        String totalCost = cursor.getString(cursor.getColumnIndexOrThrow(TripEntry.COLUMN_NAME_TOTAL_COST));
+
+                        Trip trip = new Trip(itemId, title, Utils.fromMillisToText(startDate), Utils.fromMillisToText(endDate), numPersons, totalCost);
+                        trips.add(trip);
+                    }
+                }
+                if (cursor != null) {
+                    cursor.close();
+                }
+
+                db.close();
+
+                if (!trips.isEmpty()) {
+                    callback.onTripsLoaded(trips);
+                } else {
+                    callback.onDataNotAvailable();
+                }
+            }
+        }
+
+    */
+ /*   @Override
     public void getTrip(String tripId, GetTripCallback callback) {
         if (tripId != null) {
             if (callback != null) {
@@ -131,8 +177,8 @@ public class TripsLocalDataSource implements TripsDataSource {
             }
         }
     }
-
-    @Override
+*/
+ /*   @Override
     public int saveTrip(Trip trip) {
         if (trip != null) {
             SQLiteDatabase db = mDbHelper.getWritableDatabase();
@@ -153,7 +199,7 @@ public class TripsLocalDataSource implements TripsDataSource {
         } else {
             return 0;
         }
-    }
+    }*/
 
 
     //

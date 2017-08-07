@@ -5,13 +5,20 @@ import android.os.Parcelable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by markc on 21/07/2017.
  */
 
-public final class Trip implements Parcelable {
+public class Trip extends RealmObject {
+//public final class Trip extends RealmObject implements Parcelable {
 
+/*
     //Parcelable
     public static final Creator<Trip> CREATOR = new Creator<Trip>() {
         @Override
@@ -24,7 +31,10 @@ public final class Trip implements Parcelable {
             return new Trip[size];
         }
     };
-    private int id;
+*/
+
+    @PrimaryKey
+    private String id = UUID.randomUUID().toString();
     private long remoteId;
     private String mTitle;
     private String mStartDate;
@@ -32,7 +42,10 @@ public final class Trip implements Parcelable {
     private int mNumPersons;
     private String mTotalCost;
     private String talkId;
-    private List<Item> mItemsList;
+    private RealmList<Item> mItemsList;
+
+    public Trip() {
+    }
 
     public Trip(String mTitle, String mStartDate, String mEndDate, int mNumPersons, String mTotalCost) {
         this.mTitle = mTitle;
@@ -40,32 +53,32 @@ public final class Trip implements Parcelable {
         this.mEndDate = mEndDate;
         this.mNumPersons = mNumPersons;
         this.mTotalCost = mTotalCost;
-        this.mItemsList = new ArrayList<Item>(0);
+//        this.mItemsList = new ArrayList<Item>(0);
     }
 
-    public Trip(int id, String mTitle, String mStartDate, String mEndDate, int mNumPersons, String mTotalCost) {
+    public Trip(String id, String mTitle, String mStartDate, String mEndDate, int mNumPersons, String mTotalCost) {
         this(id, mTitle, mStartDate, mEndDate, mNumPersons, mTotalCost, new ArrayList<Item>());
     }
 
-    public Trip(int id, String mTitle, String mStartDate, String mEndDate, int mNumPersons, String mTotalCost, List<Item> mItemsList) {
+    public Trip(String id, String mTitle, String mStartDate, String mEndDate, int mNumPersons, String mTotalCost, List<Item> mItemsList) {
         this.id = id;
         this.mTitle = mTitle;
         this.mStartDate = mStartDate;
         this.mEndDate = mEndDate;
         this.mNumPersons = mNumPersons;
         this.mTotalCost = mTotalCost;
-        this.mItemsList = mItemsList;
+//        this.mItemsList = mItemsList;
     }
 
     protected Trip(Parcel in) {
         mTitle = in.readString();
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -101,11 +114,11 @@ public final class Trip implements Parcelable {
         this.mNumPersons = numPersons;
     }
 
-    public List<Item> getItemsList() {
+    public RealmList<Item> getItemsList() {
         return mItemsList;
     }
 
-    public void setItemsList(List<Item> itemsList) {
+    public void setItemsList(RealmList<Item> itemsList) {
         this.mItemsList = itemsList;
     }
 
@@ -132,7 +145,7 @@ public final class Trip implements Parcelable {
     public void setTalkId(String talkId) {
         this.talkId = talkId;
     }
-
+/*
     @Override
     public int describeContents() {
         return 0;
@@ -171,12 +184,14 @@ public final class Trip implements Parcelable {
 
     @Override
     public int hashCode() {
-        int result = (int) (getId() ^ (getId() >>> 32));
+        int result = getId() != null ? getId().hashCode() : 0;
+        result = 31 * result + (int) (getRemoteId() ^ (getRemoteId() >>> 32));
         result = 31 * result + (mTitle != null ? mTitle.hashCode() : 0);
         result = 31 * result + (mStartDate != null ? mStartDate.hashCode() : 0);
         result = 31 * result + (mEndDate != null ? mEndDate.hashCode() : 0);
         result = 31 * result + mNumPersons;
         result = 31 * result + (mTotalCost != null ? mTotalCost.hashCode() : 0);
+        result = 31 * result + (getTalkId() != null ? getTalkId().hashCode() : 0);
         result = 31 * result + (mItemsList != null ? mItemsList.hashCode() : 0);
         return result;
     }
@@ -192,5 +207,5 @@ public final class Trip implements Parcelable {
                 ", mTotalCost='" + mTotalCost + '\'' +
                 ", mItemsList=" + mItemsList +
                 '}';
-    }
+    }*/
 }
