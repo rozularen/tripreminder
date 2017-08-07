@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.argandevteam.tripreminder.MainActivity;
 import com.argandevteam.tripreminder.R;
+import com.argandevteam.tripreminder.data.Item;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 

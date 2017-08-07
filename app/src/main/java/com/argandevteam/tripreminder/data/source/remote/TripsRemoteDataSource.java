@@ -4,7 +4,7 @@ import android.os.Handler;
 
 import com.argandevteam.tripreminder.data.Trip;
 import com.argandevteam.tripreminder.data.source.TripsDataSource;
-import com.argandevteam.tripreminder.tripsdetail.Item;
+import com.argandevteam.tripreminder.data.Item;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

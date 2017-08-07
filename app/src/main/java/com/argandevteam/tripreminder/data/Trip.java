@@ -3,8 +3,6 @@ package com.argandevteam.tripreminder.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.argandevteam.tripreminder.tripsdetail.Item;
-
 import java.util.ArrayList;
 import java.util.List;
 
