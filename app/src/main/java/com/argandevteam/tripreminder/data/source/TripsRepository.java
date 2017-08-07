@@ -215,7 +215,7 @@ public class TripsRepository implements TripsDataSource {
         mTripsRemoteDataSource.deleteTrip(String.valueOf(trip.getId()));
         mTripsLocalDataSource.deleteTrip(String.valueOf(trip.getId()));
 
-        mCachedTrips.remove(trip.getId());
+        mCachedTrips.remove(String.valueOf(trip.getId()));
     }
 
     @Override

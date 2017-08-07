@@ -3,20 +3,26 @@ package com.argandevteam.tripreminder.tripsdetail;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.appgree.sdk.AppgreeSDK;
-import com.argandevteam.tripreminder.R;
 import com.argandevteam.tripreminder.MainActivity;
+import com.argandevteam.tripreminder.R;
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,19 +31,33 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TripDetailsFragment extends Fragment implements TripDetailsContract.View {
+public class TripDetailsFragment extends Fragment implements TripDetailsContract.View, View.OnClickListener {
 
+    FloatingActionMenu mFabMenu;
 
     @BindView(R.id.trip_title)
     TextView mTripTitle;
+
     @BindView(R.id.trip_start_date)
     TextView mTripStartDate;
+
     @BindView(R.id.trip_end_date)
     TextView mTripEndDate;
+
     @BindView(R.id.trip_num_persons)
     TextView mTripNumPersons;
+
     @BindView(R.id.trip_total_cost)
     TextView mTripTotalCost;
+
+    @BindView(R.id.no_items_view)
+    LinearLayout mNoItemsView;
+
+    @BindView(R.id.items_view)
+    LinearLayout mItemsView;
+
+    @BindView(R.id.items_recycler_view)
+    RecyclerView mItemsRecyclerView;
 
     @NonNull
     private static final String ARG_TRIP_ID = "TRIP_ID";
@@ -46,6 +66,8 @@ public class TripDetailsFragment extends Fragment implements TripDetailsContract
 
     private Menu mMenu;
     private TripDetailsContract.Presenter mPresenter;
+    private LinearLayoutManager mLayoutManager;
+    private ItemsAdapter mAdapter;
 
     public TripDetailsFragment() {
         // Required empty public constructor
@@ -57,6 +79,14 @@ public class TripDetailsFragment extends Fragment implements TripDetailsContract
         TripDetailsFragment tripDetailsFragment = new TripDetailsFragment();
         tripDetailsFragment.setArguments(args);
         return tripDetailsFragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ArrayList<Item> tripsList = new ArrayList<>(0);
+
+        mAdapter = new ItemsAdapter(tripsList);
     }
 
     @Override
@@ -72,24 +102,38 @@ public class TripDetailsFragment extends Fragment implements TripDetailsContract
         View view = inflater.inflate(R.layout.fragment_trip_details, container, false);
 
         ButterKnife.bind(this, view);
-
         setHasOptionsMenu(true);
 
-
+        //Set up RecyclerView
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        mItemsRecyclerView.setHasFixedSize(true);
+        mItemsRecyclerView.setLayoutManager(mLayoutManager);
+        mItemsRecyclerView.setAdapter(mAdapter);
 
         //Set up Floating Action Button
-        FloatingActionButton fab =
-                (FloatingActionButton) getActivity().findViewById(R.id.fab_create_trip);
-
-        fab.setImageResource(R.drawable.ic_edit);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPresenter.editTrip();
-            }
-        });
+        setUpFloatingActionMenu();
 
         return view;
+    }
+
+    private void setUpFloatingActionMenu() {
+        mFabMenu = (FloatingActionMenu) getActivity().findViewById(R.id.fab_menu);
+
+        FloatingActionButton mFabCreate =
+                (FloatingActionButton) getActivity().findViewById(R.id.fab_create_trip);
+        FloatingActionButton mFabEditTrip =
+                (FloatingActionButton) getActivity().findViewById(R.id.fab_edit_trip);
+        FloatingActionButton mFabDeleteTrip =
+                (FloatingActionButton) getActivity().findViewById(R.id.fab_delete_trip);
+        FloatingActionButton mFabEditItems =
+                (FloatingActionButton) getActivity().findViewById(R.id.fab_edit_items);
+
+        mFabMenu.setVisibility(View.VISIBLE);
+        mFabCreate.setVisibility(View.GONE);
+
+        mFabEditTrip.setOnClickListener(this);
+        mFabDeleteTrip.setOnClickListener(this);
+        mFabEditItems.setOnClickListener(this);
     }
 
     @Override
@@ -127,6 +171,7 @@ public class TripDetailsFragment extends Fragment implements TripDetailsContract
 
     @Override
     public void showEditTrip(String tripId) {
+        mFabMenu.close(true);
         MainActivity activity = (MainActivity) getActivity();
         activity.showEditTrip(tripId);
     }
@@ -196,5 +241,28 @@ public class TripDetailsFragment extends Fragment implements TripDetailsContract
     public void navigateToCreateTalkView() {
         MainActivity activity = (MainActivity) getActivity();
         activity.showCreateTalkView();
+    }
+
+    @Override
+    public void editItems() {
+        //TODO: Make items list editable
+        mFabMenu.close(true);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.fab_edit_items:
+                mPresenter.editItems();
+                break;
+            case R.id.fab_delete_trip:
+                mPresenter.deleteTrip();
+                break;
+            case R.id.fab_edit_trip:
+                mPresenter.editTrip();
+                break;
+            default:
+                break;
+        }
     }
 }

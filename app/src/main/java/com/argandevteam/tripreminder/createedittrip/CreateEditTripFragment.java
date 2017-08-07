@@ -2,7 +2,6 @@ package com.argandevteam.tripreminder.createedittrip;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,6 +11,8 @@ import android.widget.EditText;
 
 import com.argandevteam.tripreminder.MainActivity;
 import com.argandevteam.tripreminder.R;
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,6 +34,7 @@ public class CreateEditTripFragment extends Fragment implements CreateEditTripCo
     EditText mTripNumPersons;
     @BindView(R.id.trip_total_cost)
     EditText mTripTotalCost;
+
     private CreateEditTripContract.Presenter mPresenter;
 
     public static CreateEditTripFragment newInstance() {
@@ -66,10 +68,17 @@ public class CreateEditTripFragment extends Fragment implements CreateEditTripCo
 
         ButterKnife.bind(this, view);
 
-        FloatingActionButton floatingActionButton = (FloatingActionButton)
+        // Set up Floating Action Menu
+        FloatingActionMenu mFabMenu = (FloatingActionMenu) getActivity().findViewById(R.id.fab_menu);
+        FloatingActionButton mFabButton = (FloatingActionButton)
                 getActivity().findViewById(R.id.fab_create_trip);
-        floatingActionButton.setImageResource(R.drawable.ic_check);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+
+        mFabButton.setVisibility(View.VISIBLE);
+        mFabMenu.setVisibility(View.GONE);
+
+
+        mFabButton.setImageResource(R.drawable.ic_check_white_24dp);
+        mFabButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //TODO: Handle time coming as String but formated as a date

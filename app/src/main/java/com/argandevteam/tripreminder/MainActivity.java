@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         //Set up the Toolbar
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         //Set up the Drawer Layout

@@ -17,6 +17,10 @@ public class ItemsAdapter extends RecyclerView.Adapter {
 
     List<Item> itemsList;
 
+    public ItemsAdapter(List<Item> itemsList) {
+        this.itemsList = itemsList;
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemCardView = LayoutInflater.from(parent.getContext()).inflate(R.layout.trip_card, parent, false);

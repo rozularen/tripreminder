@@ -137,4 +137,9 @@ public class TripDetailsPresenter implements TripDetailsContract.Presenter {
     public void createTalk() {
         mView.navigateToCreateTalkView();
     }
+
+    @Override
+    public void editItems() {
+        mView.editItems();
+    }
 }

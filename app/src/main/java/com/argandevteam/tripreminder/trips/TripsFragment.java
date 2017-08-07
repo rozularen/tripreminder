@@ -4,7 +4,6 @@ package com.argandevteam.tripreminder.trips;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -22,6 +21,8 @@ import android.widget.TextView;
 import com.argandevteam.tripreminder.MainActivity;
 import com.argandevteam.tripreminder.R;
 import com.argandevteam.tripreminder.data.Trip;
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +51,8 @@ public class TripsFragment extends Fragment implements TripsContract.View {
     TextView mNoTripsCreateView;
     @BindView(R.id.trips_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
+
+
     private RecyclerView.LayoutManager mLayoutManager;
     private TripsContract.Presenter mPresenter;
     /**
@@ -100,11 +103,15 @@ public class TripsFragment extends Fragment implements TripsContract.View {
         mTripsRecyclerView.setAdapter(mAdapter);
 
         //Set up Floating Action Button
-        FloatingActionButton fab =
+        FloatingActionMenu mFabMenu = (FloatingActionMenu) getActivity().findViewById(R.id.fab_menu);
+        FloatingActionButton mFabButton =
                 (FloatingActionButton) getActivity().findViewById(R.id.fab_create_trip);
 
-        fab.setImageResource(R.drawable.ic_create);
-        fab.setOnClickListener(new View.OnClickListener() {
+        mFabMenu.setVisibility(View.GONE);
+        mFabButton.setVisibility(View.VISIBLE);
+
+        mFabButton.setImageResource(R.drawable.ic_create_white_24dp);
+        mFabButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mPresenter.createTrip();

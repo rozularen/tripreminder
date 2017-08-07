@@ -38,15 +38,59 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
-            <android.support.design.widget.FloatingActionButton
+
+            <com.github.clans.fab.FloatingActionButton
                 android:id="@+id/fab_create_trip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right|end"
                 android:layout_margin="16dp"
-                android:src="@drawable/ic_create"
-                app:fabSize="normal"
-                app:layout_anchor="@id/fragment_container"
-                app:layout_anchorGravity="bottom|right|end" />
+                android:src="@drawable/ic_group_black_24dp" />
+
+            <com.github.clans.fab.FloatingActionMenu
+                android:id="@+id/fab_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right|end"
+                android:layout_margin="16dp"
+                android:visibility="gone">
+
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/fab_delete_trip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_delete_white_24dp"
+                    app:fab_label="Eliminar Viaje"
+                    app:fab_size="mini" />
+
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/fab_edit_trip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_edit_white_24dp"
+                    app:fab_label="Editar Viaje"
+                    app:fab_size="mini" />
+
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/fab_edit_items"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_list_bullet_white_24dp"
+                    app:fab_label="Editar Lista de Ítems"
+                    app:fab_size="mini" />
+
+
+            </com.github.clans.fab.FloatingActionMenu>
+
+            <!--<android.support.design.widget.FloatingActionButton-->
+            <!--android:id="@+id/fab_create_trip"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_margin="16dp"-->
+            <!--android:src="@drawable/ic_create_white_24dp"-->
+            <!--app:fabSize="normal"-->
+            <!--app:layout_anchor="@id/fragment_container"-->
+            <!--app:layout_anchorGravity="bottom|right|end" />-->
 
         </android.support.design.widget.CoordinatorLayout>
 

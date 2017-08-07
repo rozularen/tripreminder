@@ -35,6 +35,7 @@ public interface TripDetailsContract {
 
         void navigateToCreateTalkView();
 
+        void editItems();
     }
 
     interface Presenter extends BasePresenter {
@@ -49,5 +50,6 @@ public interface TripDetailsContract {
 
         void createTalk();
 
+        void editItems();
     }
 }

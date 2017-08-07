@@ -62,10 +62,58 @@
             android:layout_margin="10dp"
             android:text="Lista de cosas" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/items_recycler_view"
+        <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:id="@+id/items_recycler_view"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content" />-->
+
+        <LinearLayout
+            android:id="@+id/items_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent"
+            android:gravity="center"
+            tools:visibility="gone">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/items_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/no_items_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            tools:visibility="visible">
+
+            <ImageView
+                android:id="@+id/no_items_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:tint="@color/color_material_gray"
+                tools:src="@drawable/ic_basket_black_24dp" />
+
+            <TextView
+                android:id="@+id/no_items_main_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No tienes Ítems aún!"
+                android:textColor="@color/color_black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/no_items_create_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Crea uno nuevo ahora!"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>

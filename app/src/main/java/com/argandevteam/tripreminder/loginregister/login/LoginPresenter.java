@@ -31,20 +31,26 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     @Override
     public void doLogin(String email, String password) {
-        // TODO: Do login
-        //Query local or remote Database for user etc etc
-        // is it good?
-        AppgreeSDK.API.doLogin(email, password, new Callbacks.GenericCallback<AppUser>() {
-            @Override
-            public void onSuccess(AppUser appUser) {
-                mView.loginSuccess();
-            }
+//        if (AppgreeSDK.isStarted()) {
+//            // TODO: Do login
+//            //Login normally, first with appgree then locally/remotely
+//            AppgreeSDK.API.doLogin(email, password, new Callbacks.GenericCallback<AppUser>() {
+//                @Override
+//                public void onSuccess(AppUser appUser) {
+//                    mView.loginSuccess();
+//                }
+//
+//                @Override
+//                public void onError(ApiResponseException e, Exception e1) {
+//                    mView.loginError();
+//                }
+//            });
+//        } else {
+//            // TODO: Do login
+//            //If appgree is not started, do just login
+//        }
+        mView.loginSuccess();
 
-            @Override
-            public void onError(ApiResponseException e, Exception e1) {
-                mView.loginError();
-            }
-        });
     }
 
 }
