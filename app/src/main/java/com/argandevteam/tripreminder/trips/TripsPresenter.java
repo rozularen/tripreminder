@@ -61,8 +61,6 @@ public class TripsPresenter implements TripsContract.Presenter {
         mTripsRepository.getTrips(new TripsDataSource.LoadTripsCallback() {
             @Override
             public void onTripsLoaded(List<Trip> trips) {
-                Log.d(TAG, "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-
                 List<Trip> tripsToShow = new ArrayList<>();
 
                 for (Trip trip : trips) {
@@ -75,7 +73,6 @@ public class TripsPresenter implements TripsContract.Presenter {
                 if (showLoadingView) {
                     mView.setLoadingView(false);
                 }
-
 
                 processTrips(tripsToShow);
             }

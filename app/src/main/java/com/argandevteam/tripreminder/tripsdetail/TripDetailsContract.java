@@ -36,6 +36,10 @@ public interface TripDetailsContract {
         void navigateToCreateTalkView();
 
         void editItems();
+
+        void showEmptyItems();
+
+        void newItemCreated();
     }
 
     interface Presenter extends BasePresenter {
@@ -51,5 +55,7 @@ public interface TripDetailsContract {
         void createTalk();
 
         void editItems();
+
+        void addItem(String itemTitle);
     }
 }

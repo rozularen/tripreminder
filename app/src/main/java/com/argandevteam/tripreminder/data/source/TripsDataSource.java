@@ -1,5 +1,6 @@
 package com.argandevteam.tripreminder.data.source;
 
+import com.argandevteam.tripreminder.data.Item;
 import com.argandevteam.tripreminder.data.Trip;
 
 import java.util.List;
@@ -26,6 +27,8 @@ public interface TripsDataSource {
 
     void refreshTrips();
 
+    void addItem(String mTripId, Item newItem, NewItemCallback callback);
+
     interface SaveTripCallback {
         void onTripSaved(Trip trip);
 
@@ -44,4 +47,9 @@ public interface TripsDataSource {
         void onDataNotAvailable();
     }
 
+    public interface NewItemCallback {
+        void onItemCreated(Item newItem);
+
+        void onError();
+    }
 }

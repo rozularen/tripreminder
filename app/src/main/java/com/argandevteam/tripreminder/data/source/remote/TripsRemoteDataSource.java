@@ -61,12 +61,10 @@ public class TripsRemoteDataSource implements TripsDataSource {
         }, SERVICE_LATENCY_IN_MILIS);
     }
 
-//    @Override
-//    public void saveTrip(Trip trip, SaveTripCallback callback) {
-//        TRIP_SERVICE_DATA.put(String.valueOf(trip.getId()), trip);
-//        callback.onTripSaved(trip);
-//    }
+    @Override
+    public void addItem(String mTripId, Item newItem, NewItemCallback callback) {
 
+    }
 
     @Override
     public void saveTrip(Trip trip, SaveTripCallback callback) {

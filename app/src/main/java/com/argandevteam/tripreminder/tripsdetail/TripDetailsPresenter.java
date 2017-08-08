@@ -2,12 +2,10 @@ package com.argandevteam.tripreminder.tripsdetail;
 
 import android.util.Log;
 
-import com.appgree.core.task.ApiResponseException;
+import com.argandevteam.tripreminder.data.Item;
 import com.argandevteam.tripreminder.data.Trip;
 import com.argandevteam.tripreminder.data.source.TripsDataSource;
 import com.argandevteam.tripreminder.data.source.TripsRepository;
-
-import java.text.SimpleDateFormat;
 
 /**
  * Created by markc on 23/07/2017.
@@ -60,7 +58,7 @@ public class TripDetailsPresenter implements TripDetailsContract.Presenter {
                 if (null == trip) {
                     mView.showMissingTrip();
                 } else {
-                    showTrip(trip);
+                    processTrip(trip);
                 }
             }
 
@@ -74,7 +72,7 @@ public class TripDetailsPresenter implements TripDetailsContract.Presenter {
         });
     }
 
-    private void showTrip(Trip trip) {
+    private void processTrip(Trip trip) {
 
         //TODO:Consider using TextUtils
         if (trip != null) {
@@ -84,12 +82,13 @@ public class TripDetailsPresenter implements TripDetailsContract.Presenter {
             String endDate = trip.getEndDate();
             String totalCost = trip.getTotalCost();
 
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-
             mView.showTrip(title, startDate, endDate, numPersons, totalCost);
+            if (trip.getItemsList() == null || trip.getItemsList().size() == 0) {
+                mView.showEmptyItems();
+            }
         }
-
     }
+
 
     @Override
     public void editTrip() {
@@ -106,6 +105,25 @@ public class TripDetailsPresenter implements TripDetailsContract.Presenter {
         if (mTripId != null) {
             mTripsRepository.deleteTrip(mTripId);
             mView.showTripDeleted();
+        }
+    }
+
+    @Override
+    public void addItem(String itemTitle) {
+        if (!itemTitle.equals("")) {
+            Item newItem = new Item();
+            newItem.setName(itemTitle);
+            mTripsRepository.addItem(mTripId, newItem, new TripsDataSource.NewItemCallback() {
+                @Override
+                public void onItemCreated(Item newItem) {
+                    mView.newItemCreated();
+                }
+
+                @Override
+                public void onError() {
+//                    mView.newItemError();
+                }
+            });
         }
     }
 

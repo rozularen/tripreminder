@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/delete_trip"
-        android:title="Eliminar" />
-    <item
         android:id="@+id/navigate_talk"
         android:title="Ir a Talk Privado"
         android:visible="false" />

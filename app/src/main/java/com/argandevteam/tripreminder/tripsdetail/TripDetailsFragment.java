@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +14,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,8 +60,26 @@ public class TripDetailsFragment extends Fragment implements TripDetailsContract
     @BindView(R.id.items_view)
     LinearLayout mItemsView;
 
+    @BindView(R.id.add_item_text)
+    TextView mAddItemText;
+
+    @BindView(R.id.clear_item_text)
+    TextView mClearItem;
+
     @BindView(R.id.items_recycler_view)
     RecyclerView mItemsRecyclerView;
+
+    @BindView(R.id.item_card_view)
+    CardView mItemCardView;
+
+    @BindView(R.id.item_title)
+    TextView mItemTitle;
+
+    @BindView(R.id.item_title_edit)
+    EditText mItemTitleEdit;
+
+    @BindView(R.id.add_item_button)
+    Button mAddItemBtn;
 
     @NonNull
     private static final String ARG_TRIP_ID = "TRIP_ID";
@@ -115,6 +136,9 @@ public class TripDetailsFragment extends Fragment implements TripDetailsContract
         //Set up Floating Action Button
         setUpFloatingActionMenu();
 
+        mAddItemText.setOnClickListener(this);
+        mAddItemBtn.setOnClickListener(this);
+        mClearItem.setOnClickListener(this);
         return view;
     }
 
@@ -141,9 +165,6 @@ public class TripDetailsFragment extends Fragment implements TripDetailsContract
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.delete_trip:
-                mPresenter.deleteTrip();
-                return true;
             case R.id.navigate_talk:
                 mPresenter.navigateToTalk();
                 return true;
@@ -203,6 +224,12 @@ public class TripDetailsFragment extends Fragment implements TripDetailsContract
     }
 
     @Override
+    public void showEmptyItems() {
+        mNoItemsView.setVisibility(View.VISIBLE);
+        mItemsView.setVisibility(View.GONE);
+    }
+
+    @Override
     public void showTalk() {
         MenuItem navigateItem = mMenu.findItem(R.id.navigate_talk);
         MenuItem createItem = mMenu.findItem(R.id.create_talk);
@@ -253,6 +280,13 @@ public class TripDetailsFragment extends Fragment implements TripDetailsContract
     }
 
     @Override
+    public void newItemCreated() {
+        clearNewItemCard();
+//        mAdapter.replaceData();
+        showMessage("Nuevo item añadido");
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fab_edit_items:
@@ -264,8 +298,33 @@ public class TripDetailsFragment extends Fragment implements TripDetailsContract
             case R.id.fab_edit_trip:
                 mPresenter.editTrip();
                 break;
+            case R.id.add_item_text:
+                showNewItemCard();
+                break;
+            case R.id.clear_item_text:
+                clearNewItemCard();
+                break;
+            case R.id.add_item_button:
+                String itemTitle = mItemTitleEdit.getText().toString();
+                mPresenter.addItem(itemTitle);
+                break;
             default:
                 break;
         }
+    }
+
+    private void clearNewItemCard() {
+        mClearItem.setVisibility(View.GONE);
+        mAddItemText.setVisibility(View.VISIBLE);
+
+        mItemCardView.setVisibility(View.GONE);
+
+    }
+
+    private void showNewItemCard() {
+        mClearItem.setVisibility(View.VISIBLE);
+        mAddItemText.setVisibility(View.GONE);
+
+        mItemCardView.setVisibility(View.VISIBLE);
     }
 }

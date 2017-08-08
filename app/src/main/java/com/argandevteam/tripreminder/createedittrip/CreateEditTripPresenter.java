@@ -116,18 +116,6 @@ public class CreateEditTripPresenter implements CreateEditTripContract.Presenter
                 }
             });
             mView.showTripsList();
-
-//            mTripsRepository.saveTrip(newTrip, new TripsDataSource.SaveTripCallback() {
-//                @Override
-//                public void onTripSaved(Trip trip) {
-//                    mView.onTripCreated();
-//                }
-//
-//                @Override
-//                public void onDataNotAvailable() {
-//                    mView.onTripCreateError();
-//                }
-//            });
         }
     }
 }

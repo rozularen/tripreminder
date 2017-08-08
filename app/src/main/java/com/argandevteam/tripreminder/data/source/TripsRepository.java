@@ -2,6 +2,7 @@ package com.argandevteam.tripreminder.data.source;
 
 import android.util.Log;
 
+import com.argandevteam.tripreminder.data.Item;
 import com.argandevteam.tripreminder.data.Trip;
 
 import java.util.ArrayList;
@@ -148,52 +149,6 @@ public class TripsRepository implements TripsDataSource {
         }
     }
 
-    //    @Override
-//    public void saveTrip(final Trip trip, final SaveTripCallback callback) {
-//        if (trip != null) {
-//            mTripsRemoteDataSource.saveTrip(trip, new SaveTripCallback() {
-//                @Override
-//                public void onTripSaved(Trip trip) {
-//                    mTripsLocalDataSource.saveTrip(trip, new SaveTripCallback() {
-//                        @Override
-//                        public void onTripSaved(Trip trip) {
-//                            callback.onTripSaved(trip);
-//                        }
-//
-//                        @Override
-//                        public void onDataNotAvailable() {
-//                            Log.e(TAG, "onDataNotAvailable: LocalRepository can't insert new Trip");
-//                            callback.onDataNotAvailable();
-//                        }
-//                    });
-//                }
-//
-//                @Override
-//                public void onDataNotAvailable() {
-//                    mTripsLocalDataSource.saveTrip(trip, new SaveTripCallback() {
-//                        @Override
-//                        public void onTripSaved(Trip trip) {
-//                            callback.onTripSaved(trip);
-//                        }
-//
-//                        @Override
-//                        public void onDataNotAvailable() {
-//                            Log.e(TAG, "onDataNotAvailable: LocalRepository can't insert new Trip");
-//                            callback.onDataNotAvailable();
-//                        }
-//                    });
-//                    Log.e(TAG, "onDataNotAvailable: RemoteRepository can't insert new Trip");
-//                }
-//            });
-//
-//            if (mCachedTrips == null) {
-//                mCachedTrips = new LinkedHashMap<>();
-//            }
-//
-//            mCachedTrips.put(String.valueOf(trip.getId()), trip);
-//        }
-//    }
-
     @Override
     public void updateTrip(Trip trip) {
         if (trip != null) {
@@ -219,8 +174,6 @@ public class TripsRepository implements TripsDataSource {
     @Override
     public void deleteTrip(String tripId) {
         if (tripId != null) {
-//            deleteTrip(getTripWithId(tripId));
-//            deleteTrip(tripId);
             mTripsRemoteDataSource.deleteTrip(tripId);
             mCachedTrips.remove(tripId);
             mTripsLocalDataSource.deleteTrip(tripId);
@@ -256,6 +209,21 @@ public class TripsRepository implements TripsDataSource {
     }
 
 
+    @Override
+    public void addItem(String mTripId, Item newItem, final NewItemCallback callback) {
+        mTripsLocalDataSource.addItem(mTripId, newItem, new NewItemCallback() {
+            @Override
+            public void onItemCreated(Item newItem) {
+                callback.onItemCreated(newItem);
+            }
+
+            @Override
+            public void onError() {
+                callback.onError();
+            }
+        });
+    }
+
     public void getTripsFromRemoteDataSource(final LoadTripsCallback callback) {
         mTripsRemoteDataSource.getTrips(new LoadTripsCallback() {
             @Override
@@ -286,7 +254,7 @@ public class TripsRepository implements TripsDataSource {
         mCachedTrips.clear();
 
         for (Trip trip : trips) {
-            mCachedTrips.put(String.valueOf(trip.getId()), trip);
+            mCachedTrips.put(trip.getId(), trip);
         }
 
         mCacheIsDirty = false;
