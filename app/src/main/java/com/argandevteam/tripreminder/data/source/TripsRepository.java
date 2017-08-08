@@ -105,7 +105,7 @@ public class TripsRepository implements TripsDataSource {
                         if (mCachedTrips == null) {
                             mCachedTrips = new LinkedHashMap<>();
                         }
-                        mCachedTrips.put(String.valueOf(trip.getId()), trip);
+                        mCachedTrips.put(trip.getId(), trip);
                         callback.onTripLoaded(trip);
                     }
 
@@ -117,7 +117,7 @@ public class TripsRepository implements TripsDataSource {
                                 if (mCachedTrips == null) {
                                     mCachedTrips = new LinkedHashMap<>();
                                 }
-                                mCachedTrips.put(String.valueOf(trip.getId()), trip);
+                                mCachedTrips.put(trip.getId(), trip);
                                 callback.onTripLoaded(trip);
                             }
 
@@ -142,7 +142,7 @@ public class TripsRepository implements TripsDataSource {
                 mCachedTrips = new LinkedHashMap<>();
             }
             //TODO: Retrieve the last inserted id in local storage
-            mCachedTrips.put("", trip);
+            mCachedTrips.put(trip.getId(), trip);
         } else {
             Log.d(TAG, "saveTrip: TRIP IS NULL");
         }
@@ -210,16 +210,20 @@ public class TripsRepository implements TripsDataSource {
 
     @Override
     public void deleteTrip(Trip trip) {
-        mTripsRemoteDataSource.deleteTrip(String.valueOf(trip.getId()));
-        mTripsLocalDataSource.deleteTrip(String.valueOf(trip.getId()));
-
-        mCachedTrips.remove(String.valueOf(trip.getId()));
+        mTripsRemoteDataSource.deleteTrip(trip.getId());
+        mCachedTrips.remove(trip.getId());
+        mTripsLocalDataSource.deleteTrip(trip.getId());
     }
+
 
     @Override
     public void deleteTrip(String tripId) {
         if (tripId != null) {
-            deleteTrip(getTripWithId(tripId));
+//            deleteTrip(getTripWithId(tripId));
+//            deleteTrip(tripId);
+            mTripsRemoteDataSource.deleteTrip(tripId);
+            mCachedTrips.remove(tripId);
+            mTripsLocalDataSource.deleteTrip(tripId);
         }
     }
 

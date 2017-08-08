@@ -2,17 +2,12 @@ package com.argandevteam.tripreminder.data.source.local;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.argandevteam.tripreminder.data.Trip;
 import com.argandevteam.tripreminder.data.source.TripsDataSource;
 import com.argandevteam.tripreminder.data.source.local.TripsPersistenceContract.TripEntry;
-import com.argandevteam.tripreminder.util.Utils;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -55,7 +50,7 @@ public class TripsLocalDataSource implements TripsDataSource {
     public void getTrip(String tripId, GetTripCallback callback) {
         if (callback != null) {
             Realm realm = Realm.getDefaultInstance();
-            Trip trip = realm.where(Trip.class).equalTo("id", "s").findFirst();
+            Trip trip = realm.where(Trip.class).equalTo("id", tripId).findFirst();
             callback.onTripLoaded(trip);
         } else {
             Log.d(TAG, "getTrip: CANT BE NULL!!");
@@ -269,6 +264,23 @@ public class TripsLocalDataSource implements TripsDataSource {
     }
 
     @Override
+    public void deleteTrip(String tripid) {
+        //TODO: COnsider using a callbal
+
+        Realm realm = Realm.getDefaultInstance();
+
+        final RealmResults<Trip> results = realm.where(Trip.class).findAll();
+
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                results.deleteFirstFromRealm();
+            }
+        });
+
+    }
+
+    /*@Override
     public void deleteTrip(String tripId) {
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
@@ -278,7 +290,7 @@ public class TripsLocalDataSource implements TripsDataSource {
         db.delete(TripEntry.TABLE_NAME, selection, selectionArgs);
 
         db.close();
-    }
+    }*/
 
     @Override
     public void deleteAllTrips() {

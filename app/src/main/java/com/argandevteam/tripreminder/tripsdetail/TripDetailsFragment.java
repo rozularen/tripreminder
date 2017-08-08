@@ -220,6 +220,7 @@ public class TripDetailsFragment extends Fragment implements TripDetailsContract
 
     @Override
     public void showTripDeleted() {
+        mFabMenu.close(true);
         MainActivity activity = (MainActivity) getActivity();
         activity.showTripsList();
     }
