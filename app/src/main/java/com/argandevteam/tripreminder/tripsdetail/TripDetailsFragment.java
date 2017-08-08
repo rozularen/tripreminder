@@ -1,6 +1,9 @@
 package com.argandevteam.tripreminder.tripsdetail;
 
 
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -91,6 +94,7 @@ public class TripDetailsFragment extends Fragment implements TripDetailsContract
     private TripDetailsContract.Presenter mPresenter;
     private LinearLayoutManager mLayoutManager;
     private ItemsAdapter mAdapter;
+    private OnTripDetailFragmentListener mListener;
 
     public TripDetailsFragment() {
         // Required empty public constructor
@@ -105,6 +109,23 @@ public class TripDetailsFragment extends Fragment implements TripDetailsContract
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mListener.enableCollapse();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnTripDetailFragmentListener) {
+            mListener = (OnTripDetailFragmentListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnCheeseDetailFragmentListener");
+        }
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ArrayList<Item> tripsList = new ArrayList<>(0);
@@ -115,6 +136,7 @@ public class TripDetailsFragment extends Fragment implements TripDetailsContract
     @Override
     public void onResume() {
         super.onResume();
+        ((MainActivity) getActivity()).getCollapsingToolbar().setTitle("Detail");
         mPresenter.start();
     }
 
@@ -128,6 +150,8 @@ public class TripDetailsFragment extends Fragment implements TripDetailsContract
 
         setHasOptionsMenu(true);
 
+        MainActivity activity = (MainActivity) getActivity();
+        activity.getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#00000000")));
         //Set up RecyclerView
         mLayoutManager = new LinearLayoutManager(getActivity());
         mItemsRecyclerView.setHasFixedSize(true);
@@ -338,5 +362,9 @@ public class TripDetailsFragment extends Fragment implements TripDetailsContract
         mAddItemText.setVisibility(View.GONE);
 
         mItemCardView.setVisibility(View.VISIBLE);
+    }
+
+    public interface OnTripDetailFragmentListener {
+        void enableCollapse();
     }
 }

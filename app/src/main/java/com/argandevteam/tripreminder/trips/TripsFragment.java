@@ -1,6 +1,7 @@
 package com.argandevteam.tripreminder.trips;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -65,6 +66,7 @@ public class TripsFragment extends Fragment implements TripsContract.View {
         }
     };
     private TripsAdapter mAdapter;
+    private OnTripListFragmentListener mListener;
 
     // Required empty public constructor
     public TripsFragment() {
@@ -72,6 +74,23 @@ public class TripsFragment extends Fragment implements TripsContract.View {
 
     public static TripsFragment newInstance() {
         return new TripsFragment();
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mListener.disableCollapse();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnTripListFragmentListener) {
+            mListener = (OnTripListFragmentListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnCheeseCategoriesFragmentListener");
+        }
     }
 
     @Override
@@ -214,5 +233,9 @@ public class TripsFragment extends Fragment implements TripsContract.View {
         mNoTripsMainTextView.setText(mainText);
         mNoTripsIcon.setImageDrawable(getResources().getDrawable(iconRes));
         mNoTripsCreateView.setVisibility(showCreateView ? View.VISIBLE : View.GONE);
+    }
+
+    public interface OnTripListFragmentListener {
+        void disableCollapse();
     }
 }

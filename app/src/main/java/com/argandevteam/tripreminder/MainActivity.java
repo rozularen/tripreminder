@@ -2,16 +2,20 @@ package com.argandevteam.tripreminder;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.appgree.core.AppgreeNotInitializeException;
 import com.appgree.core.task.ApiResponseException;
+import com.appgree.core.views.ImageView;
 import com.appgree.sdk.AppgreeSDK;
 import com.appgree.sdk.Callbacks;
 import com.appgree.sdk.TalkView;
@@ -32,7 +36,9 @@ import com.argandevteam.tripreminder.util.ActivityUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements
+        TripDetailsFragment.OnTripDetailFragmentListener,
+        TripsFragment.OnTripListFragmentListener {
 
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
@@ -40,6 +46,11 @@ public class MainActivity extends AppCompatActivity {
     NavigationView navigationView;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.collapsing_toolbar)
+    CollapsingToolbarLayout collapsingToolbarLayout;
+    @BindView(R.id.backdrop)
+    android.widget.ImageView backdrop;
+
 
     private TripsPresenter mTripsPresenter;
     private TripsRepository mTripsRepository;
@@ -67,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
             setUpDrawerContent(navigationView);
         }
 
+        loadBackdrop();
+
         TripsFragment tripsFragment =
                 (TripsFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
 
@@ -85,6 +98,25 @@ public class MainActivity extends AppCompatActivity {
 
         mTripsPresenter = new TripsPresenter(mTripsRepository, tripsFragment);
 
+    }
+
+    private void loadBackdrop() {
+        backdrop.setImageResource(R.drawable.ic_basket_black_24dp);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        syncFrags();
+    }
+
+    private void syncFrags() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+        if (fragment instanceof TripsFragment) {
+            disableCollapse();
+        } else if (fragment instanceof TripDetailsFragment) {
+            enableCollapse();
+        }
     }
 
     @Override
@@ -240,5 +272,22 @@ public class MainActivity extends AppCompatActivity {
         } catch (AppgreeNotInitializeException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void enableCollapse() {
+        backdrop.setVisibility(View.VISIBLE);
+
+        collapsingToolbarLayout.setTitleEnabled(true);
+    }
+
+    @Override
+    public void disableCollapse() {
+        backdrop.setVisibility(View.GONE);
+        collapsingToolbarLayout.setTitleEnabled(false);
+    }
+
+    public CollapsingToolbarLayout getCollapsingToolbar() {
+        return collapsingToolbarLayout;
     }
 }
