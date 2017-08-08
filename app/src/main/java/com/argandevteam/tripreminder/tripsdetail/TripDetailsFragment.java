@@ -294,6 +294,11 @@ public class TripDetailsFragment extends Fragment implements TripDetailsContract
     }
 
     @Override
+    public void hideNoItemsView() {
+        mNoItemsView.setVisibility(View.GONE);
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fab_edit_items:

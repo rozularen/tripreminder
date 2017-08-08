@@ -85,8 +85,11 @@ public class TripDetailsPresenter implements TripDetailsContract.Presenter {
             String totalCost = trip.getTotalCost();
             RealmList<Item> itemsList = trip.getItemsList();
             mView.showTrip(title, startDate, endDate, numPersons, totalCost, itemsList);
+
             if (trip.getItemsList() == null || trip.getItemsList().size() == 0) {
                 mView.showEmptyItems();
+            } else {
+                mView.hideNoItemsView();
             }
         }
     }

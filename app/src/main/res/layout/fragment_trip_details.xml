@@ -1,190 +1,197 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.argandevteam.tripreminder.tripsdetail.TripDetailsFragment">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="140dp"
-            android:background="@color/color_material_gray"
-            android:contentDescription="contentDescription" />
-
-        <TextView
-            android:id="@+id/trip_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="90dp"
-            android:text="MALAGA"
-            android:textColor="@color/color_white"
-            android:textSize="28sp" />
-    </RelativeLayout>
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="16dp">
+        tools:context="com.argandevteam.tripreminder.tripsdetail.TripDetailsFragment">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:background="@color/color_material_gray"
+                android:contentDescription="contentDescription" />
+
+            <TextView
+                android:id="@+id/trip_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="90dp"
+                android:text="MALAGA"
+                android:textColor="@color/color_white"
+                android:textSize="28sp" />
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/trip_start_date"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="22/7/2017" />
-
-            <TextView
-                android:id="@+id/trip_end_date"
-                android:layout_width="0dp"
-
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="28/7/2017" />
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/trip_num_persons"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="4" />
-
-        <TextView
-            android:id="@+id/trip_total_cost"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="220 €" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:text="Lista de cosas" />
-
-            <TextView
-                android:id="@+id/add_item_text"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:drawableStart="@drawable/ic_create_white_24dp"
-                android:drawableTint="#FFAAAA"
-                android:gravity="center"
-                android:text="Añadir item" />
-
-            <TextView
-                android:id="@+id/clear_item_text"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:drawableStart="@drawable/ic_clear_black_24dp"
-                android:drawableTint="#FFAAAA"
-                android:gravity="center"
-                android:text="Cancelar"
-                android:visibility="gone" />
-
-        </LinearLayout>
-    </LinearLayout>
-
-    <android.support.v7.widget.CardView
-        android:id="@+id/item_card_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:layout_margin="8dp"
-        tools:visibility="visible">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="16dp">
 
-            <TextView
-                android:id="@+id/item_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="HOLA"
-                android:visibility="gone" />
-
-            <EditText
-                android:id="@+id/item_title_edit"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Item numero 1" />
+                android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/add_item_button"
+                <TextView
+                    android:id="@+id/trip_start_date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="22/7/2017" />
+
+                <TextView
+                    android:id="@+id/trip_end_date"
+                    android:layout_width="0dp"
+
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="28/7/2017" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/trip_num_persons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="añadir" />
+                android:text="4" />
+
+            <TextView
+                android:id="@+id/trip_total_cost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="220 €" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:text="Lista de cosas" />
+
+                <TextView
+                    android:id="@+id/add_item_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:drawableStart="@drawable/ic_create_white_24dp"
+                    android:drawableTint="#FFAAAA"
+                    android:gravity="center"
+                    android:text="Añadir item" />
+
+                <TextView
+                    android:id="@+id/clear_item_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:drawableStart="@drawable/ic_clear_black_24dp"
+                    android:drawableTint="#FFAAAA"
+                    android:gravity="center"
+                    android:text="Cancelar"
+                    android:visibility="gone" />
+
+            </LinearLayout>
         </LinearLayout>
 
-    </android.support.v7.widget.CardView>
-
-    <LinearLayout
-        android:id="@+id/items_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:visibility="visible">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/items_recycler_view"
+        <android.support.v7.widget.CardView
+            android:id="@+id/item_card_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/item_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="HOLA"
+                    android:visibility="gone" />
+
+                <EditText
+                    android:id="@+id/item_title_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Item numero 1" />
+
+                <Button
+                    android:id="@+id/add_item_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="añadir" />
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <LinearLayout
+            android:id="@+id/items_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:visibility="visible">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/items_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/no_items_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            tools:visibility="visible">
+
+            <ImageView
+                android:id="@+id/no_items_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:src="@drawable/ic_basket_black_24dp"
+                android:tint="@color/color_material_gray" />
+
+            <TextView
+                android:id="@+id/no_items_main_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No tienes Ítems aún!"
+                android:textColor="@color/color_black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/no_items_create_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Añade uno ahora!"
+                android:textSize="12sp" />
+
+        </LinearLayout>
     </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/no_items_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        tools:visibility="visible">
-
-        <ImageView
-            android:id="@+id/no_items_image_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:src="@drawable/ic_basket_black_24dp"
-            android:tint="@color/color_material_gray" />
-
-        <TextView
-            android:id="@+id/no_items_main_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="No tienes Ítems aún!"
-            android:textColor="@color/color_black"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/no_items_create_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Añade uno ahora!"
-            android:textSize="12sp" />
-
-    </LinearLayout>
-</LinearLayout>
+</android.support.v4.widget.NestedScrollView>

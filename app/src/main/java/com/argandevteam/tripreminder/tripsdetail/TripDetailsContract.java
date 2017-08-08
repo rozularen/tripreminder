@@ -43,6 +43,8 @@ public interface TripDetailsContract {
         void showEmptyItems();
 
         void newItemCreated(RealmList<Item> itemsList);
+
+        void hideNoItemsView();
     }
 
     interface Presenter extends BasePresenter {
