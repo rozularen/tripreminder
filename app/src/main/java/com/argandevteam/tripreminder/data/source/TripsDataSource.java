@@ -5,6 +5,8 @@ import com.argandevteam.tripreminder.data.Trip;
 
 import java.util.List;
 
+import io.realm.RealmList;
+
 /**
  * Created by markc on 23/07/2017.
  */
@@ -48,7 +50,7 @@ public interface TripsDataSource {
     }
 
     public interface NewItemCallback {
-        void onItemCreated(Item newItem);
+        void onItemCreated(RealmList<Item> itemsList);
 
         void onError();
     }

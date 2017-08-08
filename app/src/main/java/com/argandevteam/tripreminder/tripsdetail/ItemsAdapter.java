@@ -4,11 +4,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.argandevteam.tripreminder.R;
 import com.argandevteam.tripreminder.data.Item;
 
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by markc on 21/07/2017.
@@ -30,7 +34,7 @@ public class ItemsAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemCardView = LayoutInflater.from(parent.getContext()).inflate(R.layout.trip_card, parent, false);
+        View itemCardView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_card, parent, false);
 
         ItemViewHolder itemViewHolder = new ItemViewHolder(itemCardView);
 
@@ -53,14 +57,20 @@ public class ItemsAdapter extends RecyclerView.Adapter {
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
 
+        @BindView(R.id.item_title)
+        TextView itemTitle;
+
         private Item item;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
+
         }
 
         public void setData(Item item) {
             this.item = item;
+            itemTitle.setText(item.getName());
         }
     }
 }

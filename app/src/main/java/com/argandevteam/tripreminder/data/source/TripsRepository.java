@@ -10,6 +10,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.realm.RealmList;
+
 
 /**
  * Created by markc on 23/07/2017.
@@ -213,7 +215,7 @@ public class TripsRepository implements TripsDataSource {
     public void addItem(String mTripId, Item newItem, final NewItemCallback callback) {
         mTripsLocalDataSource.addItem(mTripId, newItem, new NewItemCallback() {
             @Override
-            public void onItemCreated(Item newItem) {
+            public void onItemCreated(RealmList<Item> newItem) {
                 callback.onItemCreated(newItem);
             }
 

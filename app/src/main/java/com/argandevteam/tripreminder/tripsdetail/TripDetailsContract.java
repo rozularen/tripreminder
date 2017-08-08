@@ -4,6 +4,9 @@ import com.appgree.core.task.ApiResponseException;
 import com.appgree.sdk.Callbacks;
 import com.argandevteam.tripreminder.BasePresenter;
 import com.argandevteam.tripreminder.BaseView;
+import com.argandevteam.tripreminder.data.Item;
+
+import io.realm.RealmList;
 
 /**
  * Created by markc on 23/07/2017.
@@ -19,7 +22,7 @@ public interface TripDetailsContract {
 
         boolean isActive();
 
-        void showTrip(String title, String startDate, String endDate, int numPersons, String totalCost);
+        void showTrip(String title, String startDate, String endDate, int numPersons, String totalCost, RealmList<Item> itemsList);
 
         void showTripDeleted();
 
@@ -39,7 +42,7 @@ public interface TripDetailsContract {
 
         void showEmptyItems();
 
-        void newItemCreated();
+        void newItemCreated(RealmList<Item> itemsList);
     }
 
     interface Presenter extends BasePresenter {

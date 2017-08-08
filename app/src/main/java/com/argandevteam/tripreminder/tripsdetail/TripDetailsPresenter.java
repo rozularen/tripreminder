@@ -7,6 +7,8 @@ import com.argandevteam.tripreminder.data.Trip;
 import com.argandevteam.tripreminder.data.source.TripsDataSource;
 import com.argandevteam.tripreminder.data.source.TripsRepository;
 
+import io.realm.RealmList;
+
 /**
  * Created by markc on 23/07/2017.
  */
@@ -81,8 +83,8 @@ public class TripDetailsPresenter implements TripDetailsContract.Presenter {
             String startDate = trip.getStartDate();
             String endDate = trip.getEndDate();
             String totalCost = trip.getTotalCost();
-
-            mView.showTrip(title, startDate, endDate, numPersons, totalCost);
+            RealmList<Item> itemsList = trip.getItemsList();
+            mView.showTrip(title, startDate, endDate, numPersons, totalCost, itemsList);
             if (trip.getItemsList() == null || trip.getItemsList().size() == 0) {
                 mView.showEmptyItems();
             }
@@ -115,8 +117,8 @@ public class TripDetailsPresenter implements TripDetailsContract.Presenter {
             newItem.setName(itemTitle);
             mTripsRepository.addItem(mTripId, newItem, new TripsDataSource.NewItemCallback() {
                 @Override
-                public void onItemCreated(Item newItem) {
-                    mView.newItemCreated();
+                public void onItemCreated(RealmList<Item> itemsList) {
+                    mView.newItemCreated(itemsList);
                 }
 
                 @Override

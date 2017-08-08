@@ -30,6 +30,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.RealmList;
 
 
 /**
@@ -211,9 +212,10 @@ public class TripDetailsFragment extends Fragment implements TripDetailsContract
     }
 
     @Override
-    public void showTrip(String title, String startDate, String endDate, int numPersons, String totalCost) {
+    public void showTrip(String title, String startDate, String endDate, int numPersons, String totalCost, RealmList<Item> itemsList) {
         mTripTitle.setVisibility(View.VISIBLE);
         mTripStartDate.setVisibility(View.VISIBLE);
+
         mTripTitle.setText(title);
 
         mTripStartDate.setText(startDate);
@@ -221,6 +223,8 @@ public class TripDetailsFragment extends Fragment implements TripDetailsContract
 
         mTripNumPersons.setText(String.valueOf(numPersons));
         mTripTotalCost.setText(totalCost);
+
+        mAdapter.replaceData(itemsList);
     }
 
     @Override
@@ -280,9 +284,12 @@ public class TripDetailsFragment extends Fragment implements TripDetailsContract
     }
 
     @Override
-    public void newItemCreated() {
+    public void newItemCreated(RealmList<Item> itemsList) {
         clearNewItemCard();
-//        mAdapter.replaceData();
+
+        mNoItemsView.setVisibility(View.GONE);
+        mItemsView.setVisibility(View.VISIBLE);
+        mAdapter.replaceData(itemsList);
         showMessage("Nuevo item añadido");
     }
 

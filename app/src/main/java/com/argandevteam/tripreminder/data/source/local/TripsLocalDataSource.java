@@ -147,13 +147,11 @@ public class TripsLocalDataSource implements TripsDataSource {
                     public void execute(Realm realm) {
                         Item item = realm.copyToRealm(newItem);
 
-                        RealmList<Item> itemsList = trip.getItemsList();
-                        itemsList.add(newItem);
-                        trip.setItemsList(itemsList);
+                        trip.getItemsList().add(newItem);
 
                         Trip updatedTrip = realm.copyToRealmOrUpdate(trip);
 
-                        callback.onItemCreated(item);
+                        callback.onItemCreated(updatedTrip.getItemsList());
                     }
                 });
             }
