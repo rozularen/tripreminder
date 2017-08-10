@@ -11,6 +11,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         lintOptions {
@@ -31,7 +32,6 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.appgree.core:appgreesdk:1.1.14'
 
     compile 'com.google.android.gms:play-services:11.0.2'
     compile 'com.google.android.gms:play-services-base:11.0.2'

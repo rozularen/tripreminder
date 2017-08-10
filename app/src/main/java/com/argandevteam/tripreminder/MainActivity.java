@@ -169,6 +169,8 @@ public class MainActivity extends AppCompatActivity implements
                 //TODO: Eror while doing logout
             }
         });
+
+        showLoginView();
     }
 
     private void showLoginView() {
