@@ -13,12 +13,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.appgree.core.AppgreeNotInitializeException;
-import com.appgree.core.task.ApiResponseException;
-import com.appgree.core.views.ImageView;
-import com.appgree.sdk.AppgreeSDK;
-import com.appgree.sdk.Callbacks;
-import com.appgree.sdk.TalkView;
 import com.argandevteam.tripreminder.createedittrip.CreateEditTripFragment;
 import com.argandevteam.tripreminder.createedittrip.CreateEditTripPresenter;
 import com.argandevteam.tripreminder.createtalk.CreateTalkFragment;
@@ -64,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements
         ButterKnife.bind(this);
 
         //Set up Appgree SDK
-        AppgreeSDK.setDebugMode(true);
+//        AppgreeSDK.setDebugMode(true);
 
         //Set up the Toolbar
         setSupportActionBar(toolbar);
@@ -158,17 +152,17 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void doLogout() {
-        AppgreeSDK.API.doLogout(new Callbacks.GenericCallback<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                showLoginView();
-            }
-
-            @Override
-            public void onError(ApiResponseException e, Exception e1) {
-                //TODO: Eror while doing logout
-            }
-        });
+//        AppgreeSDK.API.doLogout(new Callbacks.GenericCallback<Void>() {
+//            @Override
+//            public void onSuccess(Void aVoid) {
+//                showLoginView();
+//            }
+//
+//            @Override
+//            public void onError(ApiResponseException e, Exception e1) {
+//                //TODO: Eror while doing logout
+//            }
+//        });
 
         showLoginView();
     }
@@ -269,11 +263,11 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     public void showTalkView(String talkId) {
-        try {
-            AppgreeSDK.ViewLoader.loadTalk(this, talkId, new TalkView.Delegate());
-        } catch (AppgreeNotInitializeException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            AppgreeSDK.ViewLoader.loadTalk(this, talkId, new TalkView.Delegate());
+//        } catch (AppgreeNotInitializeException e) {
+//            e.printStackTrace();
+//        }
     }
 
     @Override

@@ -1,10 +1,6 @@
 package com.argandevteam.tripreminder.loginregister.login;
 
 
-import com.appgree.core.AppUser;
-import com.appgree.core.task.ApiResponseException;
-import com.appgree.sdk.AppgreeSDK;
-import com.appgree.sdk.Callbacks;
 import com.argandevteam.tripreminder.loginregister.LoginRegisterContract;
 
 /**

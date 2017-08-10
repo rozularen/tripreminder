@@ -1,7 +1,5 @@
 package com.argandevteam.tripreminder.tripsdetail;
 
-import com.appgree.core.task.ApiResponseException;
-import com.appgree.sdk.Callbacks;
 import com.argandevteam.tripreminder.BasePresenter;
 import com.argandevteam.tripreminder.BaseView;
 import com.argandevteam.tripreminder.data.Item;

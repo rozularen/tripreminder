@@ -2,10 +2,6 @@ package com.argandevteam.tripreminder.loginregister.register;
 
 import android.util.Log;
 
-import com.appgree.core.AppUser;
-import com.appgree.core.task.ApiResponseException;
-import com.appgree.sdk.AppgreeSDK;
-import com.appgree.sdk.Callbacks;
 import com.argandevteam.tripreminder.loginregister.LoginRegisterContract;
 
 /**
@@ -32,25 +28,25 @@ public class RegisterPresenter implements RegisterContract.Presenter {
     public void registerUser(String email, String firstName, String lastName, String password) {
         //Registrer user
         // Proceso input y registro usuario
-        AppgreeSDK.API.doRegister(
-                email,
-                firstName,
-                lastName,
-                password,
-                new Callbacks.GenericCallback<AppUser>() {
-                    @Override
-                    public void onSuccess(AppUser appUser) {
-                        Log.d(TAG, "onSuccess: " + appUser.getEmail());
-                        mView.registerSuccess();
-                    }
-
-                    @Override
-                    public void onError(ApiResponseException e, Exception e1) {
-                        Log.e(TAG, "onError: " + e.getMessage() + " " + e.getErrorCode(), e);
-                        Log.e(TAG, "onError: " + e1.getMessage(), e1);
-                        mView.registerError();
-                    }
-                }
-        );
+//        AppgreeSDK.API.doRegister(
+//                email,
+//                firstName,
+//                lastName,
+//                password,
+//                new Callbacks.GenericCallback<AppUser>() {
+//                    @Override
+//                    public void onSuccess(AppUser appUser) {
+//                        Log.d(TAG, "onSuccess: " + appUser.getEmail());
+//                        mView.registerSuccess();
+//                    }
+//
+//                    @Override
+//                    public void onError(ApiResponseException e, Exception e1) {
+//                        Log.e(TAG, "onError: " + e.getMessage() + " " + e.getErrorCode(), e);
+//                        Log.e(TAG, "onError: " + e1.getMessage(), e1);
+//                        mView.registerError();
+//                    }
+//                }
+//        );
     }
 }
