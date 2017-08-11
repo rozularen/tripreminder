@@ -28,6 +28,7 @@ public class RegisterPresenter implements RegisterContract.Presenter {
     public void registerUser(String email, String firstName, String lastName, String password) {
         //Registrer user
         // Proceso input y registro usuario
+
 //        AppgreeSDK.API.doRegister(
 //                email,
 //                firstName,

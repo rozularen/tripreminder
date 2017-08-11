@@ -28,23 +28,23 @@
         </activity>
 
 
-        <!-- Providers -->
-        <provider
-            android:name="com.appgree.core.provider.DataProvider"
-            android:authorities="com.argandevteam.tripreminder.appgree.provider.DataProvider"
-            android:exported="false" />
+        <!--&lt;!&ndash; Providers &ndash;&gt;-->
+        <!--<provider-->
+        <!--android:name="com.appgree.core.provider.DataProvider"-->
+        <!--android:authorities="com.argandevteam.tripreminder.appgree.provider.DataProvider"-->
+        <!--android:exported="false" />-->
 
-        <receiver
-            android:name="com.google.android.gms.gcm.GcmReceiver"
-            android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND">
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+        <!--<receiver-->
+        <!--android:name="com.google.android.gms.gcm.GcmReceiver"-->
+        <!--android:exported="true"-->
+        <!--android:permission="com.google.android.c2dm.permission.SEND">-->
+        <!--<intent-filter>-->
+        <!--<action android:name="com.google.android.c2dm.intent.REGISTRATION" />-->
+        <!--<action android:name="com.google.android.c2dm.intent.RECEIVE" />-->
 
-                <category android:name="com.argandevteam.tripreminder.gcm" />
-            </intent-filter>
-        </receiver>
+        <!--<category android:name="com.argandevteam.tripreminder.gcm" />-->
+        <!--</intent-filter>-->
+        <!--</receiver>-->
 
     </application>
 
