@@ -41,55 +41,39 @@ import io.realm.RealmList;
  */
 public class TripDetailsFragment extends Fragment implements TripDetailsContract.View, View.OnClickListener {
 
-    FloatingActionMenu mFabMenu;
-
-    @BindView(R.id.trip_title)
-    TextView mTripTitle;
-
-    @BindView(R.id.trip_start_date)
-    TextView mTripStartDate;
-
-    @BindView(R.id.trip_end_date)
-    TextView mTripEndDate;
-
-    @BindView(R.id.trip_num_persons)
-    TextView mTripNumPersons;
-
-    @BindView(R.id.trip_total_cost)
-    TextView mTripTotalCost;
-
-    @BindView(R.id.no_items_view)
-    LinearLayout mNoItemsView;
-
-    @BindView(R.id.items_view)
-    LinearLayout mItemsView;
-
-    @BindView(R.id.add_item_text)
-    TextView mAddItemText;
-
-    @BindView(R.id.clear_item_text)
-    TextView mClearItem;
-
-    @BindView(R.id.items_recycler_view)
-    RecyclerView mItemsRecyclerView;
-
-    @BindView(R.id.item_card_view)
-    CardView mItemCardView;
-
-    @BindView(R.id.item_title)
-    TextView mItemTitle;
-
-    @BindView(R.id.item_title_edit)
-    EditText mItemTitleEdit;
-
-    @BindView(R.id.add_item_button)
-    Button mAddItemBtn;
-
     @NonNull
     private static final String ARG_TRIP_ID = "TRIP_ID";
     @NonNull
     private static final int REQUEST_EDIT_TRIP = 1;
-
+    FloatingActionMenu mFabMenu;
+    @BindView(R.id.trip_title)
+    TextView mTripTitle;
+    @BindView(R.id.trip_start_date)
+    TextView mTripStartDate;
+    @BindView(R.id.trip_end_date)
+    TextView mTripEndDate;
+    @BindView(R.id.trip_num_persons)
+    TextView mTripNumPersons;
+    @BindView(R.id.trip_total_cost)
+    TextView mTripTotalCost;
+    @BindView(R.id.no_items_view)
+    LinearLayout mNoItemsView;
+    @BindView(R.id.items_view)
+    LinearLayout mItemsView;
+    @BindView(R.id.add_item_text)
+    TextView mAddItemText;
+    @BindView(R.id.clear_item_text)
+    TextView mClearItem;
+    @BindView(R.id.items_recycler_view)
+    RecyclerView mItemsRecyclerView;
+    @BindView(R.id.item_card_view)
+    CardView mItemCardView;
+    @BindView(R.id.item_title)
+    TextView mItemTitle;
+    @BindView(R.id.item_title_edit)
+    EditText mItemTitleEdit;
+    @BindView(R.id.add_item_button)
+    Button mAddItemBtn;
     private Menu mMenu;
     private TripDetailsContract.Presenter mPresenter;
     private LinearLayoutManager mLayoutManager;

@@ -10,9 +10,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.argandevteam.tripreminder.ActivityNavigator;
+import com.argandevteam.tripreminder.MainActivity;
 import com.argandevteam.tripreminder.R;
 import com.argandevteam.tripreminder.loginregister.LoginRegisterContract;
-import com.argandevteam.tripreminder.MainActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

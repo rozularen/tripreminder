@@ -11,7 +11,6 @@ import com.argandevteam.tripreminder.data.source.TripsDataSource;
 import com.argandevteam.tripreminder.data.source.local.TripsPersistenceContract.TripEntry;
 
 import io.realm.Realm;
-import io.realm.RealmList;
 import io.realm.RealmResults;
 
 /**
@@ -23,12 +22,13 @@ public class TripsLocalDataSource implements TripsDataSource {
     private static final String TAG = "LocalDataSrc";
     private static TripsLocalDataSource INSTANCE;
 
-    private TripsDbHelper mDbHelper;
+
+    private DbHelper mDbHelper;
 
 
     public TripsLocalDataSource(Context context) {
         if (context != null) {
-            mDbHelper = new TripsDbHelper(context);
+            mDbHelper = new DbHelper(context);
         }
     }
 

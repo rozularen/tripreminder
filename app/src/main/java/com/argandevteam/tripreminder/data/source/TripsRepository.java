@@ -21,8 +21,8 @@ public class TripsRepository implements TripsDataSource {
 
     private static final String TAG = "TripsRepository";
 
-    private static TripsRepository INSTANCE = null;
     Map<String, Trip> mCachedTrips;
+    private static TripsRepository INSTANCE = null;
     boolean mCacheIsDirty = false;
     private TripsDataSource mTripsLocalDataSource = null;
     private TripsDataSource mTripsRemoteDataSource = null;

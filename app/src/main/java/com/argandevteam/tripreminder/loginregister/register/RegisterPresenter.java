@@ -1,7 +1,5 @@
 package com.argandevteam.tripreminder.loginregister.register;
 
-import android.util.Log;
-
 import com.argandevteam.tripreminder.loginregister.LoginRegisterContract;
 
 /**

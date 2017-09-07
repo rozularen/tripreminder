@@ -3,7 +3,6 @@ package com.argandevteam.tripreminder.loginregister;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
 
 import com.argandevteam.tripreminder.MainActivity;
 import com.argandevteam.tripreminder.R;
@@ -17,8 +16,8 @@ import butterknife.ButterKnife;
 
 public class LoginRegisterActivity extends AppCompatActivity implements LoginRegisterContract.View {
 
-    private LoginRegisterContract.Presenter mPresenter;
     private static final String TAG = "LoginRegisterAct";
+    private LoginRegisterContract.Presenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

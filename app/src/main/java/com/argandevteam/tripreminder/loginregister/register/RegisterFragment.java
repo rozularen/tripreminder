@@ -11,8 +11,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.argandevteam.tripreminder.ActivityNavigator;
-import com.argandevteam.tripreminder.R;
 import com.argandevteam.tripreminder.MainActivity;
+import com.argandevteam.tripreminder.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

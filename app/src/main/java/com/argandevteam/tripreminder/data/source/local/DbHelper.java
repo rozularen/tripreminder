@@ -9,7 +9,7 @@ import android.util.Log;
  * Created by markc on 23/07/2017.
  */
 
-public class TripsDbHelper extends SQLiteOpenHelper {
+public class DbHelper extends SQLiteOpenHelper {
 
     private static final String TAG = "DBHelper";
 
@@ -53,7 +53,7 @@ public class TripsDbHelper extends SQLiteOpenHelper {
                     ItemsPersistenceContract.ItemEntry.COLUMN_NAME_NAME + TEXT_TYPE +
                     " )";
 
-    public TripsDbHelper(Context context) {
+    public DbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
